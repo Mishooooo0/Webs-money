@@ -4,6 +4,7 @@
 #   /                  the gallery
 #   /cafe/             café + restaurant template   (main)
 #   /services/         services + booking template  (template-services)
+#   /retail/           retail + boutique template   (template-retail)
 #   /clients/rahwah/   Rahwah                       (rahwah)
 #
 # Adding a client is one line at the bottom of this file.
@@ -38,6 +39,7 @@ publish() {
 
 publish main              cafe            "Café & restaurant template"
 publish template-services services        "Services & booking template"
+publish template-retail   retail          "Retail & boutique template"
 publish rahwah            clients/rahwah  "Rahwah (client)"
 
 cp .github/pages/index.html "$OUT/index.html"

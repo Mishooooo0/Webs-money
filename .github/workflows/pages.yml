@@ -4,7 +4,7 @@ name: Pages
 # and every client site has a live URL off a single deploy.
 on:
   push:
-    branches: [main, rahwah, template-services]
+    branches: [main, rahwah, template-services, template-retail]
   workflow_dispatch:
 
 permissions:
@@ -25,9 +25,19 @@ jobs:
           fetch-depth: 0   # assemble.sh reads other branches from this clone
       - name: Assemble the gallery
         run: bash .github/pages/assemble.sh
+      # enablement:true only works if the workflow token may create the Pages
+      # site. On most repositories it may not, and Pages has to be switched on
+      # by hand once. The next step turns that into a readable instruction
+      # instead of "Resource not accessible by integration".
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Explain a Pages permission failure
+        if: failure()
+        run: |
+          echo "::error title=GitHub Pages is not enabled::The site assembled fine — only publishing is blocked."
+          echo "Enable it once, by hand:  Settings → Pages → Source: GitHub Actions"
+          echo "Then re-run this workflow. No code change is needed."
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
