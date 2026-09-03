@@ -83,15 +83,41 @@ repeated on the opposite edge. Tile scale is set by `--pattern-size` and
 
 | Key | What to change |
 |---|---|
-| `brand` | Café name in both scripts, the Latin wordmark line, currency |
+| `brand` | Store name in both scripts, the Latin wordmark line, currency |
 | `contact` | Address lines, phone (`phone`, `phoneHref`, `phoneLabel`), email (`email`, `emailHref`), WhatsApp, Instagram, Maps link |
 | `hours` | Seven rows. Keep the `key` values — that's how today's row highlights itself |
-| `menu` | Categories in display order; `featured: true` lifts an item onto the home page (first three win) |
-| `beans` / `merch` | The shop grids |
+| `catalog` | Groups in display order; each item takes `price`, optional `tags`, `image`, `ratio`; `featured: true` lifts it onto the home page (first three win) |
+| `collections` | Curated sets — same card shape, rendered as a flat grid |
+| `faq` | `q` / `a` pairs, rendered as `<details>` so they open without JavaScript |
 | `t.*` | Every string on the site, as `{ ar, en }` pairs |
 | `t.alt.*` | Alt text for photo slots — update when real photos land |
 
-Adding a drink is one object in `menu[].items`. Never edit HTML for content.
+Adding a product is one object in `catalog[].items`. Never edit HTML for content.
+
+Both grids are drawn by the **generic** renderers, which take their data source
+from the markup — so you can point them at any array you add:
+
+```html
+<div data-render="catalog" data-source="catalog"></div>
+<div data-render="cards"   data-source="collections"></div>
+```
+
+### Retargeting the vertical
+
+The default copy is written for a **perfume and oud house**, the highest-margin
+small retail in this market. Nothing in the page structure, the CSS or the
+engine assumes it. To sell this to another kind of shop, edit `content.js`
+alone:
+
+| Change | To |
+|---|---|
+| `catalog[]` groups | Abayas / gifts / flowers / accessories / jewellery |
+| `tags` | Sizes · colours · materials · stem counts |
+| `collections[]` | Seasons · occasions · price bands |
+| `faq[]` | Alterations · same-day delivery · sizing · care |
+| `t.hero.*`, `t.story.*` | The shop's own voice |
+
+The five pages, the WhatsApp ordering flow and every check stay as they are.
 
 **After every edit here, run `node tools/sync-static.js`.** The Arabic sitting
 in the HTML is a generated mirror of this file — it exists so the site reads
@@ -125,14 +151,14 @@ element:
 
 | Page | Slot | Size | Subject |
 |---|---|---|---|
-| `index.html` | hero | 1600×1000 | The room, wide, natural light |
-| `index.html` | counter | 1000×1250 | Barista at the counter, portrait |
-| `index.html` | gallery ×4 | 800×800 | Room, cup, sweets, storefront |
-| `story.html` | room | 1000×1250 | The room early in the day, portrait |
-| `story.html` | counter | 1200×900 | The team behind the bar |
+| `index.html` | hero | 1600×1000 | The store, wide, warm light |
+| `index.html` | counter | 1000×1250 | The scale and blending table, portrait |
+| `index.html` | gallery ×4 | 800×800 | Testing corner, scale, gift box, storefront |
+| `index.html` | featured ×3 | 1000×1250 | Generated per product by `render.js` |
+| `shop.html` | catalogue | 1000×1250 | Generated per product by `render.js` |
+| `collections.html` | sets | 800×800 | Generated per set (`ratio: 'ph--square'`) |
+| `story.html` | room | 1000×1250 | The testing corner, portrait |
 | `visit.html` | map | — | Replace with a Google Maps `<iframe>` once the pin is live |
-| `shop.html` | beans, merch | 1000×1250 / 800×800 | Generated per product by `render.js` |
-| `index.html` | featured ×3 | 800×800 | Generated per drink by `render.js` |
 
 **Generated slots need no code at all.** Anything rendered from data — featured
 drinks, beans, merch, team members — takes an optional `image` (and optional

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  MENU — the full list, built entirely from SITE.menu.
+  COLLECTIONS — curated sets, built from SITE.collections.
 -->
 <html lang="ar" dir="rtl" class="no-js">
 <head>
@@ -8,10 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- ★ Per-page meta is part of the reskin surface. -->
-  <title>المنيو · اسم المقهى</title>
-  <meta name="description" content="قائمة تتغير مع الموسم. اسأل الباريستا عن حبّة اليوم.">
-  <meta property="og:title" content="المنيو · اسم المقهى">
-  <meta property="og:description" content="قائمة تتغير مع الموسم. اسأل الباريستا عن حبّة اليوم.">
+  <title>التشكيلات · اسم المتجر</title>
+  <meta name="description" content="مجموعات مختارة حسب الموسم والمناسبة، مع تغليف الهدايا مجانًا.">
+  <meta property="og:title" content="التشكيلات · اسم المتجر">
+  <meta property="og:description" content="مجموعات مختارة حسب الموسم والمناسبة، مع تغليف الهدايا مجانًا.">
   <meta property="og:type" content="website">
 
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
@@ -37,17 +37,17 @@
       <a class="brand" href="index.html">
         <span class="brand__mark" aria-hidden="true"></span>
         <span class="brand__name">
-          <span class="brand__name-primary" data-site="brand.primary">اسم المقهى</span>
-          <span class="brand__name-secondary" data-site="brand.secondary">CAFE NAME</span>
+          <span class="brand__name-primary" data-site="brand.primary">اسم المتجر</span>
+          <span class="brand__name-secondary" data-site="brand.secondary">MAISON</span>
         </span>
       </a>
 
       <nav class="nav" id="site-nav" data-nav data-i18n-attr="aria-label:common.navLabel" aria-label="التنقل الرئيسي">
         <ul class="nav__list" role="list">
           <li><a class="nav__link" href="index.html" data-i18n="nav.home">الرئيسية</a></li>
-          <li><a class="nav__link" href="menu.html"  data-i18n="nav.menu">المنيو</a></li>
+          <li><a class="nav__link" href="shop.html" data-i18n="nav.shop">المتجر</a></li>
+          <li><a class="nav__link" href="collections.html" data-i18n="nav.collections">التشكيلات</a></li>
           <li><a class="nav__link" href="story.html" data-i18n="nav.story">قصتنا</a></li>
-          <li><a class="nav__link" href="shop.html"  data-i18n="nav.shop">المتجر</a></li>
           <li><a class="nav__link" href="visit.html" data-i18n="nav.visit">زورونا</a></li>
         </ul>
       </nav>
@@ -68,42 +68,42 @@
     <!-- ================= PAGE BANNER ================= -->
     <section class="page-hero">
       <div class="container page-hero__inner">
-        <span class="eyebrow" data-i18n="menuPage.eyebrow">المشروبات والحلويات</span>
-        <h1 class="page-hero__title" data-i18n="menuPage.title">المنيو</h1>
-        <p class="lede" data-i18n="menuPage.lede">قائمة تتغير مع الموسم. اسأل الباريستا عن حبّة اليوم.</p>
+        <span class="eyebrow" data-i18n="collectionsPage.eyebrow">مجموعات مختارة</span>
+        <h1 class="page-hero__title" data-i18n="collectionsPage.title">التشكيلات</h1>
+        <p class="lede" data-i18n="collectionsPage.lede">نرتّب المجموعات بأنفسنا حسب الموسم والمناسبة، ونغلّفها مجانًا.</p>
       </div>
     </section>
 
-    <!-- ================= THE LIST ================= -->
+    <!-- ================= THE SETS ================= -->
     <section class="section">
-      <div class="container container--narrow">
-        <!-- Every row is built from SITE.menu in assets/js/content.js -->
-        <div data-render="menu"></div>
-
+      <div class="container">
+        <!-- Generic card renderer, pointed at SITE.collections -->
+        <div class="product-grid" data-render="cards" data-source="collections"></div>
         <noscript>
           <p class="noscript-note" data-i18n="common.noscript">
-            فعّل الجافاسكربت لعرض المنيو والمتجر كاملين.
+            فعّل الجافاسكربت لعرض المتجر والتشكيلات كاملة.
           </p>
         </noscript>
-
-        <p class="note u-center u-mt-7" data-i18n="menuPage.note">الأسعار شاملة ضريبة القيمة المضافة.</p>
       </div>
     </section>
 
-    <div class="band" aria-hidden="true"></div>
-
-    <!-- ================= ORDER CTA ================= -->
-    <section class="section section--deep">
+    <!-- ================= GIFTING ================= -->
+    <section class="section section--alt">
       <div class="container">
-        <div class="quote">
-          <h2 data-i18n="home.visitTitle">تعال وقابلنا</h2>
-          <p class="lede" data-i18n="shop.orderNote">
-            للطلب أرسل لنا رسالة على واتساب أو مرّ علينا في الفرع.
-          </p>
-          <div class="btn-row u-center-x">
+        <div class="split split--flip" data-reveal>
+          <div class="split__body">
+            <h2 data-i18n="home.collectionsTitle">التشكيلات</h2>
+            <p class="lede" data-i18n="home.collectionsLede">مجموعات نرتّبها بأنفسنا، للهدية أو لك.</p>
+            <div class="btn-row">
             <a class="btn btn--primary" data-site-attr="href:contact.whatsapp" href="https://wa.me/966500000000"
                target="_blank" rel="noopener" data-i18n="common.order">اطلب عبر واتساب</a>
-            <a class="btn btn--on-deep" href="visit.html" data-i18n="nav.visit">زورونا</a>
+            </div>
+          </div>
+          <div class="split__media">
+            <!-- PHOTO SLOT · gift · 1000×1250 · a wrapped gift box -->
+            <div class="ph ph--portrait" role="img" data-i18n-attr="aria-label:alt.gift" aria-label="علبة هدية مغلّفة">
+              <span class="ph__mark"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -119,21 +119,19 @@
           <a class="brand" href="index.html">
             <span class="brand__mark" aria-hidden="true"></span>
             <span class="brand__name">
-              <span class="brand__name-primary" data-site="brand.primary">اسم المقهى</span>
-              <span class="brand__name-secondary" data-site="brand.secondary">CAFE NAME</span>
+              <span class="brand__name-primary" data-site="brand.primary">اسم المتجر</span>
+              <span class="brand__name-secondary" data-site="brand.secondary">MAISON</span>
             </span>
           </a>
-          <p class="note u-mt-4" data-i18n="footer.tagline">
-            مكان يرحّب بك.
-          </p>
+          <p class="note u-mt-4" data-i18n="footer.tagline">رائحة تُعرف بها.</p>
         </div>
 
         <div class="footer-col">
           <h2 class="footer-col__title" data-i18n="footer.exploreTitle">تصفّح</h2>
           <ul role="list">
-            <li><a href="menu.html"  data-i18n="nav.menu">المنيو</a></li>
+            <li><a href="shop.html" data-i18n="nav.shop">المتجر</a></li>
+            <li><a href="collections.html" data-i18n="nav.collections">التشكيلات</a></li>
             <li><a href="story.html" data-i18n="nav.story">قصتنا</a></li>
-            <li><a href="shop.html"  data-i18n="nav.shop">المتجر</a></li>
             <li><a href="visit.html" data-i18n="nav.visit">زورونا</a></li>
           </ul>
         </div>
@@ -157,8 +155,8 @@
       </div>
 
       <div class="site-footer__base">
-        <p>© <span data-year>2026</span> <span data-site="brand.primary">اسم المقهى</span>. <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></p>
-        <p><span data-site="brand.secondary">CAFE NAME</span></p>
+        <p>© <span data-year>2026</span> <span data-site="brand.primary">اسم المتجر</span>. <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></p>
+        <p><span data-site="brand.secondary">MAISON</span></p>
       </div>
     </div>
   </footer>

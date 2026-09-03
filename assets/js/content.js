@@ -1,31 +1,37 @@
 /* ============================================================
-   CONTENT  —  ★ RESKIN FILE 2 of 3
+   CONTENT  —  ★ RESKIN FILE 2 of 3      · RETAIL & BOUTIQUE ·
    ------------------------------------------------------------
-   Every word on this website lives here, as an { ar, en } pair, plus
-   the data that drives the menu and shop grids.
+   Every word on this website lives here, as an { ar, en } pair, plus the
+   data that drives the catalogue, the collections and the FAQ.
 
-   To re-dress the site for a new client you change THIS file,
-   assets/css/tokens.css, and the five SVGs in assets/brand/.
+   The default copy is written for a PERFUME AND OUD HOUSE — the highest
+   margin small retail in this market. It retargets to an abaya boutique,
+   a gift shop, a florist, a jeweller or an accessories store by editing
+   this file alone: swap the catalogue groups, the collections and the
+   copy. The pages, the CSS and the engine do not change.
 
-   Adding a drink is one entry in menu[].items — never HTML.
-   Keys under t.* are addressed from markup as data-i18n="nav.home".
+   This template does not take payment. Orders go to WhatsApp, which is
+   how most boutiques here already sell — and a real checkout is a
+   different product at a different price. Every order link resolves from
+   contact.whatsapp below.
+
+   After editing this file run:  node tools/sync-static.js
    ============================================================ */
 
 window.SITE = {
 
   /* ---- Identity ---------------------------------------------------- */
   brand: {
-    /* Shown in the header and footer wordmark. */
-    primary:   { ar: 'اسم المقهى', en: 'Café Name' },
-    secondary: 'CAFE NAME',            // wide-tracked Latin line, one script only
+    primary:   { ar: 'اسم المتجر', en: 'Store Name' },
+    secondary: 'MAISON',
     currency:  { ar: 'ر.س', en: 'SAR' }
   },
 
   /* ---- Contact — every link on the site resolves from here ---------- */
   contact: {
     addressLines: {
-      ar: ['المدينة – اسم الحي', 'اسم الشارع'],
-      en: ['City – District', 'Street name']
+      ar: ['المدينة – اسم الحي', 'اسم المركز التجاري'],
+      en: ['City – District', 'Mall or street name']
     },
     phone:     '+966500000000',
     phoneHref: 'tel:+966500000000',
@@ -39,99 +45,110 @@ window.SITE = {
   },
 
   /* ---- Opening hours ------------------------------------------------
-     `key` matches JS getDay() names so today's row can be highlighted. */
+     `key` matches JS getDay() so today's row highlights itself. */
   hours: [
-    { key: 'sun', day: { ar: 'الأحد',    en: 'Sunday'    }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
-    { key: 'mon', day: { ar: 'الاثنين',  en: 'Monday'    }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
-    { key: 'tue', day: { ar: 'الثلاثاء', en: 'Tuesday'   }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
-    { key: 'wed', day: { ar: 'الأربعاء', en: 'Wednesday' }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
-    { key: 'thu', day: { ar: 'الخميس',   en: 'Thursday'  }, time: { ar: '٧:٠٠ ص – ١:٠٠ ص',  en: '7:00 AM – 1:00 AM'  } },
-    { key: 'fri', day: { ar: 'الجمعة',   en: 'Friday'    }, time: { ar: '١:٠٠ م – ١:٠٠ ص',  en: '1:00 PM – 1:00 AM'  } },
-    { key: 'sat', day: { ar: 'السبت',    en: 'Saturday'  }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } }
+    { key: 'sat', day: { ar: 'السبت',    en: 'Saturday'  }, time: { ar: '10 صباحًا – 11 ليلًا', en: '10:00 AM – 11:00 PM' } },
+    { key: 'sun', day: { ar: 'الأحد',    en: 'Sunday'    }, time: { ar: '10 صباحًا – 11 ليلًا', en: '10:00 AM – 11:00 PM' } },
+    { key: 'mon', day: { ar: 'الاثنين',  en: 'Monday'    }, time: { ar: '10 صباحًا – 11 ليلًا', en: '10:00 AM – 11:00 PM' } },
+    { key: 'tue', day: { ar: 'الثلاثاء', en: 'Tuesday'   }, time: { ar: '10 صباحًا – 11 ليلًا', en: '10:00 AM – 11:00 PM' } },
+    { key: 'wed', day: { ar: 'الأربعاء', en: 'Wednesday' }, time: { ar: '10 صباحًا – 11 ليلًا', en: '10:00 AM – 11:00 PM' } },
+    { key: 'thu', day: { ar: 'الخميس',   en: 'Thursday'  }, time: { ar: '10 صباحًا – 12 ليلًا', en: '10:00 AM – 12:00 AM' } },
+    { key: 'fri', day: { ar: 'الجمعة',   en: 'Friday'    }, time: { ar: '2 ظهرًا – 12 ليلًا',   en: '2:00 PM – 12:00 AM'  } }
   ],
 
-  /* ---- Menu ---------------------------------------------------------
-     Categories render in array order on menu.html. `featured: true`
-     lifts an item onto the home page strip (first three win). */
-  menu: [
+  /* ---- The catalogue ------------------------------------------------
+     Rendered by the generic `catalog` renderer, so groups and items are
+     entirely up to you. Each item takes an optional `image`, `tags` and
+     `ratio` ('ph--portrait' by default, 'ph--square' for flat-lay shots).
+     `featured: true` lifts an item onto the home page (first three win). */
+  catalog: [
     {
-      id: 'hot',
-      name: { ar: 'مشروبات ساخنة', en: 'Hot' },
-      note: { ar: 'تُحضَّر عند الطلب', en: 'Made to order' },
+      id: 'oud',
+      name: { ar: 'العود ومشتقاته', en: 'Oud' },
+      note: { ar: 'تُقطَّع وتُوزن أمامك', en: 'Cut and weighed in front of you' },
       items: [
-        { price: '12', featured: true,
-          name: { ar: 'إسبريسو', en: 'Espresso' },
-          desc: { ar: 'جرعة مركزة من خلطتنا الموسمية.', en: 'A concentrated shot of our seasonal blend.' } },
-        { price: '16',
-          name: { ar: 'فلات وايت', en: 'Flat White' },
-          desc: { ar: 'حليب مخملي وطبقة كريما رقيقة.', en: 'Velvet milk over a thin crema.' } },
-        { price: '17', featured: true,
-          name: { ar: 'لاتيه', en: 'Latte' },
-          desc: { ar: 'الأكثر طلبًا، هادئ ومتوازن.', en: 'The house regular — calm and balanced.' } },
-        { price: '18',
-          name: { ar: 'قهوة مقطرة V60', en: 'V60 Pour Over' },
-          desc: { ar: 'حبّة مفردة تتغير كل موسم.', en: 'A single origin that changes each season.' } }
+        { price: '450', featured: true,
+          name: { ar: 'عود كمبودي', en: 'Cambodian Oud' },
+          desc: { ar: 'دخان دافئ وحلاوة خشبية تبقى طويلًا.', en: 'Warm smoke over a wood sweetness that lasts.' },
+          tags: { ar: ['3 جرام'], en: ['3 g'] } },
+        { price: '620',
+          name: { ar: 'عود هندي', en: 'Indian Oud' },
+          desc: { ar: 'أعمق وأثقل، للمجالس والمناسبات.', en: 'Deeper and heavier — for gatherings.' },
+          tags: { ar: ['3 جرام'], en: ['3 g'] } },
+        { price: '180',
+          name: { ar: 'معمول ورد', en: 'Rose Ma’moul' },
+          desc: { ar: 'مخلوط باليد مع دهن الورد الطائفي.', en: 'Hand-blended with Taif rose oil.' },
+          tags: { ar: ['50 جرام'], en: ['50 g'] } }
       ]
     },
     {
-      id: 'cold',
-      name: { ar: 'مشروبات باردة', en: 'Cold' },
-      note: { ar: 'مع ثلج مصنوع من الماء المفلتر', en: 'Served over filtered ice' },
+      id: 'perfume',
+      name: { ar: 'العطور', en: 'Perfume' },
+      note: { ar: 'جرّبها على البشرة قبل أن تقرر', en: 'Try it on skin before you decide' },
       items: [
-        { price: '18', featured: true,
-          name: { ar: 'آيس لاتيه', en: 'Iced Latte' },
-          desc: { ar: 'إسبريسو مزدوج على حليب بارد.', en: 'A double shot over cold milk.' } },
-        { price: '19',
-          name: { ar: 'كولد برو', en: 'Cold Brew' },
-          desc: { ar: 'منقوع ١٦ ساعة، خفيف وحلو.', en: 'Steeped 16 hours — light and sweet.' } },
-        { price: '20',
-          name: { ar: 'مشروب الموسم', en: 'Seasonal Cooler' },
-          desc: { ar: 'فاكهة طازجة، يتغير كل شهر.', en: 'Fresh fruit, changes monthly.' } }
+        { price: '380', featured: true,
+          name: { ar: 'مسك أبيض', en: 'White Musk' },
+          desc: { ar: 'نظيف وهادئ، يصلح لكل يوم.', en: 'Clean and quiet — an everyday scent.' },
+          tags: { ar: ['100 مل'], en: ['100 ml'] } },
+        { price: '520',
+          name: { ar: 'ورد وعنبر', en: 'Rose & Amber' },
+          desc: { ar: 'ورد في البداية وعنبر في النهاية.', en: 'Rose at the open, amber at the close.' },
+          tags: { ar: ['100 مل'], en: ['100 ml'] } },
+        { price: '290',
+          name: { ar: 'دهن عود مركّز', en: 'Oud Oil' },
+          desc: { ar: 'قطرة واحدة تكفي ليوم كامل.', en: 'One drop lasts the day.' },
+          tags: { ar: ['3 مل'], en: ['3 ml'] } }
       ]
     },
     {
-      id: 'sweets',
-      name: { ar: 'الحلويات', en: 'Sweets' },
-      note: { ar: 'تُخبز يوميًا', en: 'Baked daily' },
+      id: 'home',
+      name: { ar: 'عطور المكان', en: 'Home' },
       items: [
-        { price: '15',
-          name: { ar: 'كوكيز', en: 'Cookie' },
-          desc: { ar: 'طري من الداخل، مقرمش من الحواف.', en: 'Soft centre, crisp edge.' } },
-        { price: '22',
-          name: { ar: 'تشيز كيك', en: 'Cheesecake' },
-          desc: { ar: 'قاعدة بسكوت وقشدة خفيفة.', en: 'Biscuit base, light cream.' } },
-        { price: '18',
-          name: { ar: 'كرواسون', en: 'Croissant' },
-          desc: { ar: 'زبدة حقيقية، ٧٢ ساعة تخمير.', en: 'Real butter, 72-hour ferment.' } }
+        { price: '210', featured: true,
+          name: { ar: 'بخور مبشور', en: 'Bakhoor' },
+          desc: { ar: 'يكفي شهرًا من المجالس.', en: 'A month of evenings.' },
+          tags: { ar: ['100 جرام'], en: ['100 g'] } },
+        { price: '340',
+          name: { ar: 'شمعة معطّرة', en: 'Scented Candle' },
+          desc: { ar: 'شمع صويا، تحترق أربعين ساعة.', en: 'Soy wax, forty hours.' },
+          tags: { ar: ['220 جرام'], en: ['220 g'] } },
+        { price: '160',
+          name: { ar: 'معطّر فرش', en: 'Linen Mist' },
+          desc: { ar: 'للملابس والمفارش.', en: 'For clothes and linen.' },
+          tags: { ar: ['250 مل'], en: ['250 ml'] } }
       ]
     }
   ],
 
-  /* ---- Retail bags --------------------------------------------------- */
-  beans: [
-    { price: '75', weight: '250g',
-      name:    { ar: 'الحبّة الأولى', en: 'House Origin' },
-      origin:  { ar: 'كولومبيا',      en: 'Colombia' },
-      process: { ar: 'مغسولة',        en: 'Washed' },
-      notes:   { ar: 'كراميل، تفاح، كاكاو', en: 'Caramel, apple, cocoa' } },
-    { price: '85', weight: '250g',
-      name:    { ar: 'الحبّة الموسمية', en: 'Seasonal Lot' },
-      origin:  { ar: 'إثيوبيا',         en: 'Ethiopia' },
-      process: { ar: 'طبيعية',          en: 'Natural' },
-      notes:   { ar: 'توت، ياسمين، خوخ', en: 'Berry, jasmine, peach' } },
-    { price: '95', weight: '250g',
-      name:    { ar: 'الحبّة المحدودة', en: 'Limited Lot' },
-      origin:  { ar: 'كولومبيا',        en: 'Colombia' },
-      process: { ar: 'لا هوائية',       en: 'Anaerobic' },
-      notes:   { ar: 'عنب، كمثرى، رمان', en: 'Grape, pear, pomegranate' } }
+  /* ---- Collections — rendered by the generic `cards` renderer -------- */
+  collections: [
+    { name: { ar: 'تشكيلة الشتاء', en: 'Winter' },
+      desc: { ar: 'عود وعنبر وكل ما يثقل قليلًا في البرد.', en: 'Oud, amber, and everything that turns heavier in the cold.' },
+      ratio: 'ph--square' },
+    { name: { ar: 'الهدايا', en: 'Gifting' },
+      desc: { ar: 'علب جاهزة بأحجام مختلفة، تُغلَّف عندنا مجانًا.', en: 'Ready boxes in three sizes, wrapped here at no charge.' },
+      ratio: 'ph--square' },
+    { name: { ar: 'الجديد', en: 'New In' },
+      desc: { ar: 'ما وصل هذا الشهر، قبل أن ينفد.', en: 'What landed this month, before it goes.' },
+      ratio: 'ph--square' }
   ],
 
-  /* ---- Merch ----------------------------------------------------------- */
-  merch: [
-    { price: '180', name: { ar: 'هودي',        en: 'Hoodie' },     desc: { ar: 'قطن ثقيل بشعار مطرز.', en: 'Heavy cotton, embroidered mark.' } },
-    { price: '95',  name: { ar: 'تيشيرت',      en: 'T-Shirt' },    desc: { ar: 'قطن ممشط، قصّة واسعة.', en: 'Combed cotton, relaxed cut.' } },
-    { price: '70',  name: { ar: 'كاب',         en: 'Cap' },        desc: { ar: 'مقاس واحد يناسب الجميع.', en: 'One size fits all.' } },
-    { price: '45',  name: { ar: 'كوب فخّاري',  en: 'Clay Cup' },   desc: { ar: 'مصنوع يدويًا ومختوم بشعارنا.', en: 'Hand-thrown and stamped.' } }
+  /* ---- FAQ — rendered as <details>, so it opens without JavaScript --- */
+  faq: [
+    { q: { ar: 'هل أقدر أطلب من غير ما أزور المتجر؟', en: 'Can I order without visiting?' },
+      a: { ar: 'نعم. أرسل لنا اسم المنتج على واتساب ونرتب لك الدفع والتوصيل.',
+           en: 'Yes. Send us the product on WhatsApp and we arrange payment and delivery.' } },
+    { q: { ar: 'كم يستغرق التوصيل؟', en: 'How long is delivery?' },
+      a: { ar: 'داخل المدينة خلال يوم عمل، وبقية المناطق من يومين إلى أربعة.',
+           en: 'Same city within one working day; elsewhere two to four.' } },
+    { q: { ar: 'هل تغلّفون الهدايا؟', en: 'Do you gift wrap?' },
+      a: { ar: 'نعم، التغليف مجاني ونضيف بطاقة بخط اليد إذا رغبت.',
+           en: 'Yes — wrapping is free, and we add a handwritten card if you like.' } },
+    { q: { ar: 'هل يمكن الاستبدال أو الإرجاع؟', en: 'Can I exchange or return?' },
+      a: { ar: 'خلال سبعة أيام على المنتجات غير المفتوحة، مع الفاتورة.',
+           en: 'Within seven days on unopened items, with the receipt.' } },
+    { q: { ar: 'هل الأسعار شاملة الضريبة؟', en: 'Do prices include VAT?' },
+      a: { ar: 'نعم، كل الأسعار المعروضة شاملة ضريبة القيمة المضافة.', en: 'Yes — every price shown includes VAT.' } }
   ],
 
   /* ==========================================================
@@ -139,11 +156,11 @@ window.SITE = {
      ========================================================== */
   t: {
     nav: {
-      home:  { ar: 'الرئيسية', en: 'Home'  },
-      menu:  { ar: 'المنيو',   en: 'Menu'  },
-      story: { ar: 'قصتنا',    en: 'Story' },
-      shop:  { ar: 'المتجر',   en: 'Shop'  },
-      visit: { ar: 'زورونا',   en: 'Visit' }
+      home:        { ar: 'الرئيسية',  en: 'Home'        },
+      shop:        { ar: 'المتجر',    en: 'Shop'        },
+      collections: { ar: 'التشكيلات', en: 'Collections' },
+      story:       { ar: 'قصتنا',     en: 'Story'       },
+      visit:       { ar: 'زورونا',    en: 'Visit'       }
     },
 
     common: {
@@ -153,97 +170,91 @@ window.SITE = {
       navLabel:    { ar: 'التنقل الرئيسي',     en: 'Main navigation' },
       openMenu:    { ar: 'فتح القائمة',        en: 'Open menu' },
       call:        { ar: 'اتصل بنا',           en: 'Call us' },
-      viewMenu:    { ar: 'تصفّح المنيو',       en: 'View the menu' },
+      viewShop:    { ar: 'تصفّح المتجر',       en: 'Browse the shop' },
       directions:  { ar: 'الاتجاهات',          en: 'Get directions' },
       order:       { ar: 'اطلب عبر واتساب',    en: 'Order on WhatsApp' },
       instagram:   { ar: 'إنستقرام',           en: 'Instagram' },
       backHome:    { ar: 'العودة للرئيسية',    en: 'Back to home' },
-      noscript:    { ar: 'فعّل الجافاسكربت لعرض المنيو والمتجر كاملين.', en: 'Enable JavaScript to see the full menu and shop.' }
+      noscript:    { ar: 'فعّل الجافاسكربت لعرض المتجر والتشكيلات كاملة.', en: 'Enable JavaScript to see the full shop and collections.' }
     },
 
     hero: {
-      title:   { ar: 'مكان يرحّب بك', en: 'A place that welcomes you' },
-      tagline: { ar: 'قهوة مختصة، حلويات تُخبز يوميًا، ومساحة هادئة تجلس فيها بلا استعجال.',
-                 en: 'Specialty coffee, sweets baked daily, and a quiet room to sit in without hurrying.' },
+      title:   { ar: 'رائحة تُعرف بها', en: 'A scent they know you by' },
+      tagline: { ar: 'عود وعطور تُخلط باليد، وتُوزن أمامك. مفتوح كل يوم، والطلب عبر واتساب.',
+                 en: 'Oud and perfume blended by hand and weighed in front of you. Open daily, and orders go through WhatsApp.' },
       meta1:   { ar: 'المدينة – اسم الحي', en: 'City – District' },
-      meta2:   { ar: 'يوميًا من ٧ صباحًا',  en: 'Daily from 7 AM' }
+      meta2:   { ar: 'نفتح 10 صباحًا',      en: 'Open from 10 AM' }
     },
 
     home: {
-      introEyebrow:  { ar: 'من نحن',   en: 'Who we are' },
-      introTitle:    { ar: 'نبدأ من الحبّة، وننتهي عندك', en: 'It starts with the bean and ends with you' },
-      introText:     { ar: 'نختار حبّاتنا موسمًا بعد موسم، ونحمّصها على دفعات صغيرة. كل فنجان يُحضَّر عند الطلب، لأن القهوة الجيدة لا تنتظر.',
-                       en: 'We choose our beans season by season and roast them in small batches. Every cup is made to order, because good coffee does not wait.' },
-      featuredEyebrow:{ ar: 'المفضّلة', en: 'Favourites' },
-      featuredTitle: { ar: 'ما يطلبه الناس أكثر', en: 'What people order most' },
-      galleryEyebrow:{ ar: 'المكان',   en: 'The room' },
-      galleryTitle:  { ar: 'تفاصيل صغيرة، صُنعت بحب', en: 'Small details, made with care' },
-      visitTitle:    { ar: 'تعال وقابلنا', en: 'Come and find us' },
-      visitText:     { ar: 'الباب مفتوح من الصباح الباكر حتى آخر الليل. لا تحتاج حجزًا، فقط تعال.',
-                       en: 'The door is open from early morning until late. No booking needed — just come.' }
+      introEyebrow:   { ar: 'من نحن',  en: 'Who we are' },
+      introTitle:     { ar: 'نختار الحبّة قبل أن نخلطها', en: 'We choose the grain before we blend it' },
+      introText:      { ar: 'نشتري العود بالقطعة ونخلط العطر على دفعات صغيرة، فما تشتريه اليوم لن يكون مطابقًا لما سبقه — وهذا مقصود.',
+                        en: 'We buy oud by the piece and blend perfume in small batches, so what you buy today is not identical to what came before it. That is deliberate.' },
+      featuredEyebrow:{ ar: 'المتجر',  en: 'The shop' },
+      featuredTitle:  { ar: 'الأكثر طلبًا', en: 'Most asked for' },
+      collectionsTitle:{ ar: 'التشكيلات', en: 'Collections' },
+      collectionsLede:{ ar: 'مجموعات نرتّبها بأنفسنا، للهدية أو لك.', en: 'Sets we put together ourselves — to give, or to keep.' },
+      galleryEyebrow: { ar: 'المتجر',  en: 'The store' },
+      galleryTitle:   { ar: 'تعال وشمّ قبل أن تشتري', en: 'Come and smell before you buy' },
+      visitTitle:     { ar: 'زورونا في المتجر', en: 'Visit the store' },
+      visitText:      { ar: 'التجربة على البشرة تختلف عن الورق. مرّ علينا، أو أرسل لنا على واتساب ونرتب لك التوصيل.',
+                        en: 'On skin it is a different scent than on paper. Come by, or message us and we arrange delivery.' }
     },
 
-    menuPage: {
-      eyebrow: { ar: 'المشروبات والحلويات', en: 'Drinks & Sweets' },
-      title: { ar: 'المنيو',  en: 'The Menu' },
-      lede:  { ar: 'قائمة تتغير مع الموسم. اسأل الباريستا عن حبّة اليوم.',
-               en: 'A list that moves with the season. Ask the barista about today’s bean.' },
-      note:  { ar: 'الأسعار شاملة ضريبة القيمة المضافة.', en: 'All prices include VAT.' }
+    shopPage: {
+      eyebrow: { ar: 'الأسعار والأحجام', en: 'Prices & sizes' },
+      title:   { ar: 'المتجر', en: 'The Shop' },
+      lede:    { ar: 'كل منتج بحجمه وسعره. ما لا تجده هنا اسأل عنه — الرف أوسع من الصفحة.',
+                 en: 'Every product with its size and price. Ask about anything you do not see — the shelf is wider than the page.' },
+      note:    { ar: 'الأسعار شاملة ضريبة القيمة المضافة.', en: 'All prices include VAT.' },
+      faqTitle:{ ar: 'أسئلة شائعة', en: 'Common questions' }
+    },
+
+    collectionsPage: {
+      eyebrow: { ar: 'مجموعات مختارة', en: 'Curated sets' },
+      title:   { ar: 'التشكيلات', en: 'Collections' },
+      lede:    { ar: 'نرتّب المجموعات بأنفسنا حسب الموسم والمناسبة، ونغلّفها مجانًا.',
+                 en: 'We put these together ourselves by season and occasion, and wrap them at no charge.' }
     },
 
     story: {
-      eyebrow:    { ar: 'عن المقهى', en: 'About the café' },
-      title:      { ar: 'قصتنا',  en: 'Our Story' },
-      lede:       { ar: 'بدأنا بفكرة واحدة: مكان يشبه البيت، وقهوة تستحق الجلسة.',
-                    en: 'We started with one idea: a room that feels like home, and coffee worth sitting down for.' },
-      bodyTitle:  { ar: 'كيف بدأ كل شيء', en: 'How it began' },
-      bodyText:   { ar: 'فتحنا الباب بطاولة واحدة وآلة إسبريسو. اليوم توسّعت المساحة، لكن الفكرة لم تتغير: نُحسن الاستقبال، ونُتقن الفنجان.',
-                    en: 'We opened with one table and an espresso machine. The room has grown since, but the idea has not: welcome people well, and get the cup right.' },
-      valuesTitle:{ ar: 'ما نؤمن به', en: 'What we believe' },
-      v1Title:    { ar: 'الحبّة أولًا',  en: 'The bean first' },
-      v1Text:     { ar: 'نشتري بشفافية ونحمّص على دفعات صغيرة.', en: 'Sourced transparently, roasted in small batches.' },
-      v2Title:    { ar: 'الضيافة',      en: 'Hospitality' },
-      v2Text:     { ar: 'نعرف الأسماء، ونتذكّر الطلبات.', en: 'We learn names and remember orders.' },
-      v3Title:    { ar: 'المكان',       en: 'The room' },
-      v3Text:     { ar: 'ضوء طبيعي، نباتات، ومساحة تسع الجميع.', en: 'Natural light, plants, and room for everyone.' },
-      friendsTitle:{ ar: 'أصدقاؤنا',    en: 'Our friends' },
-      friendsText:{ ar: 'نتعاون مع محمّصين ومزارعين وصنّاع محليين. أسماؤهم على الرف، لا في الظل.',
-                    en: 'We work with roasters, growers and local makers. Their names sit on the shelf, not in the shadows.' },
-      quote:      { ar: '«القهوة عذر جيد للجلوس معًا.»', en: '“Coffee is a good excuse to sit together.”' },
-      quoteCite:  { ar: 'من فريق المقهى', en: 'From the team' }
-    },
-
-    shop: {
-      eyebrow:    { ar: 'خذها معك', en: 'Take it home' },
-      title:      { ar: 'المتجر', en: 'The Shop' },
-      lede:       { ar: 'خذ شيئًا من المقهى إلى بيتك.', en: 'Take a piece of the café home with you.' },
-      beansTitle: { ar: 'حبوب القهوة', en: 'Coffee Beans' },
-      merchTitle: { ar: 'منتجاتنا',    en: 'Merch' },
-      orderNote:  { ar: 'للطلب أرسل لنا رسالة على واتساب أو مرّ علينا في الفرع.',
-                    en: 'To order, message us on WhatsApp or drop by the shop.' },
-      origin:     { ar: 'المصدر',   en: 'Origin' },
-      process:    { ar: 'المعالجة', en: 'Process' },
-      notes:      { ar: 'النكهات',  en: 'Notes' }
+      eyebrow:     { ar: 'عن المتجر', en: 'About us' },
+      title:       { ar: 'قصتنا', en: 'Our Story' },
+      lede:        { ar: 'بدأنا من مجلس العائلة، حيث كان العود يُقطَّع أمام الضيوف لا خلف باب.',
+                     en: 'We started in a family sitting room, where the oud was cut in front of guests rather than behind a door.' },
+      bodyTitle:   { ar: 'كيف بدأ كل شيء', en: 'How it began' },
+      bodyText:    { ar: 'فتحنا بخزانة واحدة وميزان. اليوم توسّع الرف، وبقيت الطريقة نفسها: تشمّ قبل أن تشتري، ونوزن أمامك، ونقول لك بصراحة أيّها يناسبك.',
+                     en: 'We opened with one cabinet and a scale. The shelf has grown; the method has not: you smell before you buy, we weigh in front of you, and we tell you plainly which one suits you.' },
+      valuesTitle: { ar: 'ما نلتزم به', en: 'What we hold to' },
+      v1Title:     { ar: 'المصدر',   en: 'Source' },
+      v1Text:      { ar: 'نشتري بأنفسنا ونعرف من أين جاءت كل قطعة.', en: 'We buy in person and know where every piece came from.' },
+      v2Title:     { ar: 'الوزن',    en: 'Weight' },
+      v2Text:      { ar: 'الميزان أمامك، والسعر بالجرام معلن.', en: 'The scale faces you, and the price per gram is posted.' },
+      v3Title:     { ar: 'الصراحة',  en: 'Straight talk' },
+      v3Text:      { ar: 'نقول لك ما يناسبك، لا ما يزيد الفاتورة.', en: 'We tell you what suits you, not what raises the bill.' },
+      quote:       { ar: '«العطر لا يُشترى بالوصف، يُشترى بالشمّ.»', en: '“Perfume is not bought by description. It is bought by smell.”' },
+      quoteCite:   { ar: 'من فريق المتجر', en: 'From the team' }
     },
 
     visit: {
       eyebrow:      { ar: 'الموقع وأوقات العمل', en: 'Location & hours' },
       title:        { ar: 'زورونا', en: 'Visit Us' },
-      lede:         { ar: 'نحن هنا كل يوم. تعال وحدك أو مع من تحب.',
-                      en: 'We are here every day. Come alone or bring someone.' },
+      lede:         { ar: 'المتجر مفتوح كل يوم. تعال وجرّب على البشرة، ولا تستعجل.',
+                      en: 'The store is open every day. Come and try it on skin — take your time.' },
       addressTitle: { ar: 'العنوان',      en: 'Address' },
       hoursTitle:   { ar: 'أوقات العمل',  en: 'Opening Hours' },
       contactTitle: { ar: 'تواصل معنا',   en: 'Get in touch' },
       parkingTitle: { ar: 'المواقف',      en: 'Parking' },
-      parkingText:  { ar: 'مواقف مجانية أمام الفرع وعلى الشارع الجانبي.',
-                      en: 'Free parking in front of the shop and on the side street.' }
+      parkingText:  { ar: 'مواقف المركز التجاري مجانية لأول ثلاث ساعات.',
+                      en: 'Mall parking is free for the first three hours.' }
     },
 
     footer: {
-      tagline:      { ar: 'مكان يرحّب بك.', en: 'A place that welcomes you.' },
-      exploreTitle: { ar: 'تصفّح',   en: 'Explore' },
-      visitTitle:   { ar: 'زورونا',  en: 'Visit'   },
-      followTitle:  { ar: 'تابعنا',  en: 'Follow'  },
+      tagline:      { ar: 'رائحة تُعرف بها.', en: 'A scent they know you by.' },
+      exploreTitle: { ar: 'تصفّح',  en: 'Explore' },
+      visitTitle:   { ar: 'زورونا', en: 'Visit'   },
+      followTitle:  { ar: 'تابعنا', en: 'Follow'  },
       rights:       { ar: 'جميع الحقوق محفوظة.', en: 'All rights reserved.' }
     },
 
@@ -253,17 +264,15 @@ window.SITE = {
                en: 'The link may have changed or the page was removed. Let’s get you back.' }
     },
 
-    /* Alt text for the image slots. Update these when real photos land. */
+    /* Alt text for the image slots. Update when real photos land. */
     alt: {
-      hero:     { ar: 'واجهة المقهى من الداخل', en: 'Inside the café' },
-      room:     { ar: 'زاوية الجلوس',           en: 'A corner of the seating area' },
-      counter:  { ar: 'الباريستا خلف الطاولة',  en: 'The barista at the counter' },
-      cup:      { ar: 'فنجان قهوة على الطاولة', en: 'A cup of coffee on the table' },
-      sweets:   { ar: 'حلويات المقهى',          en: 'Sweets from the café' },
-      beans:    { ar: 'كيس حبوب قهوة',          en: 'A bag of coffee beans' },
-      merch:    { ar: 'منتجات المقهى',          en: 'Café merchandise' },
-      storefront:{ ar: 'واجهة المقهى من الخارج', en: 'The café storefront' },
-      map:      { ar: 'موقع المقهى على الخريطة', en: 'The café location on the map' }
+      hero:      { ar: 'داخل المتجر: رفوف وزجاجات وإضاءة دافئة', en: 'Inside the store: shelves, bottles and warm light' },
+      room:      { ar: 'ركن التجربة',              en: 'The testing corner' },
+      counter:   { ar: 'الميزان وطاولة الخلط',     en: 'The scale and the blending table' },
+      product:   { ar: 'أحد منتجات المتجر',        en: 'A product from the store' },
+      gift:      { ar: 'علبة هدية مغلّفة',         en: 'A wrapped gift box' },
+      storefront:{ ar: 'واجهة المتجر من الخارج',   en: 'The storefront' },
+      map:       { ar: 'موقع المتجر على الخريطة',  en: 'The store location on the map' }
     }
   }
 };

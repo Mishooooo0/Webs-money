@@ -1,7 +1,13 @@
-# Café Site Template
+# Retail & Boutique Template
 
-A bilingual (Arabic-first, RTL) brochure website for a coffee shop, built to be
-**re-dressed for a new client in about ten minutes**.
+A bilingual (Arabic-first, RTL) website for a shop that sells things over a
+counter — perfume and oud, abayas, gifts, flowers, jewellery, accessories —
+built to be **re-dressed for a new client in about ten minutes**.
+
+There is no checkout. Orders go to WhatsApp, which is how most boutiques here
+already sell, and a real cart is a different product at a different price.
+Every order link resolves from `contact` in `content.js`. See `BRAND.md` for
+retargeting the copy to a different kind of shop without touching code.
 
 No build step. No dependencies. No framework. Six HTML pages, six stylesheets,
 four scripts. Open `index.html` and it runs.
@@ -97,7 +103,7 @@ so brand names, phone numbers and links resolve from `content.js` too.
 ## Files
 
 ```
-index.html  menu.html  story.html  shop.html  visit.html  404.html
+index.html  shop.html  collections.html  story.html  visit.html  404.html
 assets/
   css/  tokens.css ★   reset.css  base.css  layout.css  components.css  pages.css
   js/   content.js ★   i18n.js    render.js  app.js

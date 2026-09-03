@@ -1,8 +1,14 @@
 <!--
-  ★ RESKIN FILE 3b — the small icon mark.
-  Used at 34–44px in the header, feature icons and small photo slots.
-  Silhouette only (see logo.svg). Keep the viewBox square.
+  RETAIL · the facet mark — ★ RESKIN FILE 3b
+  A cut gem seen face on. Reads as premium retail across perfume, jewellery,
+  gifts and accessories without belonging to any one of them. Silhouette only;
+  the colour comes from the deep and accent tokens in tokens.css.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Mark">
-  <path d="M24 3 C35 15 35 33 24 45 C13 33 13 15 24 3 Z" fill="#000"/>
+  <g fill="none" stroke="#000" stroke-width="2.6" stroke-linejoin="round">
+    <path d="M24 4 L42 20 L24 44 L6 20 Z"/>
+    <path d="M6 20 L42 20"/>
+    <path d="M24 4 L16 20 L24 44"/>
+    <path d="M24 4 L32 20 L24 44"/>
+  </g>
 </svg>

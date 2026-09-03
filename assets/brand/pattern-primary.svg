@@ -1,15 +1,19 @@
 <!--
-  ★ RESKIN FILE 3c — the house pattern.
-  Tiled behind the hero, page banners and every photo slot. Must be
-  SEAMLESS: shapes crossing an edge are repeated on the opposite edge.
-  Tile size is set by the pattern-size token in tokens.css, not here.
+  RETAIL · the diamond mesh — ★ RESKIN FILE 3c
+  A fine lattice of solid diamonds, the way a jeweller's box lining or a
+  brocade is set. Quieter and smaller in scale than the other two templates'
+  patterns, which is what keeps it reading as luxury rather than folk.
+
+  Seamless — the centre diamond sits clear of the edges and the four corner
+  diamonds are quartered by them, so they rejoin when the tile repeats.
+  Scale is set by the pattern-size token in tokens.css, not here.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
-  <path d="M20 3 L37 20 L20 37 L3 20 Z" fill="none" stroke="#000" stroke-width="1"/>
-  <circle cx="20" cy="20" r="2.4" fill="#000"/>
-  <!-- corner dots: quartered by the tile edge, so they rejoin when repeated -->
-  <circle cx="0"  cy="0"  r="2.4" fill="#000"/>
-  <circle cx="40" cy="0"  r="2.4" fill="#000"/>
-  <circle cx="0"  cy="40" r="2.4" fill="#000"/>
-  <circle cx="40" cy="40" r="2.4" fill="#000"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <g fill="#000">
+    <path d="M16 10 L21 16 L16 22 L11 16 Z"/>
+    <path d="M0 -6 L5 0 L0 6 L-5 0 Z"/>
+    <path d="M32 -6 L37 0 L32 6 L27 0 Z"/>
+    <path d="M0 26 L5 32 L0 38 L-5 32 Z"/>
+    <path d="M32 26 L37 32 L32 38 L27 32 Z"/>
+  </g>
 </svg>
