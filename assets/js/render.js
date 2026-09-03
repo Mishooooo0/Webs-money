@@ -35,10 +35,10 @@
   }
 
   /* A branded image slot: house pattern + logo, never an empty box. */
-  function placeholder(modifier, altKey, useIcon) {
+  function placeholder(modifier, altKey, useIcon, item) {
     var slot = el('div', 'ph' + (modifier ? ' ' + modifier : ''));
     slot.setAttribute('role', 'img');
-    slot.setAttribute('aria-label', window.I18N.t('alt.' + (altKey || 'room')));
+    slot.setAttribute('aria-label', altFor(item, altKey));
     slot.appendChild(el('span', 'ph__mark' + (useIcon ? ' ph__mark--icon' : '')));
     return slot;
   }
@@ -57,9 +57,20 @@
      `image` path, the branded placeholder when it does not. That is the whole
      of the photo workflow — adding photography is a content edit in
      content.js, never a code change here. See BRAND.md section 6. */
+  /* Alt text, most specific first. Slot keys differ between templates, so a
+     key that does not exist on this branch must fall back rather than leave
+     an image with an empty alt. */
+  function altFor(item, altKey) {
+    return window.I18N.pick(item && item.alt)
+        || window.I18N.t('alt.' + (altKey || 'room'))
+        || window.I18N.t('alt.product')
+        || window.I18N.t('alt.hero')
+        || window.I18N.v('brand.primary');
+  }
+
   function media(item, modifier, altKey, useIcon) {
     var src = item && item.image;
-    if (!src) return placeholder(modifier, altKey, useIcon);
+    if (!src) return placeholder(modifier, altKey, useIcon, item);
 
     var size = SLOT_SIZE[modifier] || SLOT_SIZE['ph--square'];
     var img = el('img', 'ph-img' + (modifier ? ' ' + modifier : ''));
@@ -69,7 +80,7 @@
     img.width = size[0];
     img.height = size[1];
     /* Per-item alt beats the generic slot alt, which beats nothing at all. */
-    img.alt = window.I18N.pick(item.alt) || window.I18N.t('alt.' + (altKey || 'room'));
+    img.alt = altFor(item, altKey);
     return img;
   }
 
@@ -142,7 +153,7 @@
 
   function renderFeatured(mount) {
     /* Whichever schema this branch carries — a café menu or a service list. */
-    var categories = window.SITE.menu || window.SITE.services || [];
+    var categories = window.SITE.menu || window.SITE.services || window.SITE.catalog || [];
     var picks = [];
     categories.forEach(function (category) {
       category.items.forEach(function (item) {
