@@ -1,0 +1,189 @@
+/* ============================================================
+   BASE — typography, layout primitives, direction handling.
+
+   DIRECTION RULE: every directional property in this project is a
+   CSS *logical* property (inline-start / inline-end / block-start).
+   That is what lets one stylesheet serve both Arabic RTL and English
+   LTR with no [dir=rtl] override blocks. Flipping <html dir> mirrors
+   the entire site. A `margin-left` anywhere in here is a bug.
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--c-ground);
+  color: var(--c-ink);
+  font-family: var(--ff-latin);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+/* The two scripts want different faces. The <html dir> attribute —
+   set once by i18n.js — is the only switch. */
+html[dir='rtl'] body { font-family: var(--ff-arabic); }
+html[dir='ltr'] body { font-family: var(--ff-latin); }
+
+/* ---- Headings ------------------------------------------------------ */
+
+h1, h2, h3, h4 {
+  font-family: var(--ff-display);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  color: var(--c-deep);
+  text-wrap: balance;
+}
+html[dir='rtl'] h1,
+html[dir='rtl'] h2,
+html[dir='rtl'] h3,
+html[dir='rtl'] h4 { font-family: var(--ff-arabic); font-weight: 600; }
+
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl); }
+h3 { font-size: var(--fs-lg); }
+h4 { font-size: var(--fs-md); }
+
+p { text-wrap: pretty; }
+
+/* ---- Links --------------------------------------------------------- */
+
+a {
+  color: inherit;
+  transition: color var(--t-fast), opacity var(--t-fast);
+}
+a:hover { color: var(--c-accent); }
+
+/* Visible focus for keyboard users only — never removed outright. */
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* ---- Layout primitives --------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--s-5);
+}
+.container--narrow { max-width: var(--container-narrow); }
+
+.section { padding-block: var(--s-section); }
+.section--alt { background-color: var(--c-surface-alt); }
+.section--deep {
+  background-color: var(--c-deep);
+  color: var(--c-on-deep);
+}
+.section--deep h1,
+.section--deep h2,
+.section--deep h3 { color: var(--c-on-deep); }
+
+/* ---- Section headers ------------------------------------------------ */
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-block-end: var(--s-7);
+  max-width: var(--measure);
+}
+.section-head--center {
+  margin-inline: auto;
+  text-align: center;
+  align-items: center;
+}
+
+.eyebrow {
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--c-accent);
+  font-weight: 500;
+}
+html[dir='rtl'] .eyebrow {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: var(--fs-sm);
+}
+
+.lede {
+  font-size: var(--fs-md);
+  color: var(--c-ink-soft);
+  max-width: var(--measure);
+}
+.section--deep .lede { color: var(--c-on-deep); opacity: 0.82; }
+
+/* ---- Utilities ------------------------------------------------------ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--s-2);
+  inset-inline-start: var(--s-2);
+  z-index: 200;
+  padding: var(--s-3) var(--s-5);
+  background-color: var(--c-deep);
+  color: var(--c-on-deep);
+  border-radius: var(--r-md);
+  transform: translateY(-200%);
+  transition: transform var(--t-fast);
+}
+.skip-link:focus { transform: translateY(0); }
+
+.stack > * + * { margin-block-start: var(--s-4); }
+
+/* Latin-only values — @handles, phone numbers, emails — sitting inside an
+   Arabic RTL block. Without isolation the bidi algorithm reorders them and
+   "@example" renders as "example@". */
+.u-ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.u-center   { text-align: center; }
+.u-center-x { justify-content: center; }
+.u-mt-4     { margin-block-start: var(--s-4); }
+.u-mt-7     { margin-block-start: var(--s-7); }
+.u-muted    { color: var(--c-ink-soft); }
+
+.note {
+  font-size: var(--fs-sm);
+  color: var(--c-ink-soft);
+}
+.section--deep .note { color: var(--c-on-deep); opacity: 0.7; }
+
+/* ---- Scroll reveal — added by app.js, degrades to visible ----------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--t-slow), transform var(--t-slow);
+}
+[data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* No JS? Show everything rather than an empty page. */
+.no-js [data-reveal] { opacity: 1; transform: none; }
+
+.noscript-note {
+  padding: var(--s-4) var(--s-5);
+  background-color: var(--c-surface-alt);
+  border: var(--border);
+  border-radius: var(--r-md);
+  text-align: center;
+  color: var(--c-ink-soft);
+}

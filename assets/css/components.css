@@ -1,0 +1,302 @@
+/* ============================================================
+   COMPONENTS — buttons, cards, menu rows, image slots, bands.
+
+   Brand SVGs are drawn with CSS masks rather than <img>, so a single
+   swap in assets/brand/ re-skins every logo, pattern and divider on
+   the site, and each one re-tints from the palette in tokens.css.
+   ============================================================ */
+
+/* ---- Buttons --------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-6);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  letter-spacing: var(--ls-mid);
+  text-align: center;
+  transition: background-color var(--t-fast), color var(--t-fast),
+              border-color var(--t-fast), transform var(--t-fast);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn--primary {
+  background-color: var(--c-accent);
+  color: var(--c-on-accent);
+}
+.btn--primary:hover { background-color: var(--c-deep); color: var(--c-on-deep); }
+
+.btn--ghost {
+  border: 1px solid var(--c-line);
+  color: var(--c-deep);
+}
+.btn--ghost:hover { border-color: var(--c-deep); background-color: var(--c-surface); }
+
+.btn--on-deep {
+  border: 1px solid var(--a-hairline);
+  color: var(--c-on-deep);
+}
+.btn--on-deep:hover { background-color: var(--c-on-deep); color: var(--c-deep); }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  align-items: center;
+}
+
+/* An arrow that always points "forward" — flips with direction. */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--c-accent);
+}
+.link-arrow::after {
+  content: '→';
+  transition: transform var(--t-fast);
+}
+html[dir='rtl'] .link-arrow::after { content: '←'; }
+.link-arrow:hover::after { transform: translateX(4px); }
+html[dir='rtl'] .link-arrow:hover::after { transform: translateX(-4px); }
+
+/* ---- Image slots ------------------------------------------------------
+   Every photo on this site is a .ph until a real photograph replaces it.
+   A slot is never blank: it carries the brand logo on a tinted ground
+   washed with the house pattern, so an un-photographed build still looks
+   finished. To use a real image, swap the whole element for:
+       <img src="assets/photos/name.jpg" alt="…" class="ph-img">
+   Intended subject + pixel size for each slot are listed in BRAND.md. */
+
+.ph {
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-lg);
+  background-color: var(--c-surface-alt);
+  background-image: linear-gradient(145deg, var(--c-surface) 0%, var(--c-surface-alt) 55%, var(--c-soft) 165%);
+}
+
+/* House pattern, tinted from tokens rather than baked into the SVG. */
+.ph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--a-pattern);
+  -webkit-mask: var(--img-pattern) 0 0 / var(--pattern-size) repeat;
+  mask: var(--img-pattern) 0 0 / var(--pattern-size) repeat;
+}
+
+.ph__mark {
+  inline-size: min(42%, 180px);
+  aspect-ratio: 1;
+  background-color: var(--c-soft);
+  -webkit-mask: var(--img-logo) center / contain no-repeat;
+  mask: var(--img-logo) center / contain no-repeat;
+  opacity: 0.85;
+}
+.ph__mark--icon {
+  -webkit-mask-image: var(--img-mark);
+  mask-image: var(--img-mark);
+  inline-size: min(30%, 110px);
+}
+
+.ph--hero     { aspect-ratio: 16 / 10; }
+.ph--square   { aspect-ratio: 1; }
+.ph--portrait { aspect-ratio: 4 / 5; }
+.ph--wide     { aspect-ratio: 21 / 9; }
+.ph--tall     { aspect-ratio: 3 / 4; }
+.ph--deep {
+  background-image: linear-gradient(145deg, var(--c-mid) 0%, var(--c-deep) 100%);
+}
+.ph--deep .ph__mark { background-color: var(--c-on-deep); opacity: 0.5; }
+
+/* A real photograph, once one exists, inherits the same shape. */
+.ph-img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  border-radius: var(--r-lg);
+}
+
+/* ---- Woven divider band ------------------------------------------------ */
+
+.band {
+  block-size: var(--band-height);
+  inline-size: 100%;
+  background-color: var(--c-accent);
+  -webkit-mask: var(--img-band) 0 50% / auto 100% repeat-x;
+  mask: var(--img-band) 0 50% / auto 100% repeat-x;
+}
+.band--soft { background-color: var(--c-line); }
+.band--on-deep { background-color: var(--c-on-deep); opacity: 0.35; }
+
+/* ---- Cards -------------------------------------------------------------- */
+
+.card {
+  display: grid;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  background-color: var(--c-surface);
+  border: var(--border);
+  border-radius: var(--r-lg);
+  transition: transform var(--t-mid), box-shadow var(--t-mid);
+}
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.card--flush { padding: 0; overflow: hidden; }
+.card--flush .card__body { padding: var(--s-5); display: grid; gap: var(--s-3); }
+.card__title { font-size: var(--fs-md); font-weight: 600; color: var(--c-deep); }
+.card__text { font-size: var(--fs-sm); color: var(--c-ink-soft); }
+.card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  font-size: var(--fs-xs);
+  color: var(--c-ink-soft);
+}
+.card__price {
+  font-family: var(--ff-latin);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  color: var(--c-accent);
+}
+
+/* ---- Tags --------------------------------------------------------------- */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--s-1) var(--s-3);
+  border-radius: var(--r-pill);
+  background-color: var(--c-surface-alt);
+  color: var(--c-ink-soft);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-mid);
+}
+.tag--accent { background-color: var(--c-accent-2); color: var(--c-deep); }
+.tag-row { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+/* ---- Menu ---------------------------------------------------------------- */
+
+.menu-category + .menu-category { margin-block-start: var(--s-8); }
+
+.menu-category__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  padding-block-end: var(--s-3);
+  margin-block-end: var(--s-5);
+  border-block-end: 1px solid var(--c-line);
+}
+.menu-category__title { font-size: var(--fs-lg); }
+.menu-category__note { font-size: var(--fs-sm); color: var(--c-ink-soft); }
+
+.menu-list { display: grid; gap: var(--s-5); list-style: none; }
+
+.menu-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: var(--s-3);
+}
+.menu-item__name { font-weight: 500; color: var(--c-deep); }
+.menu-item__dots {
+  border-block-end: 1px dotted var(--c-line);
+  transform: translateY(-0.3em);
+}
+.menu-item__price {
+  font-family: var(--ff-latin);
+  font-weight: 500;
+  color: var(--c-accent);
+  white-space: nowrap;
+}
+.menu-item__desc {
+  grid-column: 1 / -1;
+  font-size: var(--fs-sm);
+  color: var(--c-ink-soft);
+  max-width: var(--measure);
+}
+
+/* ---- Information rows (hours, address, contact) --------------------------- */
+
+.info-list { display: grid; gap: var(--s-1); list-style: none; }
+.info-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-3);
+  border-block-end: 1px solid var(--c-line);
+}
+.info-row:last-child { border-block-end: 0; }
+.info-row__label { color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.info-row__value { font-weight: 500; color: var(--c-deep); }
+.section--deep .info-row { border-block-end-color: var(--a-hairline); }
+.section--deep .info-row__label { color: var(--c-on-deep); opacity: 0.6; }
+.section--deep .info-row__value { color: var(--c-on-deep); }
+.info-row.is-today .info-row__value { color: var(--c-accent); }
+/* --c-accent is tuned for light grounds; on dark, use the light accent. */
+.section--deep .info-row.is-today .info-row__value { color: var(--c-accent-2); }
+
+/* ---- Pull quote ------------------------------------------------------------ */
+
+.quote {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: center;
+  text-align: center;
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+}
+.quote__text {
+  font-family: var(--ff-display);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+  color: var(--c-deep);
+}
+html[dir='rtl'] .quote__text { font-family: var(--ff-arabic); }
+.section--deep .quote__text { color: var(--c-on-deep); }
+.quote__cite {
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-mid);
+  color: var(--c-ink-soft);
+}
+.section--deep .quote__cite { color: var(--c-on-deep); opacity: 0.6; }
+
+/* ---- Gallery strip ---------------------------------------------------------- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s-3);
+}
+.gallery > * { border-radius: var(--r-md); }
+
+/* ---- Feature list ----------------------------------------------------------- */
+
+.feature { display: grid; gap: var(--s-3); }
+.feature__icon {
+  inline-size: 34px;
+  block-size: 34px;
+  background-color: var(--c-accent);
+  -webkit-mask: var(--img-mark) center / contain no-repeat;
+  mask: var(--img-mark) center / contain no-repeat;
+}
+.feature__title { font-size: var(--fs-md); font-weight: 600; color: var(--c-deep); }
+.feature__text { font-size: var(--fs-sm); color: var(--c-ink-soft); }
+.section--deep .feature__title { color: var(--c-on-deep); }
+.section--deep .feature__text { color: var(--c-on-deep); opacity: 0.75; }
+.section--deep .feature__icon { background-color: var(--c-accent-2); }

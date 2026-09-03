@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+  SHOP — retail beans and merch. Brochure only: orders go to WhatsApp.
+-->
+<html lang="ar" dir="rtl" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ★ Per-page meta is part of the reskin surface. -->
+  <title>المتجر · اسم المقهى</title>
+  <meta name="description" content="حبوب قهوة مختصة ومنتجات المقهى. خذ شيئًا من المقهى إلى بيتك.">
+  <meta property="og:title" content="المتجر · اسم المقهى">
+  <meta property="og:description" content="حبوب قهوة مختصة ومنتجات المقهى. خذ شيئًا من المقهى إلى بيتك.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+
+  <script>document.documentElement.classList.remove('no-js');</script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main" data-i18n="common.skip">تخطَّ إلى المحتوى</a>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" data-header>
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">
+          <span class="brand__name-primary" data-site="brand.primary">اسم المقهى</span>
+          <span class="brand__name-secondary" data-site="brand.secondary">CAFE NAME</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="site-nav" data-nav data-i18n-attr="aria-label:common.navLabel" aria-label="التنقل الرئيسي">
+        <ul class="nav__list" role="list">
+          <li><a class="nav__link" href="index.html" data-i18n="nav.home">الرئيسية</a></li>
+          <li><a class="nav__link" href="menu.html"  data-i18n="nav.menu">المنيو</a></li>
+          <li><a class="nav__link" href="story.html" data-i18n="nav.story">قصتنا</a></li>
+          <li><a class="nav__link" href="shop.html"  data-i18n="nav.shop">المتجر</a></li>
+          <li><a class="nav__link" href="visit.html" data-i18n="nav.visit">زورونا</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="lang-toggle" type="button" data-lang-toggle data-i18n="common.langSwitch">English</button>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav"
+                data-i18n-attr="aria-label:common.openMenu" aria-label="فتح القائمة">
+          <span class="nav-toggle__bars" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-scrim" data-nav-scrim aria-hidden="true"></div>
+
+  <main id="main">
+
+    <!-- ================= PAGE BANNER ================= -->
+    <section class="page-hero">
+      <div class="container page-hero__inner">
+        <span class="eyebrow" data-i18n="shop.eyebrow">خذها معك</span>
+        <h1 class="page-hero__title" data-i18n="shop.title">المتجر</h1>
+        <p class="lede" data-i18n="shop.lede">خذ شيئًا من المقهى إلى بيتك.</p>
+      </div>
+    </section>
+
+    <!-- ================= BEANS ================= -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-i18n="shop.beansTitle">حبوب القهوة</h2>
+        </div>
+        <!-- Built from SITE.beans in assets/js/content.js -->
+        <div class="product-grid" data-render="beans"></div>
+
+        <noscript>
+          <p class="noscript-note" data-i18n="common.noscript">
+            فعّل الجافاسكربت لعرض المنيو والمتجر كاملين.
+          </p>
+        </noscript>
+
+      </div>
+    </section>
+
+    <!-- ================= MERCH ================= -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-i18n="shop.merchTitle">منتجاتنا</h2>
+        </div>
+        <!-- Built from SITE.merch in assets/js/content.js -->
+        <div class="product-grid" data-render="merch"></div>
+      </div>
+    </section>
+
+    <!-- ================= ORDER ================= -->
+    <section class="section section--deep">
+      <div class="container">
+        <div class="quote">
+          <p class="lede" data-i18n="shop.orderNote">
+            للطلب أرسل لنا رسالة على واتساب أو مرّ علينا في الفرع.
+          </p>
+          <div class="btn-row u-center-x">
+            <a class="btn btn--primary" data-site-attr="href:contact.whatsapp" href="https://wa.me/966500000000"
+               target="_blank" rel="noopener" data-i18n="common.order">اطلب عبر واتساب</a>
+            <a class="btn btn--on-deep" data-site-attr="href:contact.instagram" href="https://instagram.com/"
+               target="_blank" rel="noopener" data-i18n="common.instagram">إنستقرام</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="footer-col">
+          <a class="brand" href="index.html">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">
+              <span class="brand__name-primary" data-site="brand.primary">اسم المقهى</span>
+              <span class="brand__name-secondary" data-site="brand.secondary">CAFE NAME</span>
+            </span>
+          </a>
+          <p class="note u-mt-4" data-i18n="footer.tagline">
+            مكان يرحّب بك.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h2 class="footer-col__title" data-i18n="footer.exploreTitle">تصفّح</h2>
+          <ul role="list">
+            <li><a href="menu.html"  data-i18n="nav.menu">المنيو</a></li>
+            <li><a href="story.html" data-i18n="nav.story">قصتنا</a></li>
+            <li><a href="shop.html"  data-i18n="nav.shop">المتجر</a></li>
+            <li><a href="visit.html" data-i18n="nav.visit">زورونا</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h2 class="footer-col__title" data-i18n="footer.visitTitle">زورونا</h2>
+          <div class="note" data-render="address"></div>
+        </div>
+
+        <div class="footer-col">
+          <h2 class="footer-col__title" data-i18n="footer.followTitle">تابعنا</h2>
+          <ul role="list">
+            <li><a class="u-ltr" data-site-attr="href:contact.instagram" href="https://instagram.com/" target="_blank" rel="noopener"
+                   data-site="contact.instagramHandle">@example</a></li>
+            <li><a class="u-ltr" data-site-attr="href:contact.whatsapp" href="https://wa.me/966500000000" target="_blank" rel="noopener"
+                   data-site="contact.phoneLabel">+966 50 000 0000</a></li>
+            <li><a class="u-ltr" data-site-attr="href:contact.emailHref" href="mailto:hello@example.com"
+                   data-site="contact.email">hello@example.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="site-footer__base">
+        <p>© <span data-year>2026</span> <span data-site="brand.primary">اسم المقهى</span>. <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></p>
+        <p><span data-site="brand.secondary">CAFE NAME</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/content.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/render.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

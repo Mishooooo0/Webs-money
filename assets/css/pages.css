@@ -1,0 +1,149 @@
+/* ============================================================
+   PAGES — hero variants and the few page-specific arrangements.
+   ============================================================ */
+
+/* ---- Home hero -------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-block-size: clamp(520px, 78svh, 760px);
+  padding-block: var(--s-8);
+  background-color: var(--c-deep);
+  color: var(--c-on-deep);
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--a-hairline);
+  -webkit-mask: var(--img-pattern) 0 0 / var(--pattern-size) repeat;
+  mask: var(--img-pattern) 0 0 / var(--pattern-size) repeat;
+}
+
+.hero__inner {
+  display: grid;
+  gap: clamp(var(--s-6), 5vw, var(--s-9));
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hero__inner { grid-template-columns: 1.05fr 0.95fr; }
+}
+
+.hero__body { display: grid; gap: var(--s-5); justify-items: start; }
+html[dir='rtl'] .hero__body { justify-items: start; }
+
+.hero__badge {
+  inline-size: clamp(88px, 11vw, 124px);
+  aspect-ratio: 1;
+  background-color: var(--c-on-deep);
+  -webkit-mask: var(--img-logo) center / contain no-repeat;
+  mask: var(--img-logo) center / contain no-repeat;
+}
+
+.hero__title {
+  font-size: var(--fs-3xl);
+  color: var(--c-on-deep);
+  line-height: var(--lh-tight);
+}
+.hero__tagline {
+  font-size: var(--fs-md);
+  color: var(--c-on-deep);
+  opacity: 0.8;
+  max-width: 46ch;
+}
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-4);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-mid);
+  color: var(--c-on-deep);
+  opacity: 0.65;
+}
+.hero__media { position: relative; }
+.hero__media .ph { box-shadow: var(--shadow-md); }
+
+/* ---- Inner-page banner ------------------------------------------------- */
+
+.page-hero {
+  position: relative;
+  padding-block: clamp(var(--s-8), 9vw, var(--s-9));
+  background-color: var(--c-surface-alt);
+  overflow: hidden;
+  isolation: isolate;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--a-pattern);
+  -webkit-mask: var(--img-pattern) 0 0 / var(--pattern-size) repeat;
+  mask: var(--img-pattern) 0 0 / var(--pattern-size) repeat;
+}
+.page-hero__inner { display: grid; gap: var(--s-3); max-width: var(--measure); }
+.page-hero__title { font-size: var(--fs-2xl); }
+
+/* ---- Home: featured drinks strip ---------------------------------------- */
+
+.featured { display: grid; gap: var(--s-5); }
+@media (min-width: 720px) {
+  .featured { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---- Visit: map panel ---------------------------------------------------- */
+
+.map-panel {
+  display: grid;
+  gap: 0;
+  border: var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background-color: var(--c-surface);
+}
+@media (min-width: 860px) {
+  .map-panel { grid-template-columns: 1fr 1fr; }
+}
+.map-panel__body { padding: clamp(var(--s-5), 3vw, var(--s-7)); display: grid; gap: var(--s-5); align-content: start; }
+.map-panel__media .ph { border-radius: 0; block-size: 100%; aspect-ratio: auto; min-block-size: 320px; }
+
+/* ---- Shop: product grid --------------------------------------------------- */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--s-5);
+}
+
+/* ---- Story: values row ----------------------------------------------------- */
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--s-6);
+}
+
+/* ---- 404 -------------------------------------------------------------------- */
+
+.notfound {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  min-block-size: 70svh;
+  padding-block: var(--s-9);
+}
+.notfound__inner { display: grid; gap: var(--s-5); justify-items: center; }
+.notfound__code {
+  font-family: var(--ff-latin);
+  font-size: var(--fs-3xl);
+  font-weight: 300;
+  letter-spacing: var(--ls-wide);
+  color: var(--c-mid);
+}

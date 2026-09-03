@@ -1,0 +1,23 @@
+<!--
+  ★ RESKIN FILE 3a — the primary lockup.
+  Rendered through a CSS mask, so only the SILHOUETTE matters: solid
+  fill = visible, transparent = hidden. Colour comes from tokens.css.
+  Keep the viewBox square — the hero badge and every .ph slot assume it.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Logo">
+  <circle cx="60" cy="60" r="55" fill="none" stroke="#000" stroke-width="2.5"/>
+
+  <!-- steam -->
+  <g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round">
+    <path d="M48 36 q5 -6 0 -12"/>
+    <path d="M60 36 q5 -6 0 -12"/>
+    <path d="M72 36 q5 -6 0 -12"/>
+  </g>
+
+  <!-- cup -->
+  <path d="M39 48 h34 v14 a17 17 0 0 1 -34 0 z" fill="#000"/>
+  <path d="M74 52 h4 a8.5 8.5 0 0 1 0 17 h-2.5" fill="none" stroke="#000" stroke-width="3"/>
+
+  <!-- saucer -->
+  <rect x="32" y="84" width="48" height="4" rx="2" fill="#000"/>
+</svg>

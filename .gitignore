@@ -1,0 +1,11 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# No build step — nothing generated should be committed
+node_modules/
+dist/
+*.log

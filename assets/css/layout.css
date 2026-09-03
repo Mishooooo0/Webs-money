@@ -1,0 +1,281 @@
+/* ============================================================
+   LAYOUT — site header, navigation, drawer, footer, grids.
+   All directional values are logical properties (see base.css).
+   ============================================================ */
+
+/* ---- Header --------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 100;
+  background-color: var(--c-ground);
+  border-block-end: 1px solid transparent;
+  transition: background-color var(--t-mid), border-color var(--t-mid),
+              box-shadow var(--t-mid);
+}
+.site-header.is-stuck {
+  border-block-end-color: var(--c-line);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+  min-height: 76px;
+}
+
+/* ---- Wordmark ------------------------------------------------------- */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-shrink: 0;
+}
+.brand__mark {
+  inline-size: 40px;
+  block-size: 40px;
+  background-color: var(--c-deep);
+  -webkit-mask: var(--img-mark) center / contain no-repeat;
+  mask: var(--img-mark) center / contain no-repeat;
+  transition: background-color var(--t-fast);
+}
+.brand:hover .brand__mark { background-color: var(--c-accent); }
+
+.brand__name {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.brand__name-primary {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--c-deep);
+}
+.brand__name-secondary {
+  font-family: var(--ff-latin);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+  /* Always Latin — isolate it from the surrounding RTL run. */
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* ---- Primary navigation --------------------------------------------- */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+}
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  list-style: none;
+}
+.nav__link {
+  position: relative;
+  font-size: var(--fs-sm);
+  color: var(--c-ink-soft);
+  padding-block: var(--s-2);
+  white-space: nowrap;
+}
+.nav__link::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 0;
+  block-size: 1px;
+  background-color: var(--c-accent);
+  transition: inline-size var(--t-mid);
+}
+.nav__link:hover::after,
+.nav__link[aria-current='page']::after { inline-size: 100%; }
+.nav__link[aria-current='page'] { color: var(--c-deep); font-weight: 500; }
+
+/* ---- Header actions -------------------------------------------------- */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  border: var(--border);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-mid);
+  color: var(--c-ink-soft);
+  transition: border-color var(--t-fast), color var(--t-fast),
+              background-color var(--t-fast);
+}
+.lang-toggle:hover {
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+
+/* ---- Mobile drawer --------------------------------------------------- */
+
+.nav-toggle {
+  display: none;
+  inline-size: 44px;
+  block-size: 44px;
+  place-items: center;
+  border: var(--border);
+  border-radius: var(--r-md);
+}
+.nav-toggle__bars,
+.nav-toggle__bars::before,
+.nav-toggle__bars::after {
+  display: block;
+  inline-size: 18px;
+  block-size: 1.5px;
+  background-color: var(--c-deep);
+  transition: transform var(--t-mid), opacity var(--t-fast);
+}
+.nav-toggle__bars::before,
+.nav-toggle__bars::after { content: ''; position: absolute; }
+.nav-toggle__bars::before { transform: translateY(-6px); }
+.nav-toggle__bars::after  { transform: translateY(6px); }
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bars { background-color: transparent; }
+.nav-toggle[aria-expanded='true'] .nav-toggle__bars::before { transform: rotate(45deg); }
+.nav-toggle[aria-expanded='true'] .nav-toggle__bars::after  { transform: rotate(-45deg); }
+
+.nav-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background-color: var(--a-veil);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--t-mid), visibility var(--t-mid);
+}
+.nav-scrim.is-open { opacity: 1; visibility: visible; }
+
+@media (max-width: 880px) {
+  .nav-toggle { display: grid; position: relative; }
+
+  /* The drawer is a child of the header, so it shares the header's stacking
+     context. Lift the actions above it or the close button ends up buried
+     underneath the panel it is meant to close. */
+  .header-actions { position: relative; z-index: 96; }
+
+  .nav {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-end: 0;
+    z-index: 95;
+    inline-size: min(84vw, 340px);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: var(--s-6);
+    padding: calc(76px + var(--s-6)) var(--s-6) var(--s-6);
+    background-color: var(--c-surface);
+    box-shadow: var(--shadow-md);
+    /* Off-canvas toward the inline end — mirrors automatically in RTL. */
+    transform: translateX(100%);
+    transition: transform var(--t-mid);
+    overflow-y: auto;
+  }
+  html[dir='rtl'] .nav { transform: translateX(-100%); }
+  .nav.is-open,
+  html[dir='rtl'] .nav.is-open { transform: translateX(0); }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .nav__list li + li { border-block-start: var(--border); }
+  .nav__link {
+    display: block;
+    font-size: var(--fs-md);
+    padding-block: var(--s-4);
+  }
+  .nav__link::after { display: none; }
+}
+
+/* ---- Footer ---------------------------------------------------------- */
+
+.site-footer {
+  background-color: var(--c-deep);
+  color: var(--c-on-deep);
+  padding-block: var(--s-8) var(--s-6);
+  margin-block-start: auto;
+}
+.site-footer a:hover { color: var(--c-on-deep); opacity: 0.7; }
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--s-7);
+  padding-block-end: var(--s-7);
+}
+.site-footer .brand__mark { background-color: var(--c-on-deep); }
+.site-footer .brand__name-primary { color: var(--c-on-deep); }
+.site-footer .brand__name-secondary { color: var(--c-on-deep); opacity: 0.6; }
+
+.footer-col__title {
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  /* base.css paints every heading --c-deep; on the dark footer that is
+     invisible, so take the footer's own colour instead. */
+  color: inherit;
+  opacity: 0.72;
+  margin-block-end: var(--s-4);
+}
+html[dir='rtl'] .footer-col__title {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: var(--fs-sm);
+}
+.footer-col ul { list-style: none; display: grid; gap: var(--s-2); }
+/* .note is muted-dark by default; on the dark footer it must invert. */
+.site-footer .note { color: inherit; opacity: 0.75; }
+.footer-col li { opacity: 0.82; font-size: var(--fs-sm); }
+
+.site-footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block-start: var(--s-5);
+  border-block-start: 1px solid var(--a-hairline);
+  font-size: var(--fs-xs);
+  opacity: 0.6;
+}
+
+/* ---- Generic grids ---------------------------------------------------- */
+
+.grid { display: grid; gap: var(--s-5); }
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.grid--4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+
+/* Text beside imagery. Reverses without touching direction. */
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(var(--s-6), 4vw, var(--s-9));
+  align-items: center;
+}
+.split__body { display: grid; gap: var(--s-4); align-content: center; }
+@media (min-width: 861px) {
+  .split--flip .split__media { order: -1; }
+}

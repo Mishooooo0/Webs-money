@@ -1,0 +1,8 @@
+<!--
+  ★ RESKIN FILE 3b — the small icon mark.
+  Used at 34–44px in the header, feature icons and small photo slots.
+  Silhouette only (see logo.svg). Keep the viewBox square.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Mark">
+  <path d="M24 3 C35 15 35 33 24 45 C13 33 13 15 24 3 Z" fill="#000"/>
+</svg>
