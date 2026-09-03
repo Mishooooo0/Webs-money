@@ -32,13 +32,21 @@ Confirmed from Rahwah's own channels:
 | | |
 |---|---|
 | Name | رهوة · RAHWAH |
+| **What it means** | «رهوة كلمة عربية تعني مكان التجمع، ويُقال *رهوة آل فلان* للدلالة على مكان يجتمع فيه أفراد العائلة، وأنتم عائلتنا ورهوة هي مكانكم دائمًا» — the café's own words, now the spine of the story page and its pull quote |
 | Tagline | «مكان يرحّب بك» — the café's own bio line |
 | Voice | «هلا بك في رهوة», «قهوة، تفاصيل صغيرة، وطلبات تُصنع بحب» |
 | District | الرياض – حي الملقا |
 | Instagram | `@rahwa.sa` |
-| Maps pin | the café's own `maps.app.goo.gl` link |
+| Maps pin | `maps.app.goo.gl/KcsFkwFw1d4gZxm7A` |
+| **Drinks menu** | Complete — 18 items across hot and cold, in the café's own grouping (espresso / filter / no-coffee), with their real prices |
+| **Opening hours** | Confirmed — Sat–Wed 6am–12am, Thu 6am–1am, Fri 12pm–1am |
+| Photography | One real photo: the filter carafe and Rahwah cup on the Sadu cushion |
 | Coffee lot | **La Palma** — Colombia, anaerobic; grape, pear, pomegranate |
 | Merch | hoodie, tee, cap, and the stamped clay cups they serve in |
+
+An earlier draft had رهوة meaning "openness and calm". That was a guess and it
+was wrong — the café's own story gives it as a **gathering place**. Corrected
+throughout.
 
 Palette and motifs are read off the shop's own photographs: espresso brown
 from the timber and the badge, warm cream from the walls and cups, terracotta
@@ -55,9 +63,10 @@ saying the same thing.
 | What | Where | Note |
 |---|---|---|
 | Phone / WhatsApp | `contact.phone`, `phoneHref`, `phoneLabel`, `whatsapp` | Deliberately written as `5X XXX XXXX` so nobody mistakes it for a real number. Every phone and WhatsApp link on the site resolves from here. |
-| Opening hours | `hours[]` | A plausible Riyadh pattern with the late Thursday and the Friday-prayer gap. Not confirmed. |
-| Prices | `menu[].price`, `beans[].price`, `merch[].price` | Plausible for Riyadh specialty. Not confirmed. |
+| **Sweets menu** | `menu[]` | The café has a الحلويات highlight but does not publish prices. The category is **left out rather than invented** — paste it in with the same shape as the drinks categories and it renders itself. The menu page eyebrow says المشروبات only until then. |
+| Bean & merch prices | `beans[].price`, `merch[].price` | Plausible for Riyadh specialty, not confirmed. The La Palma lot's origin, process and tasting notes ARE real. |
 | Email | `contact.email`, `emailHref` | `hello@rahwa.sa` is assumed, not verified. |
+| More photography | `assets/photos/` | Only one real photo so far. Every other slot still carries the branded placeholder. |
 
 ## The logo
 
@@ -74,8 +83,17 @@ load inside a masked SVG and system fonts differ per platform.
 
 ## Photos
 
-Every photo slot is filled with the Rahwah badge on the star-lattice ground,
-so the site looks finished before a single photograph exists. `BRAND.md` has
+One real photograph is in: the filter carafe beside a Rahwah cup on the Sadu
+cushion, at `assets/photos/rahwah-filter-sadu.jpg` (900×1232, 144 KB). It sits
+in the portrait slot on the home page and on the story page.
+
+It is deliberately **not** used in the three-card featured strip: one real photo
+among two placeholders reads as an unfinished page, whereas one large photo
+paired with text reads as a deliberate layout. When more photos arrive, add
+`image:` to the menu items and the strip fills in properly.
+
+Every remaining slot is filled with the Rahwah badge on the star-lattice ground,
+so the site looks finished before the rest of the photography exists. `BRAND.md` has
 the full slot inventory with sizes and intended subjects. Swap one like this:
 
 ```html
