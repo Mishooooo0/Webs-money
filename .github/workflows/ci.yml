@@ -1,0 +1,35 @@
+name: CI
+
+# Every branch: templates and client deliveries alike. A client branch that
+# quietly breaks the engine should fail here, not in front of the client.
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # No install step — these checks are deliberately dependency-free.
+      - run: node tools/check.js
+
+  audit:
+    name: Browser audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      # Console errors, horizontal overflow, WCAG AA contrast in both
+      # languages, and brand SVGs that fail to load behind a CSS mask.
+      - run: node tools/audit.js

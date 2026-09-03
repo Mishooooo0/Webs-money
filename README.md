@@ -101,7 +101,8 @@ index.html  menu.html  story.html  shop.html  visit.html  404.html
 assets/
   css/  tokens.css ★   reset.css  base.css  layout.css  components.css  pages.css
   js/   content.js ★   i18n.js    render.js  app.js
-tools/  sync-static.js   check-brand.js
+tools/  check.js  audit.js  sync-static.js  check-brand.js
+.github/ workflows/{ci,pages}.yml   pages/{assemble.sh,index.html}
   brand/ logo.svg ★  mark.svg ★  pattern-primary.svg ★  pattern-band.svg ★  favicon.svg ★
 ```
 
@@ -111,44 +112,61 @@ image slots, `pages.css` the hero variants. `tokens.css` must load first.
 
 ## Verifying
 
+Two commands cover everything, and both run in CI on every push to every branch:
+
 ```bash
-# 1. No raw colour may live outside tokens.css — prints nothing if clean
-grep -rnE '#[0-9a-fA-F]{3,8}|rgba?\(' assets/css --include='*.css' | grep -v tokens.css
-
-# 2. No physical directional properties — they break RTL. Prints nothing if clean
-grep -rnE '(margin|padding)-(left|right)|(^|[^-])\b(left|right):' assets/css --include='*.css'
-
-# 3. The brand SVGs are well-formed — a malformed one fails SILENTLY,
-#    the mask just renders nothing and the logo or pattern disappears
-node tools/check-brand.js
-
-# 4. The HTML still matches content.js
-node tools/sync-static.js --check
-
-# 5. No stray script characters in the copy — an Arabic string with a
-#    Hebrew or Syriac letter silently corrupts a word and renders as noise
-node -e "global.window={};require('./assets/js/content.js');
-const s=JSON.stringify(window.SITE);const bad=[...s].filter(c=>{const p=c.codePointAt(0);
-return (p>=0x0590&&p<=0x05FF)||(p>=0x0700&&p<=0x074F)});
-console.log(bad.length?'STRAY SCRIPT CHARS: '+[...new Set(bad)].join(' '):'Copy is clean.')"
-
-# 6. Every binding key actually resolves
-node -e "global.window={};require('./assets/js/content.js');const S=window.SITE,fs=require('fs');
-const g=(r,p)=>p.split('.').reduce((n,k)=>n&&typeof n==='object'?n[k]:undefined,r);let bad=[];
-for(const f of fs.readdirSync('.').filter(x=>x.endsWith('.html'))){const h=fs.readFileSync(f,'utf8');
-for(const m of h.matchAll(/data-i18n=\"([^\"]+)\"/g))if(g(S.t,m[1])===undefined)bad.push(f+' '+m[1]);
-for(const m of h.matchAll(/data-site=\"([^\"]+)\"/g))if(g(S,m[1])===undefined)bad.push(f+' '+m[1]);}
-console.log(bad.length?'UNRESOLVED: '+bad.join(', '):'All binding keys resolve.')"
+node tools/check.js     # 6 static checks — no dependencies, about a second
+node tools/audit.js     # renders every page in Chromium, in both languages
 ```
 
-By hand, on every page: Arabic loads by default and reads right-to-left; the
-toggle flips direction and swaps every string; the choice survives a reload and
-a navigation; the mobile drawer opens, closes, and its X stays clickable; no
-console errors. Check 375px, 768px and 1440px.
+`check.js` enforces the invariants that make a reskin cheap. Each exists
+because breaking it produced a real bug that reading the diff did not catch:
 
-The template ships passing **WCAG AA** contrast on all six pages in both
-languages. If you darken or lighten `--c-accent`, re-check it — that one token
-drives buttons, prices, links and eyebrows.
+1. No raw colour outside `tokens.css` — this is what keeps a reskin a one-file edit.
+2. No physical directional properties — `margin-left` breaks Arabic RTL while looking fine in English.
+3. Brand SVGs well-formed — a malformed one fails *silently* and its artwork simply disappears.
+4. The static Arabic matches `content.js` — otherwise a no-JS visitor reads the previous client's words.
+5. No stray-script characters — a Hebrew letter inside an Arabic word looks almost right and renders as noise.
+6. Every `data-i18n` / `data-site` key resolves — no element silently keeps stale text.
+
+`audit.js` catches what only appears once a browser has laid the page out:
+console errors and uncaught exceptions, horizontal overflow, **WCAG AA contrast
+on every text node in both languages**, brand SVGs that fail to load behind a
+mask, and the language toggle actually flipping `dir`.
+
+By hand, still worth doing before handover: walk the pages at 375px, 768px and
+1440px, confirm the mobile drawer opens and its X stays clickable, and check
+every contact link points at the client's real accounts.
+
+### The one dependency
+
+The **websites** have none — that is the point, and it is what keeps hosting
+free and maintenance nil. `tools/audit.js` needs Playwright to drive a browser,
+declared in `package.json` under `devDependencies`. It is never needed to build,
+serve or deploy a site:
+
+```bash
+npm install && npx playwright install chromium   # only to run the audit
+```
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs both commands on **every branch** — templates
+and client deliveries alike. A client branch that quietly breaks the engine
+fails here rather than in front of the client.
+
+`.github/workflows/pages.yml` publishes everything to one GitHub Pages site,
+assembled by `.github/pages/assemble.sh` from several branches:
+
+```
+/                  the gallery
+/cafe/             café + restaurant template   (main)
+/services/         services + booking template  (template-services)
+/clients/rahwah/   Rahwah                       (rahwah)
+```
+
+Adding a client is one line at the bottom of `assemble.sh`. Every path inside
+a site is relative, so each one works unchanged under its sub-path.
 
 ## Deploying
 
@@ -163,6 +181,18 @@ becomes fully self-hosted.
 
 ## Branches
 
-- **`main`** — this template, unbranded.
-- **`rahwah`** — a worked example: the same code dressed as a real Riyadh café.
-  `git diff main..rahwah --stat` shows precisely what a reskin costs.
+Branch per business. Templates are the standard product; a branch named after
+a business is a real delivery for that client.
+
+- **`main`** — café + restaurant template, and the shared engine every branch inherits.
+- **`template-services`** — services + booking template (salons, clinics, gyms).
+- **`rahwah`** — client delivery for RAHWAH, a café in Al Malqa, Riyadh.
+
+Fixes to the engine land on `main` and merge outward. Client branches never
+touch shared code, which `git diff` proves:
+
+```bash
+git diff main --name-only -- assets/css/base.css assets/css/layout.css \
+  assets/css/components.css assets/js/i18n.js assets/js/render.js assets/js/app.js
+# prints nothing on a client branch
+```
