@@ -128,7 +128,11 @@ html[dir='rtl'] .link-arrow:hover::after { transform: translateX(-4px); }
   block-size: 100%;
   object-fit: cover;
   border-radius: var(--r-lg);
+  background-color: var(--c-surface-alt);
 }
+/* Inside a .ph the parent sets the box, but a photo that REPLACES a slot
+   carries its own ratio modifier and must size from that instead. */
+.ph-img[class*='ph--'] { block-size: auto; }
 
 /* ---- Woven divider band ------------------------------------------------ */
 
@@ -300,3 +304,104 @@ html[dir='rtl'] .quote__text { font-family: var(--ff-arabic); }
 .section--deep .feature__title { color: var(--c-on-deep); }
 .section--deep .feature__text { color: var(--c-on-deep); opacity: 0.75; }
 .section--deep .feature__icon { background-color: var(--c-accent-2); }
+
+
+/* ---- Service rows (template 2) --------------------------------------------
+   A menu item with a duration column dropped in before the price. */
+
+.service-item { grid-template-columns: auto 1fr auto auto; }
+.service-item__duration {
+  font-size: var(--fs-xs);
+  color: var(--c-ink-soft);
+  white-space: nowrap;
+}
+
+/* ---- Team ------------------------------------------------------------------ */
+
+.card__role {
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-mid);
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+html[dir='rtl'] .card__role {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: var(--fs-sm);
+}
+
+/* ---- Packages -------------------------------------------------------------- */
+
+.package { align-content: start; }
+.package--featured {
+  border-color: var(--c-accent);
+  box-shadow: var(--shadow-md);
+}
+.package__list {
+  display: grid;
+  gap: var(--s-2);
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--c-ink-soft);
+}
+.package__list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+}
+/* A tick that points the right way in either direction. */
+.package__list li::before {
+  content: '✓';
+  color: var(--c-accent);
+  font-size: var(--fs-xs);
+  flex-shrink: 0;
+}
+
+/* ---- Testimonials ----------------------------------------------------------- */
+
+.quote-card { gap: var(--s-3); }
+.quote-card__text {
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  color: var(--c-deep);
+}
+.quote-card__cite {
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-mid);
+  color: var(--c-ink-soft);
+}
+html[dir='rtl'] .quote-card__cite { letter-spacing: 0; }
+
+/* ---- FAQ -------------------------------------------------------------------
+   <details>/<summary>: keyboard accessible for free, and it still opens with
+   JavaScript disabled. */
+
+.faq { display: grid; gap: 0; }
+.faq__item { border-block-end: 1px solid var(--c-line); }
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-4);
+  font-weight: 500;
+  color: var(--c-deep);
+  cursor: pointer;
+  list-style: none;
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__q::after {
+  content: '+';
+  font-size: var(--fs-lg);
+  font-weight: 300;
+  color: var(--c-accent);
+  transition: transform var(--t-mid);
+  flex-shrink: 0;
+}
+.faq__item[open] .faq__q::after { transform: rotate(45deg); }
+.faq__a {
+  padding-block-end: var(--s-4);
+  font-size: var(--fs-sm);
+  color: var(--c-ink-soft);
+  max-width: var(--measure);
+}

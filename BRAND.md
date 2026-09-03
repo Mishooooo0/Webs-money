@@ -134,9 +134,23 @@ element:
 | `shop.html` | beans, merch | 1000×1250 / 800×800 | Generated per product by `render.js` |
 | `index.html` | featured ×3 | 800×800 | Generated per drink by `render.js` |
 
-The generated slots (shop and featured) come from `placeholder()` in
-`render.js`. To use real product photography, add an image path to the item in
-`content.js` and have `placeholder()` emit an `<img>` when one is present.
+**Generated slots need no code at all.** Anything rendered from data — featured
+drinks, beans, merch, team members — takes an optional `image` (and optional
+per-item `alt`) in `content.js`, and `media()` in `render.js` emits a real
+`<img>` when it finds one, falling back to the branded placeholder when it does
+not. Adding photography is a content edit:
+
+```js
+{ price: '18',
+  image: 'assets/photos/latte.jpg',
+  alt:   { ar: 'كوب لاتيه على الطاولة', en: 'A latte on the table' },
+  name:  { ar: 'لاتيه', en: 'Latte' },
+  desc:  { ar: '…', en: '…' } }
+```
+
+Put files under `assets/photos/`. The intrinsic size is taken from the slot
+ratio, so a photo and its placeholder reserve the same box and nothing shifts
+as the image loads.
 
 Ratios available: `.ph--hero` 16:10 · `.ph--square` 1:1 · `.ph--portrait` 4:5 ·
 `.ph--wide` 21:9 · `.ph--tall` 3:4 · `.ph--deep` for a dark ground.
