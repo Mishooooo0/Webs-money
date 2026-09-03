@@ -1,8 +1,9 @@
 <!--
-  ★ RESKIN FILE 3b — the small icon mark.
-  Used at 34–44px in the header, feature icons and small photo slots.
-  Silhouette only (see logo.svg). Keep the viewBox square.
+  SERVICES · the sparkle mark — ★ RESKIN FILE 3b
+  A four-point sparkle: reads as care and quality across a salon, a clinic,
+  a spa or a gym without belonging to any one of them. Silhouette only; the
+  colour comes from the deep and accent tokens in tokens.css.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Mark">
-  <path d="M24 3 C35 15 35 33 24 45 C13 33 13 15 24 3 Z" fill="#000"/>
+  <path d="M24 2 C26 15 33 22 46 24 C33 26 26 33 24 46 C22 33 15 26 2 24 C15 22 22 15 24 2 Z" fill="#000"/>
 </svg>

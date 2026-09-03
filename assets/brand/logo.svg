@@ -1,23 +1,30 @@
 <!--
-  ★ RESKIN FILE 3a — the primary lockup.
-  Rendered through a CSS mask, so only the SILHOUETTE matters: solid
-  fill = visible, transparent = hidden. Colour comes from tokens.css.
-  Keep the viewBox square — the hero badge and every .ph slot assume it.
+  SERVICES · the badge lockup — ★ RESKIN FILE 3a
+  The sparkle inside a ring, over a drawn STUDIO wordmark.
+
+  Letterforms are drawn as stroked paths rather than set as <text>: this
+  file is loaded through a CSS mask, where webfonts are unavailable and
+  system fonts differ per platform, so type would render inconsistently.
+
+  Replace with the client's real logo. Keep the viewBox square and the
+  artwork a flat silhouette.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Logo">
-  <circle cx="60" cy="60" r="55" fill="none" stroke="#000" stroke-width="2.5"/>
+  <circle cx="60" cy="60" r="55" fill="none" stroke="#000" stroke-width="2.4"/>
 
-  <!-- steam -->
-  <g fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round">
-    <path d="M48 36 q5 -6 0 -12"/>
-    <path d="M60 36 q5 -6 0 -12"/>
-    <path d="M72 36 q5 -6 0 -12"/>
+  <g fill="#000" transform="translate(60 48) scale(0.86) translate(-24 -24)">
+    <path d="M24 2 C26 15 33 22 46 24 C33 26 26 33 24 46 C22 33 15 26 2 24 C15 22 22 15 24 2 Z"/>
   </g>
 
-  <!-- cup -->
-  <path d="M39 48 h34 v14 a17 17 0 0 1 -34 0 z" fill="#000"/>
-  <path d="M74 52 h4 a8.5 8.5 0 0 1 0 17 h-2.5" fill="none" stroke="#000" stroke-width="3"/>
+  <line x1="46" y1="70" x2="74" y2="70" stroke="#000" stroke-width="1.4" stroke-linecap="round"/>
 
-  <!-- saucer -->
-  <rect x="32" y="84" width="48" height="4" rx="2" fill="#000"/>
+  <!-- S T U D I O -->
+  <g fill="none" stroke="#000" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M37.5 81 A2.6 2.6 0 0 0 32.5 82 C32.5 85.5 37.5 84.5 37.5 88 A2.6 2.6 0 0 1 32.4 89"/>
+    <path d="M42 80.5 L49 80.5 M45.5 80.5 L45.5 90"/>
+    <path d="M53.5 80.5 L53.5 87 A3.2 3.2 0 0 0 59.9 87 L59.9 80.5"/>
+    <path d="M65 90 L65 80.5 L67.5 80.5 A4.75 4.75 0 0 1 67.5 90 Z"/>
+    <path d="M77 80.5 L77 90"/>
+    <rect x="82" y="80.5" width="8" height="9.5" rx="4"/>
+  </g>
 </svg>

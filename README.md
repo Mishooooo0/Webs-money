@@ -1,7 +1,13 @@
-# Café Site Template
+# Services & Booking Template
 
-A bilingual (Arabic-first, RTL) brochure website for a coffee shop, built to be
-**re-dressed for a new client in about ten minutes**.
+A bilingual (Arabic-first, RTL) website for a business that sells appointments —
+salons, barbershops, clinics, gyms, spas, studios — built to be **re-dressed for
+a new client in about ten minutes**.
+
+Booking is a WhatsApp deep link rather than a calendar, because that is what
+small businesses here actually use. Every such link resolves from `contact`
+in `content.js`. See `BRAND.md` for retargeting the copy to a different
+vertical without touching a line of code.
 
 No build step. No dependencies. No framework. Six HTML pages, six stylesheets,
 four scripts. Open `index.html` and it runs.
@@ -97,7 +103,7 @@ so brand names, phone numbers and links resolve from `content.js` too.
 ## Files
 
 ```
-index.html  menu.html  story.html  shop.html  visit.html  404.html
+index.html  services.html  team.html  story.html  book.html  404.html
 assets/
   css/  tokens.css ★   reset.css  base.css  layout.css  components.css  pages.css
   js/   content.js ★   i18n.js    render.js  app.js

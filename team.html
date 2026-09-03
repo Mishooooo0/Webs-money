@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  SHOP — retail beans and merch. Brochure only: orders go to WhatsApp.
+  TEAM — the people, built from SITE.team.
 -->
 <html lang="ar" dir="rtl" class="no-js">
 <head>
@@ -8,10 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- ★ Per-page meta is part of the reskin surface. -->
-  <title>المتجر · اسم المقهى</title>
-  <meta name="description" content="حبوب قهوة مختصة ومنتجات المقهى. خذ شيئًا من المقهى إلى بيتك.">
-  <meta property="og:title" content="المتجر · اسم المقهى">
-  <meta property="og:description" content="حبوب قهوة مختصة ومنتجات المقهى. خذ شيئًا من المقهى إلى بيتك.">
+  <title>فريقنا · اسم النشاط</title>
+  <meta name="description" content="وجوه ثابتة تعرفك وتعرف ما تحب. اطلب من تريد عند الحجز.">
+  <meta property="og:title" content="فريقنا · اسم النشاط">
+  <meta property="og:description" content="وجوه ثابتة تعرفك وتعرف ما تحب. اطلب من تريد عند الحجز.">
   <meta property="og:type" content="website">
 
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
@@ -37,18 +37,18 @@
       <a class="brand" href="index.html">
         <span class="brand__mark" aria-hidden="true"></span>
         <span class="brand__name">
-          <span class="brand__name-primary" data-site="brand.primary">اسم المقهى</span>
-          <span class="brand__name-secondary" data-site="brand.secondary">CAFE NAME</span>
+          <span class="brand__name-primary" data-site="brand.primary">اسم النشاط</span>
+          <span class="brand__name-secondary" data-site="brand.secondary">STUDIO</span>
         </span>
       </a>
 
       <nav class="nav" id="site-nav" data-nav data-i18n-attr="aria-label:common.navLabel" aria-label="التنقل الرئيسي">
         <ul class="nav__list" role="list">
           <li><a class="nav__link" href="index.html" data-i18n="nav.home">الرئيسية</a></li>
-          <li><a class="nav__link" href="menu.html"  data-i18n="nav.menu">المنيو</a></li>
+          <li><a class="nav__link" href="services.html" data-i18n="nav.services">الخدمات</a></li>
+          <li><a class="nav__link" href="team.html" data-i18n="nav.team">فريقنا</a></li>
           <li><a class="nav__link" href="story.html" data-i18n="nav.story">قصتنا</a></li>
-          <li><a class="nav__link" href="shop.html"  data-i18n="nav.shop">المتجر</a></li>
-          <li><a class="nav__link" href="visit.html" data-i18n="nav.visit">زورونا</a></li>
+          <li><a class="nav__link" href="book.html" data-i18n="nav.book">احجز</a></li>
         </ul>
       </nav>
 
@@ -68,53 +68,46 @@
     <!-- ================= PAGE BANNER ================= -->
     <section class="page-hero">
       <div class="container page-hero__inner">
-        <span class="eyebrow" data-i18n="shop.eyebrow">خذها معك</span>
-        <h1 class="page-hero__title" data-i18n="shop.title">المتجر</h1>
-        <p class="lede" data-i18n="shop.lede">خذ شيئًا من المقهى إلى بيتك.</p>
+        <span class="eyebrow" data-i18n="team.eyebrow">من سيخدمك</span>
+        <h1 class="page-hero__title" data-i18n="team.title">فريقنا</h1>
+        <p class="lede" data-i18n="team.lede">وجوه ثابتة تعرفك وتعرف ما تحب. اطلب من تريد عند الحجز.</p>
       </div>
     </section>
 
-    <!-- ================= BEANS ================= -->
+    <!-- ================= THE PEOPLE ================= -->
     <section class="section">
       <div class="container">
-        <div class="section-head">
-          <h2 data-i18n="shop.beansTitle">حبوب القهوة</h2>
-        </div>
-        <!-- Built from SITE.beans in assets/js/content.js -->
-        <div class="product-grid" data-render="beans"></div>
-
+        <!-- Built from SITE.team -->
+        <div class="product-grid" data-render="team"></div>
         <noscript>
           <p class="noscript-note" data-i18n="common.noscript">
-            فعّل الجافاسكربت لعرض المنيو والمتجر كاملين.
+            فعّل الجافاسكربت لعرض الخدمات والباقات كاملة.
           </p>
         </noscript>
-
       </div>
     </section>
 
-    <!-- ================= MERCH ================= -->
+    <!-- ================= VALUES ================= -->
     <section class="section section--alt">
       <div class="container">
-        <div class="section-head">
-          <h2 data-i18n="shop.merchTitle">منتجاتنا</h2>
+        <div class="section-head section-head--center">
+          <h2 data-i18n="story.valuesTitle">ما نلتزم به</h2>
         </div>
-        <!-- Built from SITE.merch in assets/js/content.js -->
-        <div class="product-grid" data-render="merch"></div>
-      </div>
-    </section>
-
-    <!-- ================= ORDER ================= -->
-    <section class="section section--deep">
-      <div class="container">
-        <div class="quote">
-          <p class="lede" data-i18n="shop.orderNote">
-            للطلب أرسل لنا رسالة على واتساب أو مرّ علينا في الفرع.
-          </p>
-          <div class="btn-row u-center-x">
-            <a class="btn btn--primary" data-site-attr="href:contact.whatsapp" href="https://wa.me/966500000000"
-               target="_blank" rel="noopener" data-i18n="common.order">اطلب عبر واتساب</a>
-            <a class="btn btn--on-deep" data-site-attr="href:contact.instagram" href="https://instagram.com/"
-               target="_blank" rel="noopener" data-i18n="common.instagram">إنستقرام</a>
+        <div class="values">
+          <div class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"></span>
+            <h3 class="feature__title" data-i18n="story.v1Title">الوقت</h3>
+            <p class="feature__text" data-i18n="story.v1Text">موعدك يبدأ في وقته. إن تأخرنا، نعتذر ونعوّضك.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"></span>
+            <h3 class="feature__title" data-i18n="story.v2Title">النظافة</h3>
+            <p class="feature__text" data-i18n="story.v2Text">أدوات معقّمة لكل زبون، ومناشف تُستخدم مرة واحدة.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"></span>
+            <h3 class="feature__title" data-i18n="story.v3Title">الصراحة</h3>
+            <p class="feature__text" data-i18n="story.v3Text">نقول لك ما يناسبك، لا ما يزيد الفاتورة.</p>
           </div>
         </div>
       </div>
@@ -130,22 +123,20 @@
           <a class="brand" href="index.html">
             <span class="brand__mark" aria-hidden="true"></span>
             <span class="brand__name">
-              <span class="brand__name-primary" data-site="brand.primary">اسم المقهى</span>
-              <span class="brand__name-secondary" data-site="brand.secondary">CAFE NAME</span>
+              <span class="brand__name-primary" data-site="brand.primary">اسم النشاط</span>
+              <span class="brand__name-secondary" data-site="brand.secondary">STUDIO</span>
             </span>
           </a>
-          <p class="note u-mt-4" data-i18n="footer.tagline">
-            مكان يرحّب بك.
-          </p>
+          <p class="note u-mt-4" data-i18n="footer.tagline">خدمة تستحق الموعد.</p>
         </div>
 
         <div class="footer-col">
           <h2 class="footer-col__title" data-i18n="footer.exploreTitle">تصفّح</h2>
           <ul role="list">
-            <li><a href="menu.html"  data-i18n="nav.menu">المنيو</a></li>
+            <li><a href="services.html" data-i18n="nav.services">الخدمات</a></li>
+            <li><a href="team.html" data-i18n="nav.team">فريقنا</a></li>
             <li><a href="story.html" data-i18n="nav.story">قصتنا</a></li>
-            <li><a href="shop.html"  data-i18n="nav.shop">المتجر</a></li>
-            <li><a href="visit.html" data-i18n="nav.visit">زورونا</a></li>
+            <li><a href="book.html" data-i18n="nav.book">احجز</a></li>
           </ul>
         </div>
 
@@ -168,8 +159,8 @@
       </div>
 
       <div class="site-footer__base">
-        <p>© <span data-year>2026</span> <span data-site="brand.primary">اسم المقهى</span>. <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></p>
-        <p><span data-site="brand.secondary">CAFE NAME</span></p>
+        <p>© <span data-year>2026</span> <span data-site="brand.primary">اسم النشاط</span>. <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></p>
+        <p><span data-site="brand.secondary">STUDIO</span></p>
       </div>
     </div>
   </footer>

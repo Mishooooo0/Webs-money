@@ -83,15 +83,35 @@ repeated on the opposite edge. Tile scale is set by `--pattern-size` and
 
 | Key | What to change |
 |---|---|
-| `brand` | Café name in both scripts, the Latin wordmark line, currency |
+| `brand` | Business name in both scripts, the Latin wordmark line, currency |
 | `contact` | Address lines, phone (`phone`, `phoneHref`, `phoneLabel`), email (`email`, `emailHref`), WhatsApp, Instagram, Maps link |
 | `hours` | Seven rows. Keep the `key` values — that's how today's row highlights itself |
-| `menu` | Categories in display order; `featured: true` lifts an item onto the home page (first three win) |
-| `beans` / `merch` | The shop grids |
+| `services` | Categories in display order; each item takes `duration` (optional) and `price`; `featured: true` lifts it onto the home page (first three win) |
+| `team` | Staff cards — `name`, `role`, `bio`, optional `image` |
+| `packages` | Bundles; `includes` is an `{ ar: [...], en: [...] }` list, `featured: true` outlines one |
+| `testimonials` | Quote cards — `text` and `name` |
+| `faq` | `q` / `a` pairs, rendered as `<details>` so they open without JavaScript |
 | `t.*` | Every string on the site, as `{ ar, en }` pairs |
 | `t.alt.*` | Alt text for photo slots — update when real photos land |
 
-Adding a drink is one object in `menu[].items`. Never edit HTML for content.
+Adding a service is one object in `services[].items`. Never edit HTML for content.
+
+### Retargeting the vertical
+
+The default copy is written for a **barbershop or salon** because that is the
+largest segment. Nothing in the page structure, the CSS or the engine assumes
+it. To sell this to a **clinic**, a **gym**, a **spa** or a **studio**, edit
+`content.js` alone:
+
+| Change | To |
+|---|---|
+| `services[]` categories | Consultations / treatments · class types · session types |
+| `team[].role` | Doctor, dentist · coach, trainer · therapist, instructor |
+| `packages[]` | Treatment plans · memberships · class blocks |
+| `faq[]` | Insurance and referrals · trial classes · what to bring |
+| `t.hero.*`, `t.story.*` | The business's own voice |
+
+The five pages, the booking flow and every check stay exactly as they are.
 
 **After every edit here, run `node tools/sync-static.js`.** The Arabic sitting
 in the HTML is a generated mirror of this file — it exists so the site reads
@@ -126,13 +146,12 @@ element:
 | Page | Slot | Size | Subject |
 |---|---|---|---|
 | `index.html` | hero | 1600×1000 | The room, wide, natural light |
-| `index.html` | counter | 1000×1250 | Barista at the counter, portrait |
-| `index.html` | gallery ×4 | 800×800 | Room, cup, sweets, storefront |
+| `index.html` | counter | 1000×1250 | A work station and its tools, portrait |
+| `index.html` | gallery ×4 | 800×800 | Waiting area, station, a detail, storefront |
+| `index.html` | featured ×3 | 800×800 | Generated per service by `render.js` |
 | `story.html` | room | 1000×1250 | The room early in the day, portrait |
-| `story.html` | counter | 1200×900 | The team behind the bar |
-| `visit.html` | map | — | Replace with a Google Maps `<iframe>` once the pin is live |
-| `shop.html` | beans, merch | 1000×1250 / 800×800 | Generated per product by `render.js` |
-| `index.html` | featured ×3 | 800×800 | Generated per drink by `render.js` |
+| `team.html` | team | 1000×1250 | Generated per person by `render.js` |
+| `book.html` | map | — | Replace with a Google Maps `<iframe>` once the pin is live |
 
 **Generated slots need no code at all.** Anything rendered from data — featured
 drinks, beans, merch, team members — takes an optional `image` (and optional

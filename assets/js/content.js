@@ -1,23 +1,28 @@
 /* ============================================================
-   CONTENT  —  ★ RESKIN FILE 2 of 3
+   CONTENT  —  ★ RESKIN FILE 2 of 3   · SERVICES & BOOKING ·
    ------------------------------------------------------------
-   Every word on this website lives here, as an { ar, en } pair, plus
-   the data that drives the menu and shop grids.
+   Every word on this website lives here, as an { ar, en } pair, plus the
+   data that drives the services, team, packages, testimonials and FAQ.
 
-   To re-dress the site for a new client you change THIS file,
-   assets/css/tokens.css, and the five SVGs in assets/brand/.
+   The default copy is written for a barbershop or salon, the largest
+   segment. It retargets to a CLINIC, a GYM, a SPA or a STUDIO by editing
+   this file alone — the page structure, the CSS and the engine do not
+   change. Swap the service categories, the team roles and the packages,
+   and the site is a different business.
 
-   Adding a drink is one entry in menu[].items — never HTML.
-   Keys under t.* are addressed from markup as data-i18n="nav.home".
+   Booking is a WhatsApp deep link, not a calendar: that is what small
+   businesses here actually use, and every such link resolves from
+   contact.whatsapp below.
+
+   After editing this file run:  node tools/sync-static.js
    ============================================================ */
 
 window.SITE = {
 
   /* ---- Identity ---------------------------------------------------- */
   brand: {
-    /* Shown in the header and footer wordmark. */
-    primary:   { ar: 'اسم المقهى', en: 'Café Name' },
-    secondary: 'CAFE NAME',            // wide-tracked Latin line, one script only
+    primary:   { ar: 'اسم النشاط', en: 'Business Name' },
+    secondary: 'STUDIO',
     currency:  { ar: 'ر.س', en: 'SAR' }
   },
 
@@ -39,99 +44,146 @@ window.SITE = {
   },
 
   /* ---- Opening hours ------------------------------------------------
-     `key` matches JS getDay() names so today's row can be highlighted. */
+     `key` matches JS getDay() so today's row highlights itself. */
   hours: [
-    { key: 'sun', day: { ar: 'الأحد',    en: 'Sunday'    }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
-    { key: 'mon', day: { ar: 'الاثنين',  en: 'Monday'    }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
-    { key: 'tue', day: { ar: 'الثلاثاء', en: 'Tuesday'   }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
-    { key: 'wed', day: { ar: 'الأربعاء', en: 'Wednesday' }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
-    { key: 'thu', day: { ar: 'الخميس',   en: 'Thursday'  }, time: { ar: '٧:٠٠ ص – ١:٠٠ ص',  en: '7:00 AM – 1:00 AM'  } },
-    { key: 'fri', day: { ar: 'الجمعة',   en: 'Friday'    }, time: { ar: '١:٠٠ م – ١:٠٠ ص',  en: '1:00 PM – 1:00 AM'  } },
-    { key: 'sat', day: { ar: 'السبت',    en: 'Saturday'  }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } }
+    { key: 'sun', day: { ar: 'الأحد',    en: 'Sunday'    }, time: { ar: '١٠:٠٠ ص – ١٠:٠٠ م', en: '10:00 AM – 10:00 PM' } },
+    { key: 'mon', day: { ar: 'الاثنين',  en: 'Monday'    }, time: { ar: '١٠:٠٠ ص – ١٠:٠٠ م', en: '10:00 AM – 10:00 PM' } },
+    { key: 'tue', day: { ar: 'الثلاثاء', en: 'Tuesday'   }, time: { ar: '١٠:٠٠ ص – ١٠:٠٠ م', en: '10:00 AM – 10:00 PM' } },
+    { key: 'wed', day: { ar: 'الأربعاء', en: 'Wednesday' }, time: { ar: '١٠:٠٠ ص – ١٠:٠٠ م', en: '10:00 AM – 10:00 PM' } },
+    { key: 'thu', day: { ar: 'الخميس',   en: 'Thursday'  }, time: { ar: '١٠:٠٠ ص – ١٢:٠٠ م', en: '10:00 AM – 12:00 AM' } },
+    { key: 'fri', day: { ar: 'الجمعة',   en: 'Friday'    }, time: { ar: '٢:٠٠ م – ١٢:٠٠ م',  en: '2:00 PM – 12:00 AM'  } },
+    { key: 'sat', day: { ar: 'السبت',    en: 'Saturday'  }, time: { ar: '١٠:٠٠ ص – ١٠:٠٠ م', en: '10:00 AM – 10:00 PM' } }
   ],
 
-  /* ---- Menu ---------------------------------------------------------
-     Categories render in array order on menu.html. `featured: true`
-     lifts an item onto the home page strip (first three win). */
-  menu: [
+  /* ---- Services -----------------------------------------------------
+     Categories render in array order. `featured: true` lifts a service
+     onto the home page strip (first three win). `duration` is optional
+     and simply disappears from the row when absent. */
+  services: [
     {
-      id: 'hot',
-      name: { ar: 'مشروبات ساخنة', en: 'Hot' },
-      note: { ar: 'تُحضَّر عند الطلب', en: 'Made to order' },
+      id: 'hair',
+      name: { ar: 'الشعر', en: 'Hair' },
+      note: { ar: 'بالحجز أو بالدور', en: 'By appointment or walk-in' },
       items: [
-        { price: '12', featured: true,
-          name: { ar: 'إسبريسو', en: 'Espresso' },
-          desc: { ar: 'جرعة مركزة من خلطتنا الموسمية.', en: 'A concentrated shot of our seasonal blend.' } },
-        { price: '16',
-          name: { ar: 'فلات وايت', en: 'Flat White' },
-          desc: { ar: 'حليب مخملي وطبقة كريما رقيقة.', en: 'Velvet milk over a thin crema.' } },
-        { price: '17', featured: true,
-          name: { ar: 'لاتيه', en: 'Latte' },
-          desc: { ar: 'الأكثر طلبًا، هادئ ومتوازن.', en: 'The house regular — calm and balanced.' } },
-        { price: '18',
-          name: { ar: 'قهوة مقطرة V60', en: 'V60 Pour Over' },
-          desc: { ar: 'حبّة مفردة تتغير كل موسم.', en: 'A single origin that changes each season.' } }
+        { price: '60', duration: { ar: '٣٠ دقيقة', en: '30 min' }, featured: true,
+          name: { ar: 'قص شعر', en: 'Haircut' },
+          desc: { ar: 'قص وغسيل وتصفيف، مع استشارة قصيرة قبل البداية.',
+                  en: 'Cut, wash and style, with a short consultation first.' } },
+        { price: '90', duration: { ar: '٤٥ دقيقة', en: '45 min' },
+          name: { ar: 'قص وتصفيف', en: 'Cut & Style' },
+          desc: { ar: 'قص كامل مع تصفيف للمناسبات.', en: 'A full cut finished for an occasion.' } },
+        { price: '150', duration: { ar: '٩٠ دقيقة', en: '90 min' },
+          name: { ar: 'صبغة', en: 'Colour' },
+          desc: { ar: 'لون كامل أو خصلات. اختبار حساسية قبل الموعد بيوم.',
+                  en: 'Full colour or highlights. Patch test the day before.' } },
+        { price: '45', duration: { ar: '٢٠ دقيقة', en: '20 min' },
+          name: { ar: 'تصفيف فقط', en: 'Styling Only' },
+          desc: { ar: 'غسيل وتجفيف وتصفيف، بدون قص.', en: 'Wash, dry and style — no cut.' } }
       ]
     },
     {
-      id: 'cold',
-      name: { ar: 'مشروبات باردة', en: 'Cold' },
-      note: { ar: 'مع ثلج مصنوع من الماء المفلتر', en: 'Served over filtered ice' },
+      id: 'beard',
+      name: { ar: 'اللحية', en: 'Beard' },
+      note: { ar: 'مناشف ساخنة وزيوت طبيعية', en: 'Hot towels and natural oils' },
       items: [
-        { price: '18', featured: true,
-          name: { ar: 'آيس لاتيه', en: 'Iced Latte' },
-          desc: { ar: 'إسبريسو مزدوج على حليب بارد.', en: 'A double shot over cold milk.' } },
-        { price: '19',
-          name: { ar: 'كولد برو', en: 'Cold Brew' },
-          desc: { ar: 'منقوع ١٦ ساعة، خفيف وحلو.', en: 'Steeped 16 hours — light and sweet.' } },
-        { price: '20',
-          name: { ar: 'مشروب الموسم', en: 'Seasonal Cooler' },
-          desc: { ar: 'فاكهة طازجة، يتغير كل شهر.', en: 'Fresh fruit, changes monthly.' } }
+        { price: '40', duration: { ar: '٢٠ دقيقة', en: '20 min' }, featured: true,
+          name: { ar: 'تحديد اللحية', en: 'Beard Trim' },
+          desc: { ar: 'تحديد وتشذيب، مع منشفة ساخنة.', en: 'Shaped and tidied, with a hot towel.' } },
+        { price: '70', duration: { ar: '٤٠ دقيقة', en: '40 min' },
+          name: { ar: 'حلاقة تقليدية', en: 'Traditional Shave' },
+          desc: { ar: 'موسى مستقيم، منشفتان ساخنتان، وبلسم بعد الحلاقة.',
+                  en: 'Straight razor, two hot towels, and an after-shave balm.' } }
       ]
     },
     {
-      id: 'sweets',
-      name: { ar: 'الحلويات', en: 'Sweets' },
-      note: { ar: 'تُخبز يوميًا', en: 'Baked daily' },
+      id: 'care',
+      name: { ar: 'العناية', en: 'Care' },
+      note: { ar: 'احجز مع خدمة أخرى ووفّر', en: 'Book alongside another service and save' },
       items: [
-        { price: '15',
-          name: { ar: 'كوكيز', en: 'Cookie' },
-          desc: { ar: 'طري من الداخل، مقرمش من الحواف.', en: 'Soft centre, crisp edge.' } },
-        { price: '22',
-          name: { ar: 'تشيز كيك', en: 'Cheesecake' },
-          desc: { ar: 'قاعدة بسكوت وقشدة خفيفة.', en: 'Biscuit base, light cream.' } },
-        { price: '18',
-          name: { ar: 'كرواسون', en: 'Croissant' },
-          desc: { ar: 'زبدة حقيقية، ٧٢ ساعة تخمير.', en: 'Real butter, 72-hour ferment.' } }
+        { price: '120', duration: { ar: '٤٥ دقيقة', en: '45 min' }, featured: true,
+          name: { ar: 'تنظيف بشرة', en: 'Facial' },
+          desc: { ar: 'تنظيف عميق وترطيب، مناسب لكل أنواع البشرة.',
+                  en: 'Deep clean and hydrate — suits every skin type.' } },
+        { price: '80', duration: { ar: '٣٠ دقيقة', en: '30 min' },
+          name: { ar: 'مساج فروة الرأس', en: 'Scalp Massage' },
+          desc: { ar: 'زيوت دافئة وضغط خفيف، للاسترخاء.', en: 'Warm oils and light pressure.' } },
+        { price: '55', duration: { ar: '٢٥ دقيقة', en: '25 min' },
+          name: { ar: 'عناية باليدين', en: 'Hand Care' },
+          desc: { ar: 'تنظيف وتقليم وترطيب.', en: 'Clean, trim and moisturise.' } }
       ]
     }
   ],
 
-  /* ---- Retail bags --------------------------------------------------- */
-  beans: [
-    { price: '75', weight: '250g',
-      name:    { ar: 'الحبّة الأولى', en: 'House Origin' },
-      origin:  { ar: 'كولومبيا',      en: 'Colombia' },
-      process: { ar: 'مغسولة',        en: 'Washed' },
-      notes:   { ar: 'كراميل، تفاح، كاكاو', en: 'Caramel, apple, cocoa' } },
-    { price: '85', weight: '250g',
-      name:    { ar: 'الحبّة الموسمية', en: 'Seasonal Lot' },
-      origin:  { ar: 'إثيوبيا',         en: 'Ethiopia' },
-      process: { ar: 'طبيعية',          en: 'Natural' },
-      notes:   { ar: 'توت، ياسمين، خوخ', en: 'Berry, jasmine, peach' } },
-    { price: '95', weight: '250g',
-      name:    { ar: 'الحبّة المحدودة', en: 'Limited Lot' },
-      origin:  { ar: 'كولومبيا',        en: 'Colombia' },
-      process: { ar: 'لا هوائية',       en: 'Anaerobic' },
-      notes:   { ar: 'عنب، كمثرى، رمان', en: 'Grape, pear, pomegranate' } }
+  /* ---- The people ---------------------------------------------------
+     Add `image: 'assets/photos/name.jpg'` to any entry and the branded
+     placeholder is replaced by a real photograph. See BRAND.md. */
+  team: [
+    { name: { ar: 'الاسم الأول', en: 'First Name' },
+      role: { ar: 'مدير الفرع', en: 'Manager' },
+      bio:  { ar: 'خمسة عشر عامًا في المهنة، ويعرف اسم كل زبون.',
+              en: 'Fifteen years in the trade, and knows every regular by name.' } },
+    { name: { ar: 'الاسم الثاني', en: 'Second Name' },
+      role: { ar: 'أخصائي قص', en: 'Senior Stylist' },
+      bio:  { ar: 'متخصص في القصّات الكلاسيكية والتحديد الدقيق.',
+              en: 'Classic cuts and precise shaping.' } },
+    { name: { ar: 'الاسم الثالث', en: 'Third Name' },
+      role: { ar: 'أخصائي لون', en: 'Colour Specialist' },
+      bio:  { ar: 'يقرأ درجة الشعر قبل أن يلمس الصبغة.',
+              en: 'Reads the hair before touching the colour.' } },
+    { name: { ar: 'الاسم الرابع', en: 'Fourth Name' },
+      role: { ar: 'العناية بالبشرة', en: 'Skin Therapist' },
+      bio:  { ar: 'يفضّل الخطوات البسيطة على الخلطات المعقّدة.',
+              en: 'Prefers simple routines to complicated ones.' } }
   ],
 
-  /* ---- Merch ----------------------------------------------------------- */
-  merch: [
-    { price: '180', name: { ar: 'هودي',        en: 'Hoodie' },     desc: { ar: 'قطن ثقيل بشعار مطرز.', en: 'Heavy cotton, embroidered mark.' } },
-    { price: '95',  name: { ar: 'تيشيرت',      en: 'T-Shirt' },    desc: { ar: 'قطن ممشط، قصّة واسعة.', en: 'Combed cotton, relaxed cut.' } },
-    { price: '70',  name: { ar: 'كاب',         en: 'Cap' },        desc: { ar: 'مقاس واحد يناسب الجميع.', en: 'One size fits all.' } },
-    { price: '45',  name: { ar: 'كوب فخّاري',  en: 'Clay Cup' },   desc: { ar: 'مصنوع يدويًا ومختوم بشعارنا.', en: 'Hand-thrown and stamped.' } }
+  /* ---- Packages ------------------------------------------------------
+     `includes` is an { ar: [...], en: [...] } pair of lines. */
+  packages: [
+    { price: '250',
+      name: { ar: 'الباقة الشهرية', en: 'Monthly' },
+      desc: { ar: 'زيارتان في الشهر بسعر أقل من المفرد.', en: 'Two visits a month for less than singles.' },
+      includes: { ar: ['قصّتان في الشهر', 'تحديد لحية مجاني', 'حجز بالأولوية'],
+                  en: ['Two cuts a month', 'Free beard trim', 'Priority booking'] } },
+    { price: '420', featured: true,
+      name: { ar: 'الباقة الفصلية', en: 'Seasonal' },
+      desc: { ar: 'ثلاثة أشهر، وأفضل قيمة لدينا.', en: 'Three months — our best value.' },
+      includes: { ar: ['ست قصّات', 'تحديد لحية مع كل زيارة', 'تنظيف بشرة مرة واحدة', 'حجز بالأولوية'],
+                  en: ['Six cuts', 'Beard trim every visit', 'One facial', 'Priority booking'] } },
+    { price: '700',
+      name: { ar: 'باقة العريس', en: 'Groom' },
+      desc: { ar: 'تحضير كامل قبل المناسبة، لك ولمرافقك.', en: 'Full preparation before the day, for you and a guest.' },
+      includes: { ar: ['جلسة تجريبية', 'قص وتصفيف يوم المناسبة', 'حلاقة تقليدية', 'تنظيف بشرة', 'ضيف واحد مجانًا'],
+                  en: ['Trial session', 'Cut and style on the day', 'Traditional shave', 'Facial', 'One guest free'] } }
+  ],
+
+  /* ---- Social proof ---------------------------------------------------- */
+  testimonials: [
+    { name: { ar: 'زبون دائم', en: 'A regular' },
+      text: { ar: '«أول مكان أخرج منه وأنا مرتاح من الشكل ومن الجلسة نفسها.»',
+              en: '“The first place I leave happy with the cut and with the hour itself.”' } },
+    { name: { ar: 'زبون جديد', en: 'A first visit' },
+      text: { ar: '«حجزت عبر واتساب خلال دقيقة، ودخلت في وقتي بالضبط.»',
+              en: '“Booked on WhatsApp in a minute, and was seen exactly on time.”' } },
+    { name: { ar: 'من الحي', en: 'From the neighbourhood' },
+      text: { ar: '«نظيف، هادئ، ويحترمون الموعد. صار المكان الثابت لنا.»',
+              en: '“Clean, calm, and they respect the appointment. It is our regular now.”' } }
+  ],
+
+  /* ---- FAQ — rendered as <details>, so it opens without JavaScript ------ */
+  faq: [
+    { q: { ar: 'هل أحتاج حجزًا مسبقًا؟', en: 'Do I need to book ahead?' },
+      a: { ar: 'نستقبل بالدور عند توفر مكان، لكن الحجز يضمن وقتك — خاصة في المساء ونهاية الأسبوع.',
+           en: 'We take walk-ins when there is room, but booking guarantees your slot — especially evenings and weekends.' } },
+    { q: { ar: 'كيف أحجز؟', en: 'How do I book?' },
+      a: { ar: 'أرسل لنا رسالة على واتساب بالخدمة والوقت المناسب، ونؤكد لك خلال دقائق.',
+           en: 'Message us on WhatsApp with the service and a time that suits you; we confirm within minutes.' } },
+    { q: { ar: 'ماذا لو تأخرت أو أردت الإلغاء؟', en: 'What if I am late or need to cancel?' },
+      a: { ar: 'أخبرنا قبل ساعة على الأقل ونعيد جدولة الموعد بلا رسوم. التأخر أكثر من خمس عشرة دقيقة قد يعني تقصير الجلسة.',
+           en: 'Tell us at least an hour ahead and we reschedule at no charge. More than fifteen minutes late may mean a shorter session.' } },
+    { q: { ar: 'ما طرق الدفع المقبولة؟', en: 'How can I pay?' },
+      a: { ar: 'مدى، آبل باي، والبطاقات الائتمانية، والنقد.', en: 'Mada, Apple Pay, credit cards and cash.' } },
+    { q: { ar: 'هل الأسعار شاملة الضريبة؟', en: 'Do prices include VAT?' },
+      a: { ar: 'نعم، كل الأسعار المعروضة شاملة ضريبة القيمة المضافة.', en: 'Yes — every price shown includes VAT.' } }
   ],
 
   /* ==========================================================
@@ -139,11 +191,11 @@ window.SITE = {
      ========================================================== */
   t: {
     nav: {
-      home:  { ar: 'الرئيسية', en: 'Home'  },
-      menu:  { ar: 'المنيو',   en: 'Menu'  },
-      story: { ar: 'قصتنا',    en: 'Story' },
-      shop:  { ar: 'المتجر',   en: 'Shop'  },
-      visit: { ar: 'زورونا',   en: 'Visit' }
+      home:     { ar: 'الرئيسية', en: 'Home'     },
+      services: { ar: 'الخدمات',  en: 'Services' },
+      team:     { ar: 'فريقنا',   en: 'Team'     },
+      story:    { ar: 'قصتنا',    en: 'Story'    },
+      book:     { ar: 'احجز',     en: 'Book'     }
     },
 
     common: {
@@ -153,97 +205,99 @@ window.SITE = {
       navLabel:    { ar: 'التنقل الرئيسي',     en: 'Main navigation' },
       openMenu:    { ar: 'فتح القائمة',        en: 'Open menu' },
       call:        { ar: 'اتصل بنا',           en: 'Call us' },
-      viewMenu:    { ar: 'تصفّح المنيو',       en: 'View the menu' },
+      viewServices:{ ar: 'تصفّح الخدمات',      en: 'See the services' },
       directions:  { ar: 'الاتجاهات',          en: 'Get directions' },
-      order:       { ar: 'اطلب عبر واتساب',    en: 'Order on WhatsApp' },
+      book:        { ar: 'احجز عبر واتساب',    en: 'Book on WhatsApp' },
       instagram:   { ar: 'إنستقرام',           en: 'Instagram' },
       backHome:    { ar: 'العودة للرئيسية',    en: 'Back to home' },
-      noscript:    { ar: 'فعّل الجافاسكربت لعرض المنيو والمتجر كاملين.', en: 'Enable JavaScript to see the full menu and shop.' }
+      noscript:    { ar: 'فعّل الجافاسكربت لعرض الخدمات والباقات كاملة.', en: 'Enable JavaScript to see the full services and packages.' }
     },
 
     hero: {
-      title:   { ar: 'مكان يرحّب بك', en: 'A place that welcomes you' },
-      tagline: { ar: 'قهوة مختصة، حلويات تُخبز يوميًا، ومساحة هادئة تجلس فيها بلا استعجال.',
-                 en: 'Specialty coffee, sweets baked daily, and a quiet room to sit in without hurrying.' },
+      title:   { ar: 'خدمة تستحق الموعد', en: 'Worth booking the time for' },
+      tagline: { ar: 'فريق يعرف ما يفعل، مكان هادئ، ومواعيد تُحترم. احجز في دقيقة عبر واتساب.',
+                 en: 'A team who know their craft, a calm room, and appointments that are kept. Book in a minute on WhatsApp.' },
       meta1:   { ar: 'المدينة – اسم الحي', en: 'City – District' },
-      meta2:   { ar: 'يوميًا من ٧ صباحًا',  en: 'Daily from 7 AM' }
+      meta2:   { ar: 'يوميًا من ١٠ صباحًا', en: 'Daily from 10 AM' }
     },
 
     home: {
-      introEyebrow:  { ar: 'من نحن',   en: 'Who we are' },
-      introTitle:    { ar: 'نبدأ من الحبّة، وننتهي عندك', en: 'It starts with the bean and ends with you' },
-      introText:     { ar: 'نختار حبّاتنا موسمًا بعد موسم، ونحمّصها على دفعات صغيرة. كل فنجان يُحضَّر عند الطلب، لأن القهوة الجيدة لا تنتظر.',
-                       en: 'We choose our beans season by season and roast them in small batches. Every cup is made to order, because good coffee does not wait.' },
-      featuredEyebrow:{ ar: 'المفضّلة', en: 'Favourites' },
-      featuredTitle: { ar: 'ما يطلبه الناس أكثر', en: 'What people order most' },
-      galleryEyebrow:{ ar: 'المكان',   en: 'The room' },
-      galleryTitle:  { ar: 'تفاصيل صغيرة، صُنعت بحب', en: 'Small details, made with care' },
-      visitTitle:    { ar: 'تعال وقابلنا', en: 'Come and find us' },
-      visitText:     { ar: 'الباب مفتوح من الصباح الباكر حتى آخر الليل. لا تحتاج حجزًا، فقط تعال.',
-                       en: 'The door is open from early morning until late. No booking needed — just come.' }
+      introEyebrow:   { ar: 'من نحن', en: 'Who we are' },
+      introTitle:     { ar: 'وقتك محجوز لك وحدك', en: 'Your time is held for you alone' },
+      introText:      { ar: 'نحجز لكل موعد وقتًا كاملًا، فلا أحد ينتظر ولا أحد يُستعجل. تدخل في وقتك، وتخرج راضيًا.',
+                        en: 'Every appointment gets its full hour, so nobody waits and nobody is rushed. You are seen on time, and you leave happy.' },
+      featuredEyebrow:{ ar: 'الخدمات',  en: 'Services' },
+      featuredTitle:  { ar: 'الأكثر طلبًا', en: 'Most booked' },
+      galleryEyebrow: { ar: 'المكان',   en: 'The room' },
+      galleryTitle:   { ar: 'مساحة نظيفة وهادئة', en: 'Clean, quiet, and yours for the hour' },
+      praiseTitle:    { ar: 'ماذا يقول زبائننا', en: 'What people say' },
+      visitTitle:     { ar: 'احجز موعدك', en: 'Book your appointment' },
+      visitText:      { ar: 'أرسل لنا الخدمة والوقت المناسب على واتساب، ونؤكد لك خلال دقائق.',
+                        en: 'Send us the service and a time on WhatsApp, and we confirm within minutes.' }
     },
 
-    menuPage: {
-      eyebrow: { ar: 'المشروبات والحلويات', en: 'Drinks & Sweets' },
-      title: { ar: 'المنيو',  en: 'The Menu' },
-      lede:  { ar: 'قائمة تتغير مع الموسم. اسأل الباريستا عن حبّة اليوم.',
-               en: 'A list that moves with the season. Ask the barista about today’s bean.' },
-      note:  { ar: 'الأسعار شاملة ضريبة القيمة المضافة.', en: 'All prices include VAT.' }
+    servicesPage: {
+      eyebrow: { ar: 'الأسعار والمدة', en: 'Prices & duration' },
+      title:   { ar: 'الخدمات', en: 'Services' },
+      lede:    { ar: 'كل خدمة بمدتها وسعرها. المدة تقريبية، ونأخذ وقتنا حين يحتاج العمل ذلك.',
+                 en: 'Every service with its length and price. Times are a guide — we take longer when the work needs it.' },
+      note:    { ar: 'الأسعار شاملة ضريبة القيمة المضافة.', en: 'All prices include VAT.' },
+      packagesTitle: { ar: 'الباقات', en: 'Packages' },
+      packagesLede:  { ar: 'تزورنا بانتظام؟ الباقة أوفر، وتحجز لك الأولوية.',
+                       en: 'Coming regularly? A package costs less and books you priority.' }
+    },
+
+    team: {
+      eyebrow: { ar: 'من سيخدمك', en: 'Who you will meet' },
+      title:   { ar: 'فريقنا', en: 'Our Team' },
+      lede:    { ar: 'وجوه ثابتة تعرفك وتعرف ما تحب. اطلب من تريد عند الحجز.',
+                 en: 'The same faces every visit, who learn what you like. Ask for anyone by name when you book.' }
     },
 
     story: {
-      eyebrow:    { ar: 'عن المقهى', en: 'About the café' },
-      title:      { ar: 'قصتنا',  en: 'Our Story' },
-      lede:       { ar: 'بدأنا بفكرة واحدة: مكان يشبه البيت، وقهوة تستحق الجلسة.',
-                    en: 'We started with one idea: a room that feels like home, and coffee worth sitting down for.' },
-      bodyTitle:  { ar: 'كيف بدأ كل شيء', en: 'How it began' },
-      bodyText:   { ar: 'فتحنا الباب بطاولة واحدة وآلة إسبريسو. اليوم توسّعت المساحة، لكن الفكرة لم تتغير: نُحسن الاستقبال، ونُتقن الفنجان.',
-                    en: 'We opened with one table and an espresso machine. The room has grown since, but the idea has not: welcome people well, and get the cup right.' },
-      valuesTitle:{ ar: 'ما نؤمن به', en: 'What we believe' },
-      v1Title:    { ar: 'الحبّة أولًا',  en: 'The bean first' },
-      v1Text:     { ar: 'نشتري بشفافية ونحمّص على دفعات صغيرة.', en: 'Sourced transparently, roasted in small batches.' },
-      v2Title:    { ar: 'الضيافة',      en: 'Hospitality' },
-      v2Text:     { ar: 'نعرف الأسماء، ونتذكّر الطلبات.', en: 'We learn names and remember orders.' },
-      v3Title:    { ar: 'المكان',       en: 'The room' },
-      v3Text:     { ar: 'ضوء طبيعي، نباتات، ومساحة تسع الجميع.', en: 'Natural light, plants, and room for everyone.' },
-      friendsTitle:{ ar: 'أصدقاؤنا',    en: 'Our friends' },
-      friendsText:{ ar: 'نتعاون مع محمّصين ومزارعين وصنّاع محليين. أسماؤهم على الرف، لا في الظل.',
-                    en: 'We work with roasters, growers and local makers. Their names sit on the shelf, not in the shadows.' },
-      quote:      { ar: '«القهوة عذر جيد للجلوس معًا.»', en: '“Coffee is a good excuse to sit together.”' },
-      quoteCite:  { ar: 'من فريق المقهى', en: 'From the team' }
+      eyebrow:     { ar: 'عنّا', en: 'About us' },
+      title:       { ar: 'قصتنا', en: 'Our Story' },
+      lede:        { ar: 'بدأنا بفكرة واحدة: مكان يحترم وقتك ويتقن عمله.',
+                     en: 'We started with one idea: a place that respects your time and knows its craft.' },
+      bodyTitle:   { ar: 'كيف بدأ كل شيء', en: 'How it began' },
+      bodyText:    { ar: 'فتحنا بكرسي واحد وموعد واحد في اليوم. توسّع المكان، وبقيت القاعدة نفسها: موعد واحد في كل وقت، وعناية كاملة به.',
+                     en: 'We opened with one chair and one appointment a day. The room grew; the rule did not: one appointment at a time, and all of our attention on it.' },
+      valuesTitle: { ar: 'ما نلتزم به', en: 'What we hold to' },
+      v1Title:     { ar: 'الوقت',    en: 'Time' },
+      v1Text:      { ar: 'موعدك يبدأ في وقته. إن تأخرنا، نعتذر ونعوّضك.', en: 'Your appointment starts on time. If we run late, we make it up to you.' },
+      v2Title:     { ar: 'النظافة',  en: 'Hygiene' },
+      v2Text:      { ar: 'أدوات معقّمة لكل زبون، ومناشف تُستخدم مرة واحدة.', en: 'Sterilised tools for every client, and towels used once.' },
+      v3Title:     { ar: 'الصراحة',  en: 'Straight talk' },
+      v3Text:      { ar: 'نقول لك ما يناسبك، لا ما يزيد الفاتورة.', en: 'We tell you what suits you, not what raises the bill.' },
+      quote:       { ar: '«الموعد أمانة، والوقت جزء من الخدمة.»', en: '“An appointment is a promise, and time is part of the service.”' },
+      quoteCite:   { ar: 'من فريق العمل', en: 'From the team' }
     },
 
-    shop: {
-      eyebrow:    { ar: 'خذها معك', en: 'Take it home' },
-      title:      { ar: 'المتجر', en: 'The Shop' },
-      lede:       { ar: 'خذ شيئًا من المقهى إلى بيتك.', en: 'Take a piece of the café home with you.' },
-      beansTitle: { ar: 'حبوب القهوة', en: 'Coffee Beans' },
-      merchTitle: { ar: 'منتجاتنا',    en: 'Merch' },
-      orderNote:  { ar: 'للطلب أرسل لنا رسالة على واتساب أو مرّ علينا في الفرع.',
-                    en: 'To order, message us on WhatsApp or drop by the shop.' },
-      origin:     { ar: 'المصدر',   en: 'Origin' },
-      process:    { ar: 'المعالجة', en: 'Process' },
-      notes:      { ar: 'النكهات',  en: 'Notes' }
-    },
-
-    visit: {
-      eyebrow:      { ar: 'الموقع وأوقات العمل', en: 'Location & hours' },
-      title:        { ar: 'زورونا', en: 'Visit Us' },
-      lede:         { ar: 'نحن هنا كل يوم. تعال وحدك أو مع من تحب.',
-                      en: 'We are here every day. Come alone or bring someone.' },
-      addressTitle: { ar: 'العنوان',      en: 'Address' },
-      hoursTitle:   { ar: 'أوقات العمل',  en: 'Opening Hours' },
-      contactTitle: { ar: 'تواصل معنا',   en: 'Get in touch' },
-      parkingTitle: { ar: 'المواقف',      en: 'Parking' },
-      parkingText:  { ar: 'مواقف مجانية أمام الفرع وعلى الشارع الجانبي.',
-                      en: 'Free parking in front of the shop and on the side street.' }
+    book: {
+      eyebrow:      { ar: 'الحجز والموقع', en: 'Booking & location' },
+      title:        { ar: 'احجز موعدك', en: 'Book an Appointment' },
+      lede:         { ar: 'الحجز عبر واتساب أسرع طريقة. أخبرنا بالخدمة والوقت، ونؤكد لك خلال دقائق.',
+                      en: 'WhatsApp is the fastest way. Tell us the service and a time, and we confirm within minutes.' },
+      howTitle:     { ar: 'كيف يتم الحجز', en: 'How booking works' },
+      s1Title:      { ar: '١ · أرسل رسالة', en: '1 · Message us' },
+      s1Text:       { ar: 'اذكر الخدمة، واليوم، والوقت الذي يناسبك.', en: 'Name the service, the day, and a time that suits you.' },
+      s2Title:      { ar: '٢ · نؤكد لك',   en: '2 · We confirm' },
+      s2Text:       { ar: 'نرد خلال دقائق بالتأكيد أو بأقرب وقت متاح.', en: 'We reply within minutes, confirming or offering the nearest slot.' },
+      s3Title:      { ar: '٣ · تعال في وقتك', en: '3 · Arrive on time' },
+      s3Text:       { ar: 'احضر قبل خمس دقائق، ولا حاجة للانتظار.', en: 'Come five minutes early — there is no waiting.' },
+      addressTitle: { ar: 'العنوان',     en: 'Address' },
+      hoursTitle:   { ar: 'أوقات العمل', en: 'Opening Hours' },
+      contactTitle: { ar: 'تواصل معنا',  en: 'Get in touch' },
+      parkingTitle: { ar: 'المواقف',     en: 'Parking' },
+      parkingText:  { ar: 'مواقف مجانية أمام المحل وعلى الشارع الجانبي.', en: 'Free parking in front and on the side street.' },
+      faqTitle:     { ar: 'أسئلة شائعة', en: 'Common questions' }
     },
 
     footer: {
-      tagline:      { ar: 'مكان يرحّب بك.', en: 'A place that welcomes you.' },
-      exploreTitle: { ar: 'تصفّح',   en: 'Explore' },
-      visitTitle:   { ar: 'زورونا',  en: 'Visit'   },
-      followTitle:  { ar: 'تابعنا',  en: 'Follow'  },
+      tagline:      { ar: 'خدمة تستحق الموعد.', en: 'Worth booking the time for.' },
+      exploreTitle: { ar: 'تصفّح',  en: 'Explore' },
+      visitTitle:   { ar: 'زورونا', en: 'Visit'   },
+      followTitle:  { ar: 'تابعنا', en: 'Follow'  },
       rights:       { ar: 'جميع الحقوق محفوظة.', en: 'All rights reserved.' }
     },
 
@@ -253,17 +307,16 @@ window.SITE = {
                en: 'The link may have changed or the page was removed. Let’s get you back.' }
     },
 
-    /* Alt text for the image slots. Update these when real photos land. */
+    /* Alt text for the image slots. Update when real photos land. */
     alt: {
-      hero:     { ar: 'واجهة المقهى من الداخل', en: 'Inside the café' },
-      room:     { ar: 'زاوية الجلوس',           en: 'A corner of the seating area' },
-      counter:  { ar: 'الباريستا خلف الطاولة',  en: 'The barista at the counter' },
-      cup:      { ar: 'فنجان قهوة على الطاولة', en: 'A cup of coffee on the table' },
-      sweets:   { ar: 'حلويات المقهى',          en: 'Sweets from the café' },
-      beans:    { ar: 'كيس حبوب قهوة',          en: 'A bag of coffee beans' },
-      merch:    { ar: 'منتجات المقهى',          en: 'Café merchandise' },
-      storefront:{ ar: 'واجهة المقهى من الخارج', en: 'The café storefront' },
-      map:      { ar: 'موقع المقهى على الخريطة', en: 'The café location on the map' }
+      hero:      { ar: 'داخل المكان: كراسي ومرايا وإضاءة هادئة', en: 'Inside: chairs, mirrors and soft light' },
+      room:      { ar: 'زاوية الانتظار',           en: 'The waiting corner' },
+      counter:   { ar: 'محطة العمل والأدوات',      en: 'A work station and its tools' },
+      cup:       { ar: 'تفاصيل من الجلسة',         en: 'A detail from the session' },
+      team:      { ar: 'أحد أفراد الفريق',         en: 'A member of the team' },
+      merch:     { ar: 'منتجات العناية',           en: 'Care products' },
+      storefront:{ ar: 'واجهة المحل من الخارج',    en: 'The storefront' },
+      map:       { ar: 'الموقع على الخريطة',       en: 'The location on the map' }
     }
   }
 };
