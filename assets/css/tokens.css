@@ -1,6 +1,10 @@
 /* ============================================================
-   TOKENS  —  ★ RESKIN FILE 1 of 3
+   TOKENS  —  ★ RESKIN FILE 1 of 3        · RAHWAH / رهوة ·
    ------------------------------------------------------------
+   Palette read off the café itself: espresso brown from the timber and
+   the logo badge, warm cream from the walls and cups, terracotta from
+   the shopfront sign and the Sadu cushion, sage from the patio table.
+
    This is the ONLY file in the project allowed to contain a raw
    colour value. Every other stylesheet consumes var(--…).
 
@@ -14,43 +18,42 @@
    type is a one-file edit instead of a six-file one. The HTML supplies
    a brand-agnostic <link rel="preconnect"> to soften the extra hop.   */
 
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Tajawal:wght@300;400;500;700&display=swap');
 
 :root {
 
   /* ---- 2. Palette --------------------------------------------------
-     Template default: a neutral warm-grey. Each brand overrides these
-     six roles and the whole site follows.                            */
+     Six roles carry the identity; everything below them is derived.  */
 
-  --c-deep:        #3b3531;   /* darkest brand tone — header, footer   */
-  --c-mid:         #6d635b;   /* mid brand tone                        */
-  --c-soft:        #a99f95;   /* muted brand tone — placeholders       */
-  --c-accent:      #6f6153;   /* primary CTA, links, active states     */
-  --c-accent-2:    #94a394;   /* secondary accent — tags, highlights   */
-  --c-ground:      #f5f2ed;   /* page background                       */
+  --c-deep:        #4a3427;   /* espresso — hero, footer, headings     */
+  --c-mid:         #7a5b45;   /* roasted mid-brown                     */
+  --c-soft:        #c4a588;   /* latte / clay — logo in photo slots    */
+  --c-accent:      #a6432a;   /* terracotta — the shopfront sign       */
+  --c-accent-2:    #9db59a;   /* sage — the patio table                */
+  --c-ground:      #f5ede1;   /* warm cream — the walls                */
 
   /* Derived surfaces — usually fine to leave alone. */
-  --c-surface:     #fcfaf7;   /* cards, panels                         */
-  --c-surface-alt: #ece7df;   /* alternating sections                  */
-  --c-ink:         #2a2622;   /* body text                             */
-  --c-ink-soft:    #6d635b;   /* secondary text                        */
-  --c-line:        #ded7cd;   /* hairlines, borders                    */
-  --c-on-deep:     #f5f2ed;   /* text sitting on --c-deep              */
+  --c-surface:     #fcf7ef;   /* cards, panels                         */
+  --c-surface-alt: #ebdfcc;   /* alternating sections — sand           */
+  --c-ink:         #2e2018;   /* body text                             */
+  --c-ink-soft:    #7a5b45;   /* secondary text                        */
+  --c-line:        #dbc9b2;   /* hairlines, borders                    */
+  --c-on-deep:     #f5ede1;   /* text sitting on --c-deep              */
   --c-on-accent:   #ffffff;   /* text sitting on --c-accent            */
 
   /* Alpha values. Kept here so no rgba() escapes into other files. */
-  --a-shadow:      rgba(42, 38, 34, 0.10);
-  --a-shadow-soft: rgba(42, 38, 34, 0.05);
-  --a-veil:        rgba(59, 53, 49, 0.55);   /* over imagery           */
-  --a-hairline:    rgba(245, 242, 237, 0.16);/* dividers on dark       */
-  --a-pattern:     rgba(169, 159, 149, 0.16);/* pattern wash opacity   */
+  --a-shadow:      rgba(46, 32, 24, 0.12);
+  --a-shadow-soft: rgba(46, 32, 24, 0.06);
+  --a-veil:        rgba(74, 52, 39, 0.60);   /* over imagery           */
+  --a-hairline:    rgba(245, 237, 225, 0.18);/* dividers on dark       */
+  --a-pattern:     rgba(122, 91, 69, 0.13);  /* pattern wash opacity   */
 
   /* ---- 3. Type ------------------------------------------------------
      --ff-latin drives LTR, --ff-arabic drives RTL. base.css picks the
      right one off the <html dir> attribute, so pages never choose.    */
 
   --ff-latin:   'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --ff-arabic:  'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+  --ff-arabic:  'Tajawal', 'Segoe UI', Tahoma, sans-serif;
   --ff-display: var(--ff-latin);   /* headings; override per brand     */
 
   /* Fluid scale — clamp() means no breakpoint juggling for type. */
@@ -113,6 +116,6 @@
   --img-pattern: url('../brand/pattern-primary.svg');
   --img-band:    url('../brand/pattern-band.svg');
 
-  --pattern-size: 108px;   /* tile size of the primary pattern         */
-  --band-height:  22px;    /* height of the woven divider band         */
+  --pattern-size: 132px;   /* the star lattice wants an architectural  */
+  --band-height:  20px;    /* scale; the Sadu band a tighter one       */
 }

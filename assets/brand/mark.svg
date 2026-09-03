@@ -1,8 +1,19 @@
 <!--
-  ★ RESKIN FILE 3b — the small icon mark.
-  Used at 34–44px in the header, feature icons and small photo slots.
-  Silhouette only (see logo.svg). Keep the viewBox square.
+  RAHWAH · the sprig mark — ★ RESKIN FILE 3b
+  The secondary mark from the merch: three dots above three triangular
+  leaves, a stylised coffee sprig. Silhouette only; the colour comes from
+  the deep and accent tokens in tokens.css.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Mark">
-  <path d="M24 3 C35 15 35 33 24 45 C13 33 13 15 24 3 Z" fill="#000"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Rahwah mark">
+  <g fill="#000">
+    <!-- three dots -->
+    <circle cx="14" cy="13" r="2.9"/>
+    <circle cx="24" cy="8.5" r="2.9"/>
+    <circle cx="34" cy="13" r="2.9"/>
+
+    <!-- three leaves -->
+    <path d="M24 18.5 L31.2 33 L16.8 33 Z"/>
+    <path d="M13.2 24 L19.4 39 L7 39 Z"/>
+    <path d="M34.8 24 L41 39 L28.6 39 Z"/>
+  </g>
 </svg>

@@ -1,11 +1,22 @@
 /* ============================================================
-   CONTENT  —  ★ RESKIN FILE 2 of 3
+   CONTENT  —  ★ RESKIN FILE 2 of 3        · RAHWAH / رهوة ·
    ------------------------------------------------------------
    Every word on this website lives here, as an { ar, en } pair, plus
    the data that drives the menu and shop grids.
 
-   To re-dress the site for a new client you change THIS file,
-   assets/css/tokens.css, and the five SVGs in assets/brand/.
+   Rahwah is a specialty coffee shop in Al Malqa, Riyadh. The voice is
+   taken from the café's own words: «مكان يرحّب بك», «هلا بك في رهوة»,
+   «قهوة، تفاصيل صغيرة، وطلبات تصنع بحب».
+
+   ─────────────────────────────────────────────────────────────
+   STILL TO CONFIRM WITH THE CAFÉ before this goes live — every one
+   of them is a single edit in this file:
+     · contact.phone / phoneHref / phoneLabel / whatsapp   (placeholders)
+     · hours[]        — plausible, not confirmed
+     · menu[].price, beans[].price, merch[].price          (plausible)
+   Confirmed from the café's own channels: the name, the bio line, the
+   district, the Instagram handle, the Maps pin, and the La Palma lot.
+   ─────────────────────────────────────────────────────────────
 
    Adding a drink is one entry in menu[].items — never HTML.
    Keys under t.* are addressed from markup as data-i18n="nav.home".
@@ -15,38 +26,41 @@ window.SITE = {
 
   /* ---- Identity ---------------------------------------------------- */
   brand: {
-    /* Shown in the header and footer wordmark. */
-    primary:   { ar: 'اسم المقهى', en: 'Café Name' },
-    secondary: 'CAFE NAME',            // wide-tracked Latin line, one script only
+    primary:   { ar: 'رهوة', en: 'Rahwah' },
+    secondary: 'RAHWAH',
     currency:  { ar: 'ر.س', en: 'SAR' }
   },
 
   /* ---- Contact — every link on the site resolves from here ---------- */
   contact: {
     addressLines: {
-      ar: ['المدينة – اسم الحي', 'اسم الشارع'],
-      en: ['City – District', 'Street name']
+      ar: ['الرياض – حي الملقا', 'المملكة العربية السعودية'],
+      en: ['Riyadh – Al Malqa', 'Saudi Arabia']
     },
-    phone:     '+966500000000',
-    phoneHref: 'tel:+966500000000',
-    phoneLabel:'+966 50 000 0000',
-    email:     'hello@example.com',
-    emailHref: 'mailto:hello@example.com',
-    whatsapp:  'https://wa.me/966500000000',
-    instagram: 'https://instagram.com/',
-    instagramHandle: '@example',
-    maps:      'https://maps.google.com/'
+    /* PLACEHOLDER — replace with the café's real number. */
+    phone:     '+9665XXXXXXXX',
+    phoneHref: 'tel:+9665XXXXXXXX',
+    phoneLabel:'+966 5X XXX XXXX',
+    whatsapp:  'https://wa.me/9665XXXXXXXX',
+
+    email:     'hello@rahwa.sa',
+    emailHref: 'mailto:hello@rahwa.sa',
+    instagram: 'https://instagram.com/rahwa.sa',
+    instagramHandle: '@rahwa.sa',
+    maps:      'https://maps.app.goo.gl/9uag48UQN1PayJRo6'
   },
 
   /* ---- Opening hours ------------------------------------------------
-     `key` matches JS getDay() names so today's row can be highlighted. */
+     PLACEHOLDER pattern — a typical Riyadh specialty schedule, with the
+     late Thursday and the Friday-prayer gap. Confirm before launch.
+     Keep the `key` values: they drive today's highlight. */
   hours: [
     { key: 'sun', day: { ar: 'الأحد',    en: 'Sunday'    }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
     { key: 'mon', day: { ar: 'الاثنين',  en: 'Monday'    }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
     { key: 'tue', day: { ar: 'الثلاثاء', en: 'Tuesday'   }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
     { key: 'wed', day: { ar: 'الأربعاء', en: 'Wednesday' }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } },
     { key: 'thu', day: { ar: 'الخميس',   en: 'Thursday'  }, time: { ar: '٧:٠٠ ص – ١:٠٠ ص',  en: '7:00 AM – 1:00 AM'  } },
-    { key: 'fri', day: { ar: 'الجمعة',   en: 'Friday'    }, time: { ar: '١:٠٠ م – ١:٠٠ ص',  en: '1:00 PM – 1:00 AM'  } },
+    { key: 'fri', day: { ar: 'الجمعة',   en: 'Friday'    }, time: { ar: '١:٣٠ م – ١:٠٠ ص',  en: '1:30 PM – 1:00 AM'  } },
     { key: 'sat', day: { ar: 'السبت',    en: 'Saturday'  }, time: { ar: '٧:٠٠ ص – ١٢:٠٠ م', en: '7:00 AM – 12:00 AM' } }
   ],
 
@@ -56,82 +70,104 @@ window.SITE = {
   menu: [
     {
       id: 'hot',
-      name: { ar: 'مشروبات ساخنة', en: 'Hot' },
+      name: { ar: 'المشروبات الساخنة', en: 'Hot' },
       note: { ar: 'تُحضَّر عند الطلب', en: 'Made to order' },
       items: [
-        { price: '12', featured: true,
+        { price: '13',
           name: { ar: 'إسبريسو', en: 'Espresso' },
-          desc: { ar: 'جرعة مركزة من خلطتنا الموسمية.', en: 'A concentrated shot of our seasonal blend.' } },
-        { price: '16',
+          desc: { ar: 'جرعة مركزة من خلطة رهوة الموسمية.', en: 'A concentrated shot of the seasonal Rahwah blend.' } },
+        { price: '15',
+          name: { ar: 'أمريكانو', en: 'Americano' },
+          desc: { ar: 'إسبريسو وماء ساخن، صافٍ وبسيط.', en: 'Espresso and hot water — clean and plain.' } },
+        { price: '17',
           name: { ar: 'فلات وايت', en: 'Flat White' },
-          desc: { ar: 'حليب مخملي وطبقة كريما رقيقة.', en: 'Velvet milk over a thin crema.' } },
-        { price: '17', featured: true,
+          desc: { ar: 'حليب مخملي وطبقة كريما رقيقة.', en: 'Velvet milk under a thin crema.' } },
+        { price: '18', featured: true,
           name: { ar: 'لاتيه', en: 'Latte' },
-          desc: { ar: 'الأكثر طلبًا، هادئ ومتوازن.', en: 'The house regular — calm and balanced.' } },
-        { price: '18',
+          desc: { ar: 'الأكثر طلبًا في رهوة، هادئ ومتوازن.', en: 'The one most people order — calm and balanced.' } },
+        { price: '20',
+          name: { ar: 'سبانيش لاتيه', en: 'Spanish Latte' },
+          desc: { ar: 'حليب مكثّف محلّى، دافئ وسميك.', en: 'Sweetened condensed milk — warm and thick.' } },
+        { price: '22', featured: true,
           name: { ar: 'قهوة مقطرة V60', en: 'V60 Pour Over' },
-          desc: { ar: 'حبّة مفردة تتغير كل موسم.', en: 'A single origin that changes each season.' } }
+          desc: { ar: 'حبّة مفردة تتغير كل موسم. اسأل الباريستا عن حبّة اليوم.',
+                  en: 'A single origin that changes each season. Ask the barista about today’s lot.' } }
       ]
     },
     {
       id: 'cold',
-      name: { ar: 'مشروبات باردة', en: 'Cold' },
-      note: { ar: 'مع ثلج مصنوع من الماء المفلتر', en: 'Served over filtered ice' },
+      name: { ar: 'المشروبات الباردة', en: 'Cold' },
+      note: { ar: 'مع ثلج مصنوع من الماء المفلتر', en: 'Over filtered ice' },
       items: [
-        { price: '18', featured: true,
+        { price: '19',
+          name: { ar: 'آيس أمريكانو', en: 'Iced Americano' },
+          desc: { ar: 'منعش وخفيف، للأيام الطويلة.', en: 'Light and refreshing, for the long days.' } },
+        { price: '20',
           name: { ar: 'آيس لاتيه', en: 'Iced Latte' },
           desc: { ar: 'إسبريسو مزدوج على حليب بارد.', en: 'A double shot over cold milk.' } },
-        { price: '19',
+        { price: '22',
+          name: { ar: 'آيس سبانيش لاتيه', en: 'Iced Spanish Latte' },
+          desc: { ar: 'حلو ودسم، وأكثر ما يُطلب في الصيف.', en: 'Sweet and rich — the summer regular.' } },
+        { price: '21',
           name: { ar: 'كولد برو', en: 'Cold Brew' },
-          desc: { ar: 'منقوع ١٦ ساعة، خفيف وحلو.', en: 'Steeped 16 hours — light and sweet.' } },
-        { price: '20',
-          name: { ar: 'مشروب الموسم', en: 'Seasonal Cooler' },
-          desc: { ar: 'فاكهة طازجة، يتغير كل شهر.', en: 'Fresh fruit, changes monthly.' } }
+          desc: { ar: 'منقوع ست عشرة ساعة، خفيف وحلو بطبعه.', en: 'Steeped sixteen hours — light and naturally sweet.' } },
+        { price: '23', featured: true,
+          name: { ar: 'باشن فروت', en: 'Passion Fruit' },
+          desc: { ar: 'باردة وحامضة قليلًا، بلا قهوة.', en: 'Cold, faintly tart, and coffee-free.' } }
       ]
     },
     {
       id: 'sweets',
       name: { ar: 'الحلويات', en: 'Sweets' },
-      note: { ar: 'تُخبز يوميًا', en: 'Baked daily' },
+      note: { ar: 'تُخبز كل صباح', en: 'Baked each morning' },
       items: [
-        { price: '15',
+        { price: '16',
           name: { ar: 'كوكيز', en: 'Cookie' },
           desc: { ar: 'طري من الداخل، مقرمش من الحواف.', en: 'Soft centre, crisp edge.' } },
-        { price: '22',
+        { price: '19',
+          name: { ar: 'كرواسون زبدة', en: 'Butter Croissant' },
+          desc: { ar: 'زبدة حقيقية واثنتان وسبعون ساعة تخمير.', en: 'Real butter, seventy-two hours of ferment.' } },
+        { price: '24',
           name: { ar: 'تشيز كيك', en: 'Cheesecake' },
           desc: { ar: 'قاعدة بسكوت وقشدة خفيفة.', en: 'Biscuit base, light cream.' } },
-        { price: '18',
-          name: { ar: 'كرواسون', en: 'Croissant' },
-          desc: { ar: 'زبدة حقيقية، ٧٢ ساعة تخمير.', en: 'Real butter, 72-hour ferment.' } }
+        { price: '26',
+          name: { ar: 'حلى اليوم', en: 'Sweet of the Day' },
+          desc: { ar: 'يتغير يوميًا. اسأل عمّا خرج من الفرن اليوم.', en: 'Changes daily — ask what came out of the oven.' } }
       ]
     }
   ],
 
-  /* ---- Retail bags --------------------------------------------------- */
+  /* ---- Retail bags ----------------------------------------------------
+     La Palma is taken from the café's own lot card: Colombia, anaerobic,
+     fruity — grape, pear, pomegranate. */
   beans: [
-    { price: '75', weight: '250g',
-      name:    { ar: 'الحبّة الأولى', en: 'House Origin' },
-      origin:  { ar: 'كولومبيا',      en: 'Colombia' },
-      process: { ar: 'مغسولة',        en: 'Washed' },
-      notes:   { ar: 'كراميل، تفاح، كاكاو', en: 'Caramel, apple, cocoa' } },
     { price: '85', weight: '250g',
-      name:    { ar: 'الحبّة الموسمية', en: 'Seasonal Lot' },
-      origin:  { ar: 'إثيوبيا',         en: 'Ethiopia' },
-      process: { ar: 'طبيعية',          en: 'Natural' },
-      notes:   { ar: 'توت، ياسمين، خوخ', en: 'Berry, jasmine, peach' } },
-    { price: '95', weight: '250g',
-      name:    { ar: 'الحبّة المحدودة', en: 'Limited Lot' },
-      origin:  { ar: 'كولومبيا',        en: 'Colombia' },
-      process: { ar: 'لا هوائية',       en: 'Anaerobic' },
-      notes:   { ar: 'عنب، كمثرى، رمان', en: 'Grape, pear, pomegranate' } }
+      name:    { ar: 'لا بالما', en: 'La Palma' },
+      origin:  { ar: 'كولومبيا', en: 'Colombia' },
+      process: { ar: 'لا هوائية', en: 'Anaerobic' },
+      notes:   { ar: 'عنب، كمثرى، رمان', en: 'Grape, pear, pomegranate' } },
+    { price: '75', weight: '250g',
+      name:    { ar: 'خلطة رهوة', en: 'Rahwah Blend' },
+      origin:  { ar: 'البرازيل وكولومبيا', en: 'Brazil & Colombia' },
+      process: { ar: 'مغسولة', en: 'Washed' },
+      notes:   { ar: 'كراميل، شوكولاتة، بندق', en: 'Caramel, chocolate, hazelnut' } },
+    { price: '90', weight: '250g',
+      name:    { ar: 'حبّة الموسم', en: 'Seasonal Lot' },
+      origin:  { ar: 'إثيوبيا', en: 'Ethiopia' },
+      process: { ar: 'طبيعية', en: 'Natural' },
+      notes:   { ar: 'توت، ياسمين، خوخ', en: 'Berry, jasmine, peach' } }
   ],
 
   /* ---- Merch ----------------------------------------------------------- */
   merch: [
-    { price: '180', name: { ar: 'هودي',        en: 'Hoodie' },     desc: { ar: 'قطن ثقيل بشعار مطرز.', en: 'Heavy cotton, embroidered mark.' } },
-    { price: '95',  name: { ar: 'تيشيرت',      en: 'T-Shirt' },    desc: { ar: 'قطن ممشط، قصّة واسعة.', en: 'Combed cotton, relaxed cut.' } },
-    { price: '70',  name: { ar: 'كاب',         en: 'Cap' },        desc: { ar: 'مقاس واحد يناسب الجميع.', en: 'One size fits all.' } },
-    { price: '45',  name: { ar: 'كوب فخّاري',  en: 'Clay Cup' },   desc: { ar: 'مصنوع يدويًا ومختوم بشعارنا.', en: 'Hand-thrown and stamped.' } }
+    { price: '220', name: { ar: 'هودي رهوة', en: 'Rahwah Hoodie' },
+      desc: { ar: 'قطن ثقيل بلون الرمل، والشعار مطرز على الظهر.', en: 'Heavy sand-coloured cotton, mark embroidered on the back.' } },
+    { price: '110', name: { ar: 'تيشيرت', en: 'T-Shirt' },
+      desc: { ar: 'قطن ممشط بقصّة واسعة.', en: 'Combed cotton, relaxed cut.' } },
+    { price: '80',  name: { ar: 'كاب', en: 'Cap' },
+      desc: { ar: 'مقاس واحد يناسب الجميع.', en: 'One size fits all.' } },
+    { price: '55',  name: { ar: 'كوب فخّاري', en: 'Clay Cup' },
+      desc: { ar: 'مصنوع يدويًا ومختوم بشعار رهوة، مثل أكوابنا في الفرع.', en: 'Hand-thrown and stamped with the Rahwah mark, like the ones we serve in.' } }
   ],
 
   /* ==========================================================
@@ -163,24 +199,24 @@ window.SITE = {
 
     hero: {
       title:   { ar: 'مكان يرحّب بك', en: 'A place that welcomes you' },
-      tagline: { ar: 'قهوة مختصة، حلويات تُخبز يوميًا، ومساحة هادئة تجلس فيها بلا استعجال.',
-                 en: 'Specialty coffee, sweets baked daily, and a quiet room to sit in without hurrying.' },
-      meta1:   { ar: 'المدينة – اسم الحي', en: 'City – District' },
+      tagline: { ar: 'قهوة، تفاصيل صغيرة، وطلبات تُصنع بحب. في قلب الملقا، من الصباح الباكر حتى آخر الليل.',
+                 en: 'Coffee, small details, and orders made with care. In the middle of Al Malqa, from early morning until late.' },
+      meta1:   { ar: 'الرياض – حي الملقا', en: 'Riyadh – Al Malqa' },
       meta2:   { ar: 'يوميًا من ٧ صباحًا',  en: 'Daily from 7 AM' }
     },
 
     home: {
-      introEyebrow:  { ar: 'من نحن',   en: 'Who we are' },
+      introEyebrow:  { ar: 'هلا بك في رهوة', en: 'Welcome to Rahwah' },
       introTitle:    { ar: 'نبدأ من الحبّة، وننتهي عندك', en: 'It starts with the bean and ends with you' },
-      introText:     { ar: 'نختار حبّاتنا موسمًا بعد موسم، ونحمّصها على دفعات صغيرة. كل فنجان يُحضَّر عند الطلب، لأن القهوة الجيدة لا تنتظر.',
-                       en: 'We choose our beans season by season and roast them in small batches. Every cup is made to order, because good coffee does not wait.' },
-      featuredEyebrow:{ ar: 'المفضّلة', en: 'Favourites' },
+      introText:     { ar: 'نختار حبّاتنا موسمًا بعد موسم، ونحمّصها على دفعات صغيرة. كل فنجان يُحضَّر عند الطلب، ويُقدَّم في كوب فخّاري مختوم بشعارنا.',
+                       en: 'We choose our beans season by season and roast them in small batches. Every cup is made to order, and served in a clay cup stamped with our mark.' },
+      featuredEyebrow:{ ar: 'المشروبات', en: 'Drinks' },
       featuredTitle: { ar: 'ما يطلبه الناس أكثر', en: 'What people order most' },
       galleryEyebrow:{ ar: 'المكان',   en: 'The room' },
       galleryTitle:  { ar: 'تفاصيل صغيرة، صُنعت بحب', en: 'Small details, made with care' },
-      visitTitle:    { ar: 'تعال وقابلنا', en: 'Come and find us' },
-      visitText:     { ar: 'الباب مفتوح من الصباح الباكر حتى آخر الليل. لا تحتاج حجزًا، فقط تعال.',
-                       en: 'The door is open from early morning until late. No booking needed — just come.' }
+      visitTitle:    { ar: 'تعال وقابلنا في الملقا', en: 'Come and find us in Al Malqa' },
+      visitText:     { ar: 'الباب مفتوح من الصباح الباكر حتى آخر الليل، والجمعة لها طعم آخر. لا تحتاج حجزًا، فقط تعال.',
+                       en: 'The door is open from early morning until late, and Friday has a flavour of its own. No booking needed — just come.' }
     },
 
     menuPage: {
@@ -192,35 +228,36 @@ window.SITE = {
     },
 
     story: {
-      eyebrow:    { ar: 'عن المقهى', en: 'About the café' },
+      eyebrow:    { ar: 'عن رهوة', en: 'About Rahwah' },
       title:      { ar: 'قصتنا',  en: 'Our Story' },
-      lede:       { ar: 'بدأنا بفكرة واحدة: مكان يشبه البيت، وقهوة تستحق الجلسة.',
-                    en: 'We started with one idea: a room that feels like home, and coffee worth sitting down for.' },
-      bodyTitle:  { ar: 'كيف بدأ كل شيء', en: 'How it began' },
-      bodyText:   { ar: 'فتحنا الباب بطاولة واحدة وآلة إسبريسو. اليوم توسّعت المساحة، لكن الفكرة لم تتغير: نُحسن الاستقبال، ونُتقن الفنجان.',
-                    en: 'We opened with one table and an espresso machine. The room has grown since, but the idea has not: welcome people well, and get the cup right.' },
+      lede:       { ar: 'رهوة كلمة تعني الاتساع والسكينة. بدأنا بفكرة واحدة: مكان يشبه البيت، وقهوة تستحق الجلسة.',
+                    en: 'Rahwah is a word for openness and calm. We started with one idea: a room that feels like home, and coffee worth sitting down for.' },
+      bodyTitle:  { ar: 'سنة من رهوة', en: 'A year of Rahwah' },
+      bodyText:   { ar: 'فتحنا الباب في الملقا بطاولة واحدة وآلة إسبريسو. مرّت سنة، واتسعت المساحة، ودخلها النور والنبات، لكن الفكرة لم تتغير: نُحسن الاستقبال، ونُتقن الفنجان.',
+                    en: 'We opened in Al Malqa with one table and an espresso machine. A year passed, the room grew, light and plants came in, but the idea has not changed: welcome people well, and get the cup right.' },
       valuesTitle:{ ar: 'ما نؤمن به', en: 'What we believe' },
       v1Title:    { ar: 'الحبّة أولًا',  en: 'The bean first' },
-      v1Text:     { ar: 'نشتري بشفافية ونحمّص على دفعات صغيرة.', en: 'Sourced transparently, roasted in small batches.' },
+      v1Text:     { ar: 'نشتري بشفافية ونحمّص على دفعات صغيرة، ونكتب المصدر على كل كيس.', en: 'Sourced transparently, roasted in small batches, origin written on every bag.' },
       v2Title:    { ar: 'الضيافة',      en: 'Hospitality' },
-      v2Text:     { ar: 'نعرف الأسماء، ونتذكّر الطلبات.', en: 'We learn names and remember orders.' },
+      v2Text:     { ar: 'نعرف الأسماء، ونتذكّر الطلبات، ونقول هلا قبل أي شيء.', en: 'We learn names, remember orders, and say hello before anything else.' },
       v3Title:    { ar: 'المكان',       en: 'The room' },
-      v3Text:     { ar: 'ضوء طبيعي، نباتات، ومساحة تسع الجميع.', en: 'Natural light, plants, and room for everyone.' },
+      v3Text:     { ar: 'خشب ونبات وبلاط نجدي، وضوء يدخل من النوافذ طوال النهار.', en: 'Timber, plants, Najdi tile, and light through the windows all day.' },
       friendsTitle:{ ar: 'أصدقاؤنا',    en: 'Our friends' },
-      friendsText:{ ar: 'نتعاون مع محمّصين ومزارعين وصنّاع محليين. أسماؤهم على الرف، لا في الظل.',
-                    en: 'We work with roasters, growers and local makers. Their names sit on the shelf, not in the shadows.' },
-      quote:      { ar: '«القهوة عذر جيد للجلوس معًا.»', en: '“Coffee is a good excuse to sit together.”' },
-      quoteCite:  { ar: 'من فريق المقهى', en: 'From the team' }
+      friendsText:{ ar: 'نتعاون مع محمّصين ومزارعين وصنّاع فخّار محليين. أسماؤهم على الرف، لا في الظل، والأكواب التي تشرب فيها من صنع أيديهم.',
+                    en: 'We work with roasters, growers and local potters. Their names sit on the shelf, not in the shadows — and the cup you drink from was made by their hands.' },
+      quote:      { ar: '«الجمعة في رهوة لها طعم آخر.»', en: '“Friday at Rahwah has a flavour of its own.”' },
+      quoteCite:  { ar: 'من زوّار رهوة', en: 'From a regular' }
     },
 
     shop: {
       eyebrow:    { ar: 'خذها معك', en: 'Take it home' },
       title:      { ar: 'المتجر', en: 'The Shop' },
-      lede:       { ar: 'خذ شيئًا من المقهى إلى بيتك.', en: 'Take a piece of the café home with you.' },
+      lede:       { ar: 'خذ شيئًا من رهوة إلى بيتك: حبّة قهوة، أو كوبًا فخّاريًا مثل الذي شربت فيه.',
+                    en: 'Take a piece of Rahwah home: a bag of coffee, or a clay cup like the one you drank from.' },
       beansTitle: { ar: 'حبوب القهوة', en: 'Coffee Beans' },
-      merchTitle: { ar: 'منتجاتنا',    en: 'Merch' },
-      orderNote:  { ar: 'للطلب أرسل لنا رسالة على واتساب أو مرّ علينا في الفرع.',
-                    en: 'To order, message us on WhatsApp or drop by the shop.' },
+      merchTitle: { ar: 'منتجات رهوة', en: 'Rahwah Merch' },
+      orderNote:  { ar: 'للطلب أرسل لنا رسالة على إنستقرام أو واتساب، أو مرّ علينا في الفرع.',
+                    en: 'To order, message us on Instagram or WhatsApp, or drop by the shop.' },
       origin:     { ar: 'المصدر',   en: 'Origin' },
       process:    { ar: 'المعالجة', en: 'Process' },
       notes:      { ar: 'النكهات',  en: 'Notes' }
@@ -229,8 +266,8 @@ window.SITE = {
     visit: {
       eyebrow:      { ar: 'الموقع وأوقات العمل', en: 'Location & hours' },
       title:        { ar: 'زورونا', en: 'Visit Us' },
-      lede:         { ar: 'نحن هنا كل يوم. تعال وحدك أو مع من تحب.',
-                      en: 'We are here every day. Come alone or bring someone.' },
+      lede:         { ar: 'نحن في حي الملقا، ونفتح كل يوم. تعال وحدك أو مع من تحب.',
+                      en: 'We are in Al Malqa, open every day. Come alone or bring someone.' },
       addressTitle: { ar: 'العنوان',      en: 'Address' },
       hoursTitle:   { ar: 'أوقات العمل',  en: 'Opening Hours' },
       contactTitle: { ar: 'تواصل معنا',   en: 'Get in touch' },
@@ -253,17 +290,17 @@ window.SITE = {
                en: 'The link may have changed or the page was removed. Let’s get you back.' }
     },
 
-    /* Alt text for the image slots. Update these when real photos land. */
+    /* Alt text for the image slots. Update when the café's photos land. */
     alt: {
-      hero:     { ar: 'واجهة المقهى من الداخل', en: 'Inside the café' },
-      room:     { ar: 'زاوية الجلوس',           en: 'A corner of the seating area' },
-      counter:  { ar: 'الباريستا خلف الطاولة',  en: 'The barista at the counter' },
-      cup:      { ar: 'فنجان قهوة على الطاولة', en: 'A cup of coffee on the table' },
-      sweets:   { ar: 'حلويات المقهى',          en: 'Sweets from the café' },
-      beans:    { ar: 'كيس حبوب قهوة',          en: 'A bag of coffee beans' },
-      merch:    { ar: 'منتجات المقهى',          en: 'Café merchandise' },
-      storefront:{ ar: 'واجهة المقهى من الخارج', en: 'The café storefront' },
-      map:      { ar: 'موقع المقهى على الخريطة', en: 'The café location on the map' }
+      hero:     { ar: 'داخل رهوة: خشب ونبات وضوء طبيعي', en: 'Inside Rahwah: timber, plants and natural light' },
+      room:     { ar: 'زاوية الجلوس فوق البلاط النجدي',  en: 'A seating corner over the Najdi tile' },
+      counter:  { ar: 'الباريستا خلف طاولة التحضير',      en: 'The barista behind the bar' },
+      cup:      { ar: 'كوب رهوة الفخّاري على الطاولة',    en: 'A Rahwah clay cup on the table' },
+      sweets:   { ar: 'صينية حلويات رهوة',                en: 'A tray of Rahwah sweets' },
+      beans:    { ar: 'كيس حبوب قهوة من رهوة',            en: 'A bag of Rahwah coffee beans' },
+      merch:    { ar: 'منتجات رهوة: هودي وكاب وأكواب فخّار', en: 'Rahwah merch: hoodie, cap and clay cups' },
+      storefront:{ ar: 'واجهة رهوة المضاءة في الملقا',    en: 'The lit Rahwah storefront in Al Malqa' },
+      map:      { ar: 'موقع رهوة على الخريطة في حي الملقا', en: 'Rahwah’s location on the map in Al Malqa' }
     }
   }
 };

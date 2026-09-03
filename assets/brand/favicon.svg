@@ -1,19 +1,16 @@
 <!--
-  ★ RESKIN FILE 3e — the favicon.
-  Unlike the other brand files this one is shown as a real image, not a
-  mask, so it carries its own colours. Match them to --c-deep and
-  --c-ground in tokens.css when you reskin.
+  RAHWAH · favicon — ★ RESKIN FILE 3e
+  The one brand file rendered as a real image rather than a mask, so it
+  carries its own colours. They match the deep and ground tokens in tokens.css.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#3b3531"/>
-  <g transform="translate(32 33) scale(0.42) translate(-60 -60)">
-    <g fill="none" stroke="#f5f2ed" stroke-width="6" stroke-linecap="round">
-      <path d="M48 36 q5 -6 0 -12"/>
-      <path d="M60 36 q5 -6 0 -12"/>
-      <path d="M72 36 q5 -6 0 -12"/>
-    </g>
-    <path d="M39 48 h34 v14 a17 17 0 0 1 -34 0 z" fill="#f5f2ed"/>
-    <path d="M74 52 h4 a8.5 8.5 0 0 1 0 17 h-2.5" fill="none" stroke="#f5f2ed" stroke-width="6"/>
-    <rect x="32" y="84" width="48" height="7" rx="3.5" fill="#f5f2ed"/>
+  <rect width="64" height="64" rx="15" fill="#4a3427"/>
+  <g fill="#f5ede1" transform="translate(32 32) scale(1.05) translate(-24 -24)">
+    <circle cx="14" cy="13" r="2.9"/>
+    <circle cx="24" cy="8.5" r="2.9"/>
+    <circle cx="34" cy="13" r="2.9"/>
+    <path d="M24 18.5 L31.2 33 L16.8 33 Z"/>
+    <path d="M13.2 24 L19.4 39 L7 39 Z"/>
+    <path d="M34.8 24 L41 39 L28.6 39 Z"/>
   </g>
 </svg>

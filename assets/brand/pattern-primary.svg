@@ -1,15 +1,29 @@
 <!--
-  ★ RESKIN FILE 3c — the house pattern.
-  Tiled behind the hero, page banners and every photo slot. Must be
-  SEAMLESS: shapes crossing an edge are repeated on the opposite edge.
-  Tile size is set by --pattern-size in tokens.css, not here.
+  RAHWAH · the Najdi star lattice — ★ RESKIN FILE 3c
+  Taken from the eight-point star floor tile in the café. Built the
+  traditional way: two squares, one rotated 45°, sharing a centre.
+
+  Seamless — a full star sits at the tile centre and quarter-stars sit on
+  each corner, so the corners rejoin when the tile repeats. Scale is set by
+  the pattern-size token in tokens.css, not here.
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
-  <path d="M20 3 L37 20 L20 37 L3 20 Z" fill="none" stroke="#000" stroke-width="1"/>
-  <circle cx="20" cy="20" r="2.4" fill="#000"/>
-  <!-- corner dots: quartered by the tile edge, so they rejoin when repeated -->
-  <circle cx="0"  cy="0"  r="2.4" fill="#000"/>
-  <circle cx="40" cy="0"  r="2.4" fill="#000"/>
-  <circle cx="0"  cy="40" r="2.4" fill="#000"/>
-  <circle cx="40" cy="40" r="2.4" fill="#000"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <g fill="none" stroke="#000" stroke-width="1.7">
+    <!-- centre star -->
+    <rect x="16" y="16" width="28" height="28"/>
+    <rect x="16" y="16" width="28" height="28" transform="rotate(45 30 30)"/>
+
+    <!-- corner stars: quartered by the tile edge -->
+    <rect x="-14" y="-14" width="28" height="28"/>
+    <rect x="-14" y="-14" width="28" height="28" transform="rotate(45 0 0)"/>
+
+    <rect x="46" y="-14" width="28" height="28"/>
+    <rect x="46" y="-14" width="28" height="28" transform="rotate(45 60 0)"/>
+
+    <rect x="-14" y="46" width="28" height="28"/>
+    <rect x="-14" y="46" width="28" height="28" transform="rotate(45 0 60)"/>
+
+    <rect x="46" y="46" width="28" height="28"/>
+    <rect x="46" y="46" width="28" height="28" transform="rotate(45 60 60)"/>
+  </g>
 </svg>
