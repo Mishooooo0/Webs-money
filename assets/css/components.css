@@ -405,3 +405,9 @@ html[dir='rtl'] .quote-card__cite { letter-spacing: 0; }
   color: var(--c-ink-soft);
   max-width: var(--measure);
 }
+
+/* ---- Catalog groups (template 3) -------------------------------------------
+   A category heading over a product grid, repeated. Reuses the menu category
+   header so a catalogue and a menu share one visual language. */
+
+.catalog-group + .catalog-group { margin-block-start: var(--s-8); }
