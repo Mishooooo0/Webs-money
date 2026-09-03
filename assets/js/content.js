@@ -101,7 +101,7 @@ window.SITE = {
           name: { ar: 'تشيز كيك', en: 'Cheesecake' },
           desc: { ar: 'قاعدة بسكوت وقشدة خفيفة.', en: 'Biscuit base, light cream.' } },
         { price: '18',
-          name: { ar: 'كرואسون', en: 'Croissant' },
+          name: { ar: 'كرواسون', en: 'Croissant' },
           desc: { ar: 'زبدة حقيقية، ٧٢ ساعة تخمير.', en: 'Real butter, 72-hour ferment.' } }
       ]
     }

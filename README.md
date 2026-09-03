@@ -24,8 +24,8 @@ files carry 100% of the brand:
 | 2 | `assets/js/content.js` | Every word in the site, in Arabic **and** English, plus the menu and shop data |
 | 3 | `assets/brand/*.svg` | Logo, icon mark, house pattern, divider band, favicon |
 
-Nothing else needs editing. That is enforced, not merely intended — two
-greps in **Verifying** below prove it, and the `rahwah` branch demonstrates it:
+Nothing else needs editing. That is enforced, not merely intended — the
+checks in **Verifying** below prove it, and the `rahwah` branch demonstrates it:
 a complete visual reskin that touches only these three surfaces.
 
 ## Reskinning, start to finish
@@ -38,7 +38,8 @@ a complete visual reskin that touches only these three surfaces.
    swapping type is one edit rather than six.
 3. **Words** — open `content.js`. Replace `brand`, `contact`, `hours`, and
    every `{ ar, en }` pair under `t`. Adding a drink is one entry in
-   `menu[].items` — never HTML.
+   `menu[].items` — never HTML. Then run `node tools/sync-static.js` to
+   stamp the new Arabic into the HTML (see below).
 4. **Marks** — replace the five SVGs in `assets/brand/`. They are rendered
    through CSS masks, so only the *silhouette* matters; colour comes from your
    tokens. Keep `logo.svg` and `mark.svg` square.
@@ -59,6 +60,18 @@ no second stylesheet. A `margin-left` anywhere in `assets/css/` is a bug.
 HTML, so the site is readable and crawlable with JavaScript off. `i18n.js` only
 swaps text when a visitor picks English. The choice persists in `localStorage`
 and survives navigation.
+
+The Arabic in the HTML is therefore a **generated mirror** of `content.js`,
+not a second copy to maintain by hand. `tools/sync-static.js` rewrites it, and
+`--check` fails if the two have drifted — run it after every content edit:
+
+```bash
+node tools/sync-static.js            # rewrite the HTML from content.js
+node tools/sync-static.js --check    # report drift, change nothing (exit 1 if stale)
+```
+
+It only ever rewrites text already bound with a `data-i18n` / `data-site`
+attribute, so it cannot touch layout or markup.
 
 **Content renders from data.** Menu categories, bean and merch grids, opening
 hours and the address are built by `render.js` from `content.js`, and redraw on
@@ -104,7 +117,17 @@ grep -rnE '#[0-9a-fA-F]{3,8}|rgba?\(' assets/css --include='*.css' | grep -v tok
 # 2. No physical directional properties — they break RTL. Prints nothing if clean
 grep -rnE '(margin|padding)-(left|right)|(^|[^-])\b(left|right):' assets/css --include='*.css'
 
-# 3. Every binding key actually resolves
+# 3. The HTML still matches content.js
+node tools/sync-static.js --check
+
+# 4. No stray script characters in the copy — an Arabic string with a
+#    Hebrew or Syriac letter silently corrupts a word and renders as noise
+node -e "global.window={};require('./assets/js/content.js');
+const s=JSON.stringify(window.SITE);const bad=[...s].filter(c=>{const p=c.codePointAt(0);
+return (p>=0x0590&&p<=0x05FF)||(p>=0x0700&&p<=0x074F)});
+console.log(bad.length?'STRAY SCRIPT CHARS: '+[...new Set(bad)].join(' '):'Copy is clean.')"
+
+# 5. Every binding key actually resolves
 node -e "global.window={};require('./assets/js/content.js');const S=window.SITE,fs=require('fs');
 const g=(r,p)=>p.split('.').reduce((n,k)=>n&&typeof n==='object'?n[k]:undefined,r);let bad=[];
 for(const f of fs.readdirSync('.').filter(x=>x.endsWith('.html'))){const h=fs.readFileSync(f,'utf8');

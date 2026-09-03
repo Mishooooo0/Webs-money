@@ -84,6 +84,15 @@ repeated on the opposite edge. Tile scale is set by `--pattern-size` and
 
 Adding a drink is one object in `menu[].items`. Never edit HTML for content.
 
+**After every edit here, run `node tools/sync-static.js`.** The Arabic sitting
+in the HTML is a generated mirror of this file — it exists so the site reads
+correctly with JavaScript off. Skip the sync and a no-JS visitor still sees the
+*previous* brand's words. `node tools/sync-static.js --check` will tell you.
+
+Watch for stray script characters when typing Arabic — a Hebrew or Syriac
+letter slipped into an Arabic word looks almost right and renders as noise.
+Check 4 in `README.md` catches it.
+
 ## 5 · Page meta — the six HTML files
 
 The only per-page edit. At the top of each: `<title>`, `<meta name="description">`,
@@ -125,7 +134,7 @@ Ratios available: `.ph--hero` 16:10 · `.ph--square` 1:1 · `.ph--portrait` 4:5 
 
 ## 7 · Before handover
 
-Run all three greps and the contrast pass from `README.md`, then walk the six
+Run all five checks and the contrast pass from `README.md`, then walk the six
 pages in both languages at 375px, 768px and 1440px. Confirm the WhatsApp,
 Maps, phone, email and Instagram links all point at the client's real accounts —
 they resolve from `contact` in `content.js`, so getting that block right fixes
