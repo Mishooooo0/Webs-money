@@ -35,10 +35,10 @@
   }
 
   /* A branded image slot: house pattern + logo, never an empty box. */
-  function placeholder(modifier, altKey, useIcon) {
+  function placeholder(modifier, altKey, useIcon, item) {
     var slot = el('div', 'ph' + (modifier ? ' ' + modifier : ''));
     slot.setAttribute('role', 'img');
-    slot.setAttribute('aria-label', window.I18N.t('alt.' + (altKey || 'room')));
+    slot.setAttribute('aria-label', altFor(item, altKey));
     slot.appendChild(el('span', 'ph__mark' + (useIcon ? ' ph__mark--icon' : '')));
     return slot;
   }
@@ -57,9 +57,20 @@
      `image` path, the branded placeholder when it does not. That is the whole
      of the photo workflow — adding photography is a content edit in
      content.js, never a code change here. See BRAND.md section 6. */
+  /* Alt text, most specific first. Slot keys differ between templates, so a
+     key that does not exist on this branch must fall back rather than leave
+     an image with an empty alt. */
+  function altFor(item, altKey) {
+    return window.I18N.pick(item && item.alt)
+        || window.I18N.t('alt.' + (altKey || 'room'))
+        || window.I18N.t('alt.product')
+        || window.I18N.t('alt.hero')
+        || window.I18N.v('brand.primary');
+  }
+
   function media(item, modifier, altKey, useIcon) {
     var src = item && item.image;
-    if (!src) return placeholder(modifier, altKey, useIcon);
+    if (!src) return placeholder(modifier, altKey, useIcon, item);
 
     var size = SLOT_SIZE[modifier] || SLOT_SIZE['ph--square'];
     var img = el('img', 'ph-img' + (modifier ? ' ' + modifier : ''));
@@ -69,7 +80,7 @@
     img.width = size[0];
     img.height = size[1];
     /* Per-item alt beats the generic slot alt, which beats nothing at all. */
-    img.alt = window.I18N.pick(item.alt) || window.I18N.t('alt.' + (altKey || 'room'));
+    img.alt = altFor(item, altKey);
     return img;
   }
 
@@ -142,7 +153,7 @@
 
   function renderFeatured(mount) {
     /* Whichever schema this branch carries — a café menu or a service list. */
-    var categories = window.SITE.menu || window.SITE.services || [];
+    var categories = window.SITE.menu || window.SITE.services || window.SITE.catalog || [];
     var picks = [];
     categories.forEach(function (category) {
       category.items.forEach(function (item) {
@@ -255,6 +266,74 @@
     mount.replaceChildren(frag);
   }
 
+  /* ---- Generic card grids (template 3 onward) --------------------------
+     Every template so far wants the same thing at some point: a grid of
+     items with a picture, a name, a line of text, optional tags and a
+     price. Rather than a fourth near-identical renderer, these two read
+     their data source from the mount:
+
+         <div class="product-grid" data-render="cards"   data-source="products">
+         <div                      data-render="catalog" data-source="catalog">
+
+     `cards` renders one flat array; `catalog` renders categories, each
+     with its own heading and grid. Both accept any array in SITE, so a new
+     template usually needs no new renderer at all. */
+
+  function productCard(item) {
+    var card = el('article', 'card card--flush');
+    card.setAttribute('data-reveal', '');
+    card.appendChild(media(item, item.ratio || 'ph--portrait', 'product'));
+
+    var body = el('div', 'card__body');
+    body.appendChild(el('h3', 'card__title', window.I18N.pick(item.name)));
+
+    var desc = window.I18N.pick(item.desc);
+    if (desc) body.appendChild(el('p', 'card__text', desc));
+
+    var tags = window.I18N.pick(item.tags) || [];
+    if (tags.length) {
+      var row = el('div', 'tag-row');
+      tags.forEach(function (t) { row.appendChild(el('span', 'tag', t)); });
+      body.appendChild(row);
+    }
+
+    if (item.price) body.appendChild(el('p', 'card__price', price(item.price)));
+
+    card.appendChild(body);
+    return card;
+  }
+
+  function renderCards(mount) {
+    var items = window.I18N.v(mount.getAttribute('data-source') || 'products') || [];
+    var frag = document.createDocumentFragment();
+    items.forEach(function (item) { frag.appendChild(productCard(item)); });
+    mount.replaceChildren(frag);
+  }
+
+  function renderCatalog(mount) {
+    var groups = window.I18N.v(mount.getAttribute('data-source') || 'catalog') || [];
+    var frag = document.createDocumentFragment();
+
+    groups.forEach(function (group) {
+      var section = el('section', 'catalog-group');
+      if (group.id) section.id = group.id;
+
+      var head = el('div', 'menu-category__head');
+      head.appendChild(el('h2', 'menu-category__title', window.I18N.pick(group.name)));
+      var note = window.I18N.pick(group.note);
+      if (note) head.appendChild(el('p', 'menu-category__note', note));
+      section.appendChild(head);
+
+      var grid = el('div', 'product-grid');
+      group.items.forEach(function (item) { grid.appendChild(productCard(item)); });
+      section.appendChild(grid);
+
+      frag.appendChild(section);
+    });
+
+    mount.replaceChildren(frag);
+  }
+
   /* ---- Team, packages, testimonials, FAQ (template 2) ------------------ */
 
   function renderTeam(mount) {
@@ -352,6 +431,9 @@
     menu:         renderMenu,
     beans:        renderBeans,
     merch:        renderMerch,
+    /* generic — any array in SITE, chosen with data-source */
+    cards:        renderCards,
+    catalog:      renderCatalog,
     /* template 2 — services and booking */
     services:     renderServices,
     team:         renderTeam,
