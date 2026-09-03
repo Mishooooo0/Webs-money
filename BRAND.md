@@ -66,6 +66,15 @@ from your palette. Draw them as flat black shapes on a transparent ground.
 `favicon.svg` is the exception: it renders as a real image and carries its own
 colours. Match them to `--c-deep` and `--c-ground`.
 
+> **The one rule that will bite you.** An XML comment may not contain a
+> double hyphen — and every CSS custom property starts with one. Writing
+> `--c-deep` in a comment inside an SVG makes the whole file unparseable, and
+> a malformed mask fails *silently*: no console error, no fallback, the logo
+> or pattern simply vanishes. Write "the deep token" instead, and run
+> `node tools/check-brand.js` after touching these files. It also checks the
+> viewBox is present, that `logo.svg` and `mark.svg` are square, and that
+> there is artwork for the mask to use.
+
 Both patterns must **tile seamlessly** — any shape crossing an edge has to be
 repeated on the opposite edge. Tile scale is set by `--pattern-size` and
 `--band-height` in `tokens.css`, not inside the SVGs.

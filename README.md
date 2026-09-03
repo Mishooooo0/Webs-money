@@ -101,6 +101,7 @@ index.html  menu.html  story.html  shop.html  visit.html  404.html
 assets/
   css/  tokens.css ★   reset.css  base.css  layout.css  components.css  pages.css
   js/   content.js ★   i18n.js    render.js  app.js
+tools/  sync-static.js   check-brand.js
   brand/ logo.svg ★  mark.svg ★  pattern-primary.svg ★  pattern-band.svg ★  favicon.svg ★
 ```
 
@@ -117,17 +118,21 @@ grep -rnE '#[0-9a-fA-F]{3,8}|rgba?\(' assets/css --include='*.css' | grep -v tok
 # 2. No physical directional properties — they break RTL. Prints nothing if clean
 grep -rnE '(margin|padding)-(left|right)|(^|[^-])\b(left|right):' assets/css --include='*.css'
 
-# 3. The HTML still matches content.js
+# 3. The brand SVGs are well-formed — a malformed one fails SILENTLY,
+#    the mask just renders nothing and the logo or pattern disappears
+node tools/check-brand.js
+
+# 4. The HTML still matches content.js
 node tools/sync-static.js --check
 
-# 4. No stray script characters in the copy — an Arabic string with a
+# 5. No stray script characters in the copy — an Arabic string with a
 #    Hebrew or Syriac letter silently corrupts a word and renders as noise
 node -e "global.window={};require('./assets/js/content.js');
 const s=JSON.stringify(window.SITE);const bad=[...s].filter(c=>{const p=c.codePointAt(0);
 return (p>=0x0590&&p<=0x05FF)||(p>=0x0700&&p<=0x074F)});
 console.log(bad.length?'STRAY SCRIPT CHARS: '+[...new Set(bad)].join(' '):'Copy is clean.')"
 
-# 5. Every binding key actually resolves
+# 6. Every binding key actually resolves
 node -e "global.window={};require('./assets/js/content.js');const S=window.SITE,fs=require('fs');
 const g=(r,p)=>p.split('.').reduce((n,k)=>n&&typeof n==='object'?n[k]:undefined,r);let bad=[];
 for(const f of fs.readdirSync('.').filter(x=>x.endsWith('.html'))){const h=fs.readFileSync(f,'utf8');
