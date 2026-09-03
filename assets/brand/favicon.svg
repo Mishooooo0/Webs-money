@@ -1,8 +1,8 @@
 <!--
   ★ RESKIN FILE 3e — the favicon.
   Unlike the other brand files this one is shown as a real image, not a
-  mask, so it carries its own colours. Match them to --c-deep and
-  --c-ground in tokens.css when you reskin.
+  mask, so it carries its own colours. Match them to the deep and
+  ground tokens in tokens.css when you reskin.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#3b3531"/>

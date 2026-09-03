@@ -1,6 +1,6 @@
 <!--
   ★ RESKIN FILE 3d — the divider band.
-  Repeated on the x-axis at --band-height. The path must start and end
+  Repeated on the x-axis at the band-height token. The path must start and end
   at the same y so the tiles join without a visible seam.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20" width="40" height="20">

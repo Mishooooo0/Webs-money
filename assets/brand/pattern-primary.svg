@@ -2,7 +2,7 @@
   ★ RESKIN FILE 3c — the house pattern.
   Tiled behind the hero, page banners and every photo slot. Must be
   SEAMLESS: shapes crossing an edge are repeated on the opposite edge.
-  Tile size is set by --pattern-size in tokens.css, not here.
+  Tile size is set by the pattern-size token in tokens.css, not here.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
   <path d="M20 3 L37 20 L20 37 L3 20 Z" fill="none" stroke="#000" stroke-width="1"/>
