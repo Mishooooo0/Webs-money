@@ -122,6 +122,11 @@ html[dir='rtl'] .eyebrow {
 
 /* ---- Utilities ------------------------------------------------------ */
 
+/* The browser's own [hidden] rule is display:none, which any class rule
+   setting display beats on specificity. A renderer that hides its section
+   must not depend on which classes that section happens to carry. */
+[hidden] { display: none !important; }
+
 .visually-hidden {
   position: absolute;
   width: 1px; height: 1px;
