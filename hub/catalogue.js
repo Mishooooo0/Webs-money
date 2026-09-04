@@ -86,6 +86,20 @@ window.CATALOGUE = {
       },
       repo: 'https://github.com/Mishooooo0/web-clients/tree/rahwah',
       liveUrl: null
+    },
+    {
+      id: 'llabate',
+      from: 'cafe',
+      accent: '#3e5c6e',
+      status: 'building',
+      name: { ar: 'لابيت', en: 'Llabate' },
+      location: { ar: 'السعودية', en: 'Saudi Arabia' },
+      note: {
+        ar: 'الهوية وأوقات العمل والنصوص من حسابهم. ينقص رقم الجوال والعنوان والمنيو.',
+        en: 'Identity, hours and copy taken from their own account. Phone, address and menu still outstanding.'
+      },
+      repo: 'https://github.com/Mishooooo0/web-clients/tree/llabate',
+      liveUrl: null
     }
   ]
 };
