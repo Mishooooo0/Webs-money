@@ -44,6 +44,14 @@ DISPLAY_EN="${4:-}"
 
 [ -n "$TEMPLATE" ] && [ -n "$SLUG" ] || die 'usage: tools/start-project.sh <template-id> <client-slug> ["Client Name"] ["English Name"] [--multi-location]'
 [[ "$SLUG" =~ ^[a-z0-9][a-z0-9-]*$ ]] || die "client slug must be lowercase letters, digits and dashes — got '$SLUG'"
+
+# Derived once, so the name stamped into content.js and the name printed in the
+# catalogue snippet cannot disagree. The slug is ASCII by the rule above, so
+# awk's toupper is safe on it.
+if [ -z "$DISPLAY_EN" ]; then
+  DISPLAY_EN=$(printf '%s' "$SLUG" | tr '-' ' ' \
+    | awk '{for (i=1; i<=NF; i++) $i = toupper(substr($i,1,1)) substr($i,2)} 1')
+fi
 git rev-parse --git-dir >/dev/null 2>&1 || die 'not inside a git repository'
 [ -z "$(git status --porcelain)" ] || die 'working tree is not clean — commit or stash first'
 
@@ -82,11 +90,7 @@ git checkout -q -b "$SLUG" "$TEMPLATES_REMOTE_NAME/$BRANCH"
 if [ -n "$DISPLAY" ]; then
   STAMPED=$(node -e '
     const fs = require("fs");
-    const [slug, display, displayEnArg] = process.argv.slice(1);
-
-    /* No English name given: title-case the slug. al-nakheel -> Al Nakheel. */
-    const displayEn = displayEnArg || slug.split("-").filter(Boolean)
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+    const [display, displayEn] = process.argv.slice(1);
     const latin = displayEn.toUpperCase();
 
     /* content.js is JS source, so a name carrying an apostrophe would end the
@@ -114,7 +118,7 @@ if [ -n "$DISPLAY" ]; then
     fs.writeFileSync(f, s);
 
     process.stdout.write(display + " / " + displayEn + " / " + latin);
-  ' "$SLUG" "$DISPLAY" "$DISPLAY_EN") || die 'stamping the brand name failed — the branch exists but is unstamped'
+  ' "$DISPLAY" "$DISPLAY_EN") || die 'stamping the brand name failed — the branch exists but is unstamped'
   node tools/sync-static.js >/dev/null
   echo "stamped brand name: $STAMPED"
 fi
@@ -207,6 +211,12 @@ still holding a placeholder; none of it may ship as-is."
 echo
 node tools/check.js || die 'the new branch does not pass its own checks'
 
+# The hub card's swatch. This is the template's accent, because the reskin has
+# not happened yet — re-read it from tokens.css once the palette is settled.
+ACCENT=$(grep -oE -- '--c-accent:[[:space:]]*#[0-9a-fA-F]{3,8}' assets/css/tokens.css \
+  | grep -oE '#[0-9a-fA-F]{3,8}' | head -1)
+ACCENT="${ACCENT:-#6d5c4c}"
+
 cat <<EOF
 
 ────────────────────────────────────────────────────────────
@@ -225,9 +235,9 @@ cat <<EOF
     {
       id: '$SLUG',
       from: '$TEMPLATE',
-      accent: '#6d5c4c',
+      accent: '$ACCENT',        // the template's — update once the palette is set
       status: 'building',
-      name: { ar: '${DISPLAY:-$SLUG}', en: '${DISPLAY:-$SLUG}' },
+      name: { ar: '${DISPLAY:-$SLUG}', en: '$DISPLAY_EN' },
       location: { ar: '', en: '' },
       repo: 'https://github.com/Mishooooo0/web-clients/tree/$SLUG',
       liveUrl: null
