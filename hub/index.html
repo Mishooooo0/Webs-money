@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+  THE HUB — served at the root of the published site, and the thing you open
+  to see what exists, pick a template, and start a client project from it.
+
+  Self-contained by design: its own styles, its own scripts, no import from
+  any template branch. A template mid-reskin can never take the shelf down.
+
+  Everything on the page renders from hub/catalogue.js, which assemble.sh and
+  tools/start-project.sh read too — so the shelf, the published site and the
+  export script cannot disagree about what exists.
+-->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>قوالب مواقع للأعمال الصغيرة · Website Templates</title>
+  <meta name="description" content="قوالب مواقع ثنائية اللغة للأعمال الصغيرة: المقاهي والمطاعم، الخدمات والحجوزات، المتاجر والبوتيكات.">
+  <meta property="og:title" content="قوالب مواقع للأعمال الصغيرة">
+  <meta property="og:description" content="قوالب عربية أولًا، بدون اعتماديات وبدون خطوة بناء.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Tajawal:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="hub.css">
+</head>
+
+<body>
+
+  <header class="top">
+    <div class="wrap">
+      <div class="top-bar">
+        <span class="kicker">Website Templates</span>
+        <button class="lang" type="button" data-lang-toggle>English</button>
+      </div>
+      <h1 data-t="title">قوالب مواقع للأعمال الصغيرة</h1>
+      <p data-t="lede">قوالب ثنائية اللغة، عربية أولًا مع تبديل للإنجليزية. بدون أي اعتماديات، وبدون خطوة بناء — مجرد ملفات تُرفع وتعمل.</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= TEMPLATES ================= -->
+    <section class="shelf wrap">
+      <div class="shelf-head">
+        <h2 data-t="templatesTitle">القوالب</h2>
+        <span class="count" data-count="templates"></span>
+      </div>
+      <div class="grid" data-shelf="templates"></div>
+    </section>
+
+    <!-- ================= CLIENT PROJECTS ================= -->
+    <section class="shelf wrap">
+      <div class="shelf-head">
+        <h2 data-t="clientsTitle">مشاريع العملاء</h2>
+        <span class="count" data-count="clients"></span>
+      </div>
+
+      <!-- The gate. Not a lock — see hub/gate.js for what actually keeps
+           client work private. It guards a list of names, nothing more. -->
+      <div class="gate" data-gate>
+        <h3 data-t="gateTitle">هذا القسم مغلق</h3>
+        <p data-t="gateText">مشاريع العملاء محفوظة في مستودع خاص. أدخل كلمة المرور لعرض القائمة.</p>
+        <form data-gate-form>
+          <label class="u-ltr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)"
+                 for="gate-input" data-t="gateLabel">كلمة المرور</label>
+          <input id="gate-input" type="password" autocomplete="off" data-gate-input
+                 data-t-attr="placeholder:gatePlaceholder" placeholder="كلمة المرور">
+          <button type="submit" data-t="gateSubmit">دخول</button>
+        </form>
+        <p class="err" data-gate-error role="status" aria-live="polite"></p>
+        <p class="note" data-t="gateNote">
+          هذه بوابة للترتيب فقط، وليست حماية. المواقع نفسها غير منشورة هنا إطلاقًا — هي في مستودع خاص تتحكم فيه صلاحيات GitHub.
+        </p>
+      </div>
+
+      <div class="grid" data-shelf="clients" hidden></div>
+    </section>
+
+    <div class="wrap">
+      <footer class="foot">
+        <span data-t="footLeft">عربية أولًا · RTL · بدون اعتماديات</span>
+        <span class="u-ltr">Built with Claude Code</span>
+      </footer>
+    </div>
+
+  </main>
+
+  <script src="catalogue.js"></script>
+  <script src="gate.js"></script>
+  <script src="hub.js"></script>
+</body>
+</html>

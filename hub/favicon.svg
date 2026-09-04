@@ -1,0 +1,14 @@
+<!--
+  HUB · favicon.
+  Its own mark, not borrowed from a template — three cards on a shelf.
+  The hub is self-contained by design, so it owns this file rather than
+  reaching into assets/brand/, which belongs to the base template.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#2b2621"/>
+  <g fill="#f6f1e8">
+    <rect x="13" y="16" width="11" height="22" rx="2.5"/>
+    <rect x="26.5" y="16" width="11" height="32" rx="2.5"/>
+    <rect x="40" y="16" width="11" height="26" rx="2.5"/>
+  </g>
+</svg>

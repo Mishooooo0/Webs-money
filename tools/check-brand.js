@@ -49,8 +49,18 @@ for (const name of ALL) {
   if (!fs.existsSync(file)) { fail(name, 'missing from assets/brand/'); continue; }
   const svg = fs.readFileSync(file, 'utf8');
 
-  /* 1. Double hyphen inside a comment — fatal, and invisible at a glance. */
-  for (const comment of svg.match(/<!--[\s\S]*?-->/g) || []) {
+  /* Comments are checked on their own terms, and excluded from every check
+     that applies to markup. XML treats a comment body as opaque: entities are
+     not expanded inside one, so an "&" there is legal and a check that flags it
+     is a false alarm. A checker that cries wolf gets ignored, which costs more
+     than having no checker at all. */
+  const comments = svg.match(/<!--[\s\S]*?-->/g) || [];
+  const markup = svg.replace(/<!--[\s\S]*?-->/g, '');
+
+  /* 1. Double hyphen inside a comment — fatal, and invisible at a glance.
+        This one IS a comment rule: "--" ends a comment early and breaks the
+        whole document. */
+  for (const comment of comments) {
     const body = comment.slice(4, -3);
     if (body.includes('--')) {
       const offender = (body.match(/\S*--\S*/) || ['--'])[0];
@@ -59,9 +69,9 @@ for (const name of ALL) {
     }
   }
 
-  /* 2. Bare ampersand. */
-  if (/&(?!(#\d+|#x[0-9a-fA-F]+|[a-zA-Z][a-zA-Z0-9]*);)/.test(svg)) {
-    fail(name, 'unescaped "&" — use &amp;');
+  /* 2. Bare ampersand — in the markup only, for the reason above. */
+  if (/&(?!(#\d+|#x[0-9a-fA-F]+|[a-zA-Z][a-zA-Z0-9]*);)/.test(markup)) {
+    fail(name, 'unescaped "&" in the markup — use &amp;');
   }
 
   /* 3 & 4. viewBox present, and square where the layout assumes it. */
