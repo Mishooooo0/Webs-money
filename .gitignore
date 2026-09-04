@@ -7,8 +7,6 @@ Thumbs.db
 
 # No build step — nothing generated should be committed
 node_modules/
+_site/
 dist/
 *.log
-
-# Assembled Pages output
-_site/
