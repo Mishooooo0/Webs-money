@@ -1,10 +1,14 @@
 name: Pages
 
-# One published gallery assembled from several branches, so every template
-# and every client site has a live URL off a single deploy.
+# One published site assembled from several branches: the hub at the root and
+# every template under its own path, off a single deploy.
+#
+# TEMPLATE BRANCHES ONLY. Client work lives in the private web-money-clients
+# repo and is never published here — that is what keeps it private, and
+# tools/check-hub.js fails the build if the catalogue ever says otherwise.
 on:
   push:
-    branches: [main, rahwah, template-services, template-retail]
+    branches: [main, template-cafe, template-services, template-retail]
   workflow_dispatch:
 
 permissions:
@@ -23,8 +27,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0   # assemble.sh reads other branches from this clone
-      - name: Assemble the gallery
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Assemble the site
         run: bash .github/pages/assemble.sh
+      # Card thumbnails. Failing here must never fail the deploy — a card
+      # without a shot falls back to its colour swatch and still reads.
+      - name: Render card screenshots
+        continue-on-error: true
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+          node .github/pages/shoot.js
       # enablement:true only works if the workflow token may create the Pages
       # site. On most repositories it may not, and Pages has to be switched on
       # by hand once. The next step turns that into a readable instruction
