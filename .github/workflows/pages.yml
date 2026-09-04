@@ -3,7 +3,7 @@ name: Pages
 # One published site assembled from several branches: the hub at the root and
 # every template under its own path, off a single deploy.
 #
-# TEMPLATE BRANCHES ONLY. Client work lives in the private web-money-clients
+# TEMPLATE BRANCHES ONLY. Client work lives in the private web-clients
 # repo and is never published here — that is what keeps it private, and
 # tools/check-hub.js fails the build if the catalogue ever says otherwise.
 on:
