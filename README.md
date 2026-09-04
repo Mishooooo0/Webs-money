@@ -1,7 +1,11 @@
-# Café Site Template
+# Template 01 · Café & Restaurant
 
-A bilingual (Arabic-first, RTL) brochure website for a coffee shop, built to be
-**re-dressed for a new client in about ten minutes**.
+A bilingual (Arabic-first, RTL) brochure website for a coffee shop or
+restaurant, built to be **re-dressed for a new client in about ten minutes**.
+
+One of three templates. The shelf, the shared engine and the tooling live on
+`main`; this branch is the café product. Start a client project from it with
+`tools/start-project.sh cafe <client-slug>`.
 
 No build step. No dependencies. No framework. Six HTML pages, six stylesheets,
 four scripts. Open `index.html` and it runs.

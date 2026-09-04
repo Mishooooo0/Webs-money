@@ -1,5 +1,5 @@
 /* ============================================================
-   CONTENT  —  ★ RESKIN FILE 2 of 3
+   CONTENT  —  ★ RESKIN FILE 2 of 3   · TEMPLATE 01 · CAFÉ & RESTAURANT ·
    ------------------------------------------------------------
    Every word on this website lives here, as an { ar, en } pair, plus
    the data that drives the menu and shop grids.
