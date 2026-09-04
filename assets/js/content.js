@@ -151,6 +151,7 @@ window.SITE = {
       langSwitch:  { ar: 'English',            en: 'العربية' },
       langLabel:   { ar: 'تغيير اللغة',        en: 'Change language' },
       navLabel:    { ar: 'التنقل الرئيسي',     en: 'Main navigation' },
+      comingSoon:  { ar: 'القائمة قيد التحديث. تواصل معنا لمعرفة المتوفر اليوم.', en: 'The list is being updated. Message us for what is available today.' },
       openMenu:    { ar: 'فتح القائمة',        en: 'Open menu' },
       call:        { ar: 'اتصل بنا',           en: 'Call us' },
       viewMenu:    { ar: 'تصفّح المنيو',       en: 'View the menu' },

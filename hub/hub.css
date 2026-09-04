@@ -53,6 +53,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .shelf-head .count{font-family:var(--ff-la);font-size:.78rem;letter-spacing:.16em;
                    text-transform:uppercase;color:var(--soft)}
 
+.shelf-note{margin:-14px 0 26px;font-size:.86rem;color:var(--soft);max-width:70ch}
+
 .grid{display:grid;gap:24px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
 
 .card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);

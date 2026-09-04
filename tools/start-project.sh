@@ -2,8 +2,13 @@
 # ============================================================
 # start-project.sh — start a client project from a template.
 #
-#   tools/start-project.sh <template-id> <client-slug> ["Client Name"]
+#   tools/start-project.sh <template-id> <client-slug> ["Client Name"] [--multi-location]
 #   tools/start-project.sh retail al-nakheel "عطور النخيل"
+#   tools/start-project.sh cafe qahwa-co "قهوة" --multi-location
+#
+# --multi-location seeds a locations[] array for a business with more than one
+# branch. The engine renders a card per branch wherever an address appears —
+# no extra page, no extra markup. Leave it off for a single location.
 #
 # Run it from a checkout of the PRIVATE clients repo (web-clients).
 # It fetches the chosen template branch from the templates remote, creates
@@ -20,11 +25,18 @@ TEMPLATES_REMOTE_URL="https://github.com/Mishooooo0/Webs-money.git"
 
 die() { printf '\nstart-project: %s\n' "$1" >&2; exit 1; }
 
+MULTI_LOCATION=false
+ARGS=()
+for arg in "$@"; do
+  if [ "$arg" = "--multi-location" ]; then MULTI_LOCATION=true; else ARGS+=("$arg"); fi
+done
+set -- "${ARGS[@]+"${ARGS[@]}"}"
+
 TEMPLATE="${1:-}"
 SLUG="${2:-}"
 DISPLAY="${3:-}"
 
-[ -n "$TEMPLATE" ] && [ -n "$SLUG" ] || die 'usage: tools/start-project.sh <template-id> <client-slug> ["Client Name"]'
+[ -n "$TEMPLATE" ] && [ -n "$SLUG" ] || die 'usage: tools/start-project.sh <template-id> <client-slug> ["Client Name"] [--multi-location]'
 [[ "$SLUG" =~ ^[a-z0-9][a-z0-9-]*$ ]] || die "client slug must be lowercase letters, digits and dashes — got '$SLUG'"
 git rev-parse --git-dir >/dev/null 2>&1 || die 'not inside a git repository'
 [ -z "$(git status --porcelain)" ] || die 'working tree is not clean — commit or stash first'
@@ -76,6 +88,41 @@ if [ -n "$DISPLAY" ]; then
   echo "stamped brand name: $DISPLAY / $LATIN"
 fi
 
+# ---- Optional: scaffold a multi-branch business -------------------------
+if $MULTI_LOCATION; then
+  node -e '
+    const fs = require("fs");
+    const f = "assets/js/content.js";
+    let s = fs.readFileSync(f, "utf8");
+    const block = `
+  /* ---- Locations -----------------------------------------------------
+     One entry per branch. Present = the engine renders a card per branch
+     wherever an address appears (visit page, home page, footer). Delete
+     this array entirely to go back to the single contact.addressLines. */
+  locations: [
+    { name: { ar: "الفرع الأول", en: "First branch" },
+      addressLines: { ar: ["المدينة – اسم الحي"], en: ["City – District"] },
+      phoneLabel: "+966 50 000 0000",
+      phoneHref:  "tel:+966500000000",
+      hoursNote:  { ar: "", en: "" },
+      maps: "https://maps.google.com/" },
+    { name: { ar: "الفرع الثاني", en: "Second branch" },
+      addressLines: { ar: ["المدينة – اسم الحي"], en: ["City – District"] },
+      phoneLabel: "+966 50 000 0000",
+      phoneHref:  "tel:+966500000000",
+      hoursNote:  { ar: "", en: "" },
+      maps: "https://maps.google.com/" }
+  ],
+`;
+    // Insert just before the hours block, which every template carries.
+    const anchor = s.indexOf("  /* ---- Opening hours");
+    if (anchor === -1) { console.error("could not find the hours block to anchor locations[]"); process.exit(1); }
+    s = s.slice(0, anchor) + block.replace(/^\n/, "") + "\n" + s.slice(anchor);
+    fs.writeFileSync(f, s);
+  ' || die 'could not seed locations[]'
+  echo "seeded locations[] — two branches, edit them in assets/js/content.js"
+fi
+
 # ---- The handover checklist ---------------------------------------------
 cat > CLIENT.md <<EOF
 # ${DISPLAY:-$SLUG}
@@ -96,7 +143,7 @@ Each of these is one edit in \`assets/js/content.js\`.
 |---|---|---|
 | Phone / WhatsApp | \`contact.phone\`, \`phoneHref\`, \`phoneLabel\`, \`whatsapp\` | Every order and call link on the site resolves from here. |
 | Email | \`contact.email\`, \`emailHref\` | |
-| Address | \`contact.addressLines\`, \`contact.maps\` | |
+| Address | $( $MULTI_LOCATION && echo '\`locations[]\` — one entry per branch' || echo '\`contact.addressLines\`, \`contact.maps\`' ) | |
 | Opening hours | \`hours[]\` | Keep the \`key\` values — they drive today's highlight. |
 | Prices and items | the catalogue arrays | Never invent prices on a real client's site. |
 | Photography | \`assets/photos/\` | Slots ship filled with the brand mark; see BRAND.md §6. |

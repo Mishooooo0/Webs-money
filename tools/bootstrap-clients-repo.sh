@@ -166,11 +166,30 @@ echo "     git remote add templates $TEMPLATES_URL"
 
 if $DELETE_SOURCE; then
   say "6. Removing the public copies"
+  BLOCKED=()
   for BR in "${CLIENT_BRANCHES[@]}"; do
     git rev-parse --verify --quiet "origin/$BR" >/dev/null || continue
-    git push origin --delete "$BR"
-    echo "   $BR: deleted from the public repo"
+    # Some environments proxy git and refuse ref deletion with a 403. That is
+    # not a reason to leave the operator guessing, and definitely not a reason
+    # to pretend it worked.
+    if git push origin --delete "$BR" 2>/dev/null; then
+      echo "   $BR: deleted from the public repo"
+    else
+      BLOCKED+=("$BR")
+      echo "   $BR: deletion refused by the remote (commonly a proxied git 403)"
+    fi
   done
+
+  if [ ${#BLOCKED[@]} -gt 0 ]; then
+    echo
+    echo "   The copies are safe in the private repo — verified above — but"
+    echo "   these still exist publicly and must be removed by hand:"
+    for BR in "${BLOCKED[@]}"; do
+      echo "     · https://github.com/Mishooooo0/Webs-money/branches  →  delete '$BR'"
+      echo "       or, from a normal clone:  git push origin --delete $BR"
+    done
+  fi
+
   echo
   echo "   Note: these branches were public until now. Deleting stops further"
   echo "   exposure but does not unpublish what is already out there. For a"
