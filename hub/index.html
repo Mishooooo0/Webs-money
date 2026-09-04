@@ -49,6 +49,11 @@
         <h2 data-t="templatesTitle">القوالب</h2>
         <span class="count" data-count="templates"></span>
       </div>
+      <!-- Plain text on purpose: hub.js sets textContent on [data-t], so any
+           markup here would be stripped on the first render. -->
+      <p class="shelf-note" data-t="generatorNote">
+        لبدء مشروع عميل، شغّل الأمر الموجود على البطاقة داخل مستودع العملاء. أضف --multi-location إذا كان للنشاط أكثر من فرع.
+      </p>
       <div class="grid" data-shelf="templates"></div>
     </section>
 

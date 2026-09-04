@@ -14,6 +14,8 @@
                       en: 'Bilingual templates, Arabic-first with an English toggle. No dependencies and no build step — just files you upload.' },
     templatesTitle: { ar: 'القوالب', en: 'Templates' },
     clientsTitle:   { ar: 'مشاريع العملاء', en: 'Client projects' },
+    generatorNote:  { ar: 'لبدء مشروع عميل، شغّل الأمر الموجود على البطاقة داخل مستودع العملاء. أضف --multi-location إذا كان للنشاط أكثر من فرع.',
+                      en: 'To start a client project, run the command on the card inside the clients repo. Add --multi-location if the business has more than one branch.' },
     preview:        { ar: 'شاهد القالب', en: 'View template' },
     openRepo:       { ar: 'افتح المستودع الخاص', en: 'Open private repo' },
     viewLive:       { ar: 'شاهد الموقع', en: 'View live site' },
