@@ -2,9 +2,14 @@
 # ============================================================
 # start-project.sh — start a client project from a template.
 #
-#   tools/start-project.sh <template-id> <client-slug> ["Client Name"] [--multi-location]
-#   tools/start-project.sh retail al-nakheel "عطور النخيل"
+#   tools/start-project.sh <template-id> <client-slug> ["Client Name"] ["English Name"] [--multi-location]
+#   tools/start-project.sh retail al-nakheel "عطور النخيل" "Al Nakheel"
 #   tools/start-project.sh cafe qahwa-co "قهوة" --multi-location
+#
+# The English name is optional: left off, it is title-cased from the slug
+# (qahwa-co -> "Qahwa Co"). Both halves of the wordmark are always stamped —
+# the site is bilingual, so a client whose Arabic name is right and whose
+# English name still says "Café Name" is only half started.
 #
 # --multi-location seeds a locations[] array for a business with more than one
 # branch. The engine renders a card per branch wherever an address appears —
@@ -35,8 +40,9 @@ set -- "${ARGS[@]+"${ARGS[@]}"}"
 TEMPLATE="${1:-}"
 SLUG="${2:-}"
 DISPLAY="${3:-}"
+DISPLAY_EN="${4:-}"
 
-[ -n "$TEMPLATE" ] && [ -n "$SLUG" ] || die 'usage: tools/start-project.sh <template-id> <client-slug> ["Client Name"] [--multi-location]'
+[ -n "$TEMPLATE" ] && [ -n "$SLUG" ] || die 'usage: tools/start-project.sh <template-id> <client-slug> ["Client Name"] ["English Name"] [--multi-location]'
 [[ "$SLUG" =~ ^[a-z0-9][a-z0-9-]*$ ]] || die "client slug must be lowercase letters, digits and dashes — got '$SLUG'"
 git rev-parse --git-dir >/dev/null 2>&1 || die 'not inside a git repository'
 [ -z "$(git status --porcelain)" ] || die 'working tree is not clean — commit or stash first'
@@ -74,18 +80,43 @@ git checkout -q -b "$SLUG" "$TEMPLATES_REMOTE_NAME/$BRANCH"
 
 # ---- Stamp the client's name where the site reads it --------------------
 if [ -n "$DISPLAY" ]; then
-  LATIN=$(printf '%s' "$SLUG" | tr 'a-z-' 'A-Z ' )
-  node -e '
+  STAMPED=$(node -e '
     const fs = require("fs");
-    const [display, latin] = process.argv.slice(1);
+    const [slug, display, displayEnArg] = process.argv.slice(1);
+
+    /* No English name given: title-case the slug. al-nakheel -> Al Nakheel. */
+    const displayEn = displayEnArg || slug.split("-").filter(Boolean)
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+    const latin = displayEn.toUpperCase();
+
+    /* content.js is JS source, so a name carrying an apostrophe would end the
+       string literal and break the site rather than fail here. */
+    const lit = v => v.replace(/\\/g, "\\\\").replace(/'"'"'/g, "\\'"'"'");
+
+    /* A regex that stops matching is the dangerous failure: it leaves the
+       template placeholder in place and reports success. Every stamp is
+       checked, and any miss stops the run. */
+    function stamp(src, label, re, value) {
+      const out = src.replace(re, (m, head) => head + "'"'"'" + lit(value) + "'"'"'");
+      if (out === src) {
+        console.error("start-project: could not stamp " + label +
+          " — assets/js/content.js is not in the expected shape.");
+        process.exit(1);
+      }
+      return out;
+    }
+
     const f = "assets/js/content.js";
     let s = fs.readFileSync(f, "utf8");
-    s = s.replace(/(primary:\s*\{\s*ar:\s*)'"'"'[^'"'"']*'"'"'/, `$1'"'"'${display}'"'"'`);
-    s = s.replace(/(secondary:\s*)'"'"'[^'"'"']*'"'"'/, `$1'"'"'${latin}'"'"'`);
+    s = stamp(s, "brand.primary.ar", /(primary:\s*\{\s*ar:\s*)'"'"'[^'"'"']*'"'"'/,        display);
+    s = stamp(s, "brand.primary.en", /(primary:\s*\{[^}]*\ben:\s*)'"'"'[^'"'"']*'"'"'/,    displayEn);
+    s = stamp(s, "brand.secondary",  /(secondary:\s*)'"'"'[^'"'"']*'"'"'/,                 latin);
     fs.writeFileSync(f, s);
-  ' "$DISPLAY" "$LATIN"
+
+    process.stdout.write(display + " / " + displayEn + " / " + latin);
+  ' "$SLUG" "$DISPLAY" "$DISPLAY_EN") || die 'stamping the brand name failed — the branch exists but is unstamped'
   node tools/sync-static.js >/dev/null
-  echo "stamped brand name: $DISPLAY / $LATIN"
+  echo "stamped brand name: $STAMPED"
 fi
 
 # ---- Optional: scaffold a multi-branch business -------------------------

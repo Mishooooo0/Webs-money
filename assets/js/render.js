@@ -174,6 +174,19 @@
        than rendering an empty strip. */
     if (!picks.length && categories.length) picks = categories[0].items.slice(0, 3);
 
+    /* With nothing to feature there is no strip to render — and no section
+       either. The heading, the noscript note and the "browse the menu" button
+       all belong to this one section, so emptying the mount alone would strand
+       a heading over a gap. That is the state a client ships in while their
+       menu is still being confirmed, so it has to read as deliberate.
+
+       All three templates wrap this mount in a section of its own — nothing
+       unrelated is lost with it — and the flag is set both ways, because
+       renderAll() runs again on every language change. */
+    var section = mount.closest('.section');
+    if (section) section.hidden = !picks.length;
+    if (!picks.length) { mount.replaceChildren(); return; }
+
     var frag = document.createDocumentFragment();
     picks.forEach(function (item, index) {
       var card = el('article', 'card card--flush');
