@@ -198,7 +198,7 @@ main                the hub + the shared engine every template merges from
 └── template-retail     03 · Retail & Boutique
 ```
 
-Client work is **not** here — it lives in the private `web-money-clients` repo.
+Client work is **not** here — it lives in the private `web-clients` repo.
 Start a project from this template with:
 
 ```bash

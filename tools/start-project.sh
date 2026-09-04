@@ -5,7 +5,7 @@
 #   tools/start-project.sh <template-id> <client-slug> ["Client Name"]
 #   tools/start-project.sh retail al-nakheel "عطور النخيل"
 #
-# Run it from a checkout of the PRIVATE clients repo (web-money-clients).
+# Run it from a checkout of the PRIVATE clients repo (web-clients).
 # It fetches the chosen template branch from the templates remote, creates
 # the client branch from it, stamps the name in, writes a CLIENT.md
 # checklist, and verifies the result.
@@ -151,7 +151,7 @@ cat <<EOF
       status: 'building',
       name: { ar: '${DISPLAY:-$SLUG}', en: '${DISPLAY:-$SLUG}' },
       location: { ar: '', en: '' },
-      repo: 'https://github.com/Mishooooo0/web-money-clients/tree/$SLUG',
+      repo: 'https://github.com/Mishooooo0/web-clients/tree/$SLUG',
       liveUrl: null
     }
 ────────────────────────────────────────────────────────────
