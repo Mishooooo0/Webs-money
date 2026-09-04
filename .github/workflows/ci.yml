@@ -1,7 +1,7 @@
 name: CI
 
 # Every branch: the hub and the templates alike. Client branches live in the
-# private web-money-clients repo and run their own copy of this.
+# private web-clients repo and run their own copy of this.
 on:
   push:
     branches: ['**']
