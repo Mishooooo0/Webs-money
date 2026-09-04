@@ -31,8 +31,8 @@ files carry 100% of the brand:
 | 3 | `assets/brand/*.svg` | Logo, icon mark, house pattern, divider band, favicon |
 
 Nothing else needs editing. That is enforced, not merely intended — the
-checks in **Verifying** below prove it, and the `rahwah` branch demonstrates it:
-a complete visual reskin that touches only these three surfaces.
+checks in **Verifying** below prove it, and the client branches in the private repo
+demonstrate it: a complete visual reskin touches only these three surfaces.
 
 ## Reskinning, start to finish
 
@@ -107,8 +107,8 @@ index.html  services.html  team.html  story.html  book.html  404.html
 assets/
   css/  tokens.css ★   reset.css  base.css  layout.css  components.css  pages.css
   js/   content.js ★   i18n.js    render.js  app.js
-tools/  check.js  audit.js  sync-static.js  check-brand.js
-.github/ workflows/{ci,pages}.yml   pages/{assemble.sh,index.html}
+tools/  check.js  audit.js  sync-static.js  check-brand.js  start-project.sh
+.github/ workflows/{ci,pages}.yml   pages/{assemble.sh,shoot.js}
   brand/ logo.svg ★  mark.svg ★  pattern-primary.svg ★  pattern-band.svg ★  favicon.svg ★
 ```
 
@@ -157,9 +157,10 @@ npm install && npx playwright install chromium   # only to run the audit
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs both commands on **every branch** — templates
-and client deliveries alike. A client branch that quietly breaks the engine
-fails here rather than in front of the client.
+`.github/workflows/ci.yml` runs both commands on **every branch**, picking the
+right set from the shape of the checkout. Client branches in the private repo
+run their own copy, so one that quietly breaks the engine fails there rather
+than in front of the client.
 
 `.github/workflows/pages.yml` publishes everything to one GitHub Pages site,
 assembled by `.github/pages/assemble.sh` from several branches:
@@ -187,18 +188,21 @@ becomes fully self-hosted.
 
 ## Branches
 
-Branch per business. Templates are the standard product; a branch named after
-a business is a real delivery for that client.
+This is **02 · Services & Booking**, one of three templates. The shelf, the shared engine and
+the tooling live on `main`; each template is a peer branch of the others.
 
-- **`main`** — café + restaurant template, and the shared engine every branch inherits.
-- **`template-services`** — services + booking template (salons, clinics, gyms).
-- **`rahwah`** — client delivery for RAHWAH, a café in Al Malqa, Riyadh.
+```
+main                the hub + the shared engine every template merges from
+├── template-cafe       01 · Café & Restaurant
+├── template-services   02 · Services & Booking
+└── template-retail     03 · Retail & Boutique
+```
 
-Fixes to the engine land on `main` and merge outward. Client branches never
-touch shared code, which `git diff` proves:
+Client work is **not** here — it lives in the private `web-money-clients` repo.
+Start a project from this template with:
 
 ```bash
-git diff main --name-only -- assets/css/base.css assets/css/layout.css \
-  assets/css/components.css assets/js/i18n.js assets/js/render.js assets/js/app.js
-# prints nothing on a client branch
+tools/start-project.sh services <client-slug> "Client Name"
 ```
+
+Pick up engine fixes later with `git fetch templates && git merge templates/main`.
