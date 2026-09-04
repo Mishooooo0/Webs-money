@@ -102,6 +102,16 @@
   function renderCategoryList(mount, categories, rowFn) {
     var frag = document.createDocumentFragment();
 
+    /* An empty list is a real state, not a bug: a client mid-content-gathering
+       has a menu page with nothing confirmed on it yet. Left alone this renders
+       a blank section, which reads as broken. Say so instead. */
+    if (!categories || !categories.length) {
+      var note = window.I18N.t('common.comingSoon');
+      if (note) mount.replaceChildren(el('p', 'noscript-note', note));
+      else mount.replaceChildren();
+      return;
+    }
+
     (categories || []).forEach(function (category) {
       var section = el('section', 'menu-category');
       if (category.id) section.id = category.id;
@@ -259,10 +269,59 @@
     mount.replaceChildren(frag);
   }
 
+  /* One address, or several.
+
+     A business with two branches needs no new page and no new markup: the
+     data-render="address" mounts already sit on the visit page, the home page
+     and the footer of every template. When SITE.locations is present this
+     renders a card per branch; when it is absent — which is every existing
+     site — the behaviour below is byte-for-byte what it always was.
+
+     Start a project with --multi-location to get the locations[] scaffold.  */
   function renderAddress(mount) {
+    var locations = window.SITE.locations;
+    if (Array.isArray(locations) && locations.length) return renderLocations(mount, locations);
+
     var frag = document.createDocumentFragment();
     var lines = window.I18N.v('contact.addressLines') || [];
     lines.forEach(function (line) { frag.appendChild(el('p', null, line)); });
+    mount.replaceChildren(frag);
+  }
+
+  function renderLocations(mount, locations) {
+    var frag = document.createDocumentFragment();
+
+    locations.forEach(function (place) {
+      var card = el('div', 'location-card');
+
+      var name = window.I18N.pick(place.name);
+      if (name) card.appendChild(el('h3', 'location-card__name', name));
+
+      (window.I18N.pick(place.addressLines) || []).forEach(function (line) {
+        card.appendChild(el('p', 'location-card__line', line));
+      });
+
+      var note = window.I18N.pick(place.hoursNote);
+      if (note) card.appendChild(el('p', 'location-card__note', note));
+
+      var links = el('div', 'location-card__links');
+      if (place.maps) {
+        var map = el('a', 'link-arrow', window.I18N.t('common.directions'));
+        map.href = place.maps;
+        map.target = '_blank';
+        map.rel = 'noopener';
+        links.appendChild(map);
+      }
+      if (place.phoneLabel) {
+        var tel = el('a', 'location-card__tel u-ltr', place.phoneLabel);
+        tel.href = place.phoneHref || ('tel:' + String(place.phoneLabel).replace(/[^\d+]/g, ''));
+        links.appendChild(tel);
+      }
+      if (links.children.length) card.appendChild(links);
+
+      frag.appendChild(card);
+    });
+
     mount.replaceChildren(frag);
   }
 

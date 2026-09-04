@@ -219,6 +219,15 @@
 }
 .site-footer a:hover { color: var(--c-on-deep); opacity: 0.7; }
 
+/* base.css paints every heading --c-deep, which is invisible on this ground.
+   Scope it once here rather than per component: the footer has already
+   swallowed one heading (footer-col__title) and a second (location-card__name)
+   before this rule existed. Any heading added to the footer later is covered. */
+.site-footer :is(h1, h2, h3, h4) { color: inherit; }
+
+/* --c-accent is tuned for light grounds; on this one it goes muddy. */
+.site-footer .link-arrow { color: var(--c-accent-2); }
+
 .site-footer__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
