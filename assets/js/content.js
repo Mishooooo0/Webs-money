@@ -1,14 +1,17 @@
 /* ============================================================
-   CONTENT  —  ★ RESKIN FILE 2 of 3
+   CONTENT  —  ★ RESKIN FILE 2 of 3            · THE BASE ·
    ------------------------------------------------------------
-   Every word on this website lives here, as an { ar, en } pair, plus
-   the data that drives the menu and shop grids.
+   This is the vertical-neutral base that every template inherits, not a
+   site of its own. main carries no pages; the three template branches
+   supply those, and each overrides this file with its own content.
 
-   To re-dress the site for a new client you change THIS file,
-   assets/css/tokens.css, and the five SVGs in assets/brand/.
+   Kept generic on purpose: a new template should start from "اسم النشاط",
+   not from somebody else's café. The menu/beans/merch arrays below are
+   left as a worked example of the shape the renderers expect.
 
-   Adding a drink is one entry in menu[].items — never HTML.
-   Keys under t.* are addressed from markup as data-i18n="nav.home".
+   Every word lives here as an { ar, en } pair. To re-dress a site you
+   change THIS file, assets/css/tokens.css, and the five SVGs in
+   assets/brand/. Keys under t.* are addressed as data-i18n="nav.home".
    ============================================================ */
 
 window.SITE = {
@@ -16,8 +19,8 @@ window.SITE = {
   /* ---- Identity ---------------------------------------------------- */
   brand: {
     /* Shown in the header and footer wordmark. */
-    primary:   { ar: 'اسم المقهى', en: 'Café Name' },
-    secondary: 'CAFE NAME',            // wide-tracked Latin line, one script only
+    primary:   { ar: 'اسم النشاط', en: 'Business Name' },
+    secondary: 'BUSINESS',             // wide-tracked Latin line, one script only
     currency:  { ar: 'ر.س', en: 'SAR' }
   },
 

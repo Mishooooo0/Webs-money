@@ -1,6 +1,9 @@
 /* ============================================================
-   TOKENS  —  ★ RESKIN FILE 1 of 3
+   TOKENS  —  ★ RESKIN FILE 1 of 3             · THE BASE ·
    ------------------------------------------------------------
+   The neutral palette every template starts from. Each template branch
+   overrides these six roles; nothing here is meant to ship as-is.
+
    This is the ONLY file in the project allowed to contain a raw
    colour value. Every other stylesheet consumes var(--…).
 

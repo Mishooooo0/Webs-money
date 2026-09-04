@@ -1,7 +1,7 @@
 name: CI
 
-# Every branch: templates and client deliveries alike. A client branch that
-# quietly breaks the engine should fail here, not in front of the client.
+# Every branch: the hub and the templates alike. Client branches live in the
+# private web-money-clients repo and run their own copy of this.
 on:
   push:
     branches: ['**']
@@ -14,11 +14,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # check-hub verifies the branches the catalogue names
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       # No install step — these checks are deliberately dependency-free.
-      - run: node tools/check.js
+      #
+      # The hub branch carries no template pages, so tools/check.js would pass
+      # there vacuously: sync-static with nothing to sync, binding checks with
+      # no markup to bind. Branch on the shape of the checkout instead of on
+      # the branch name, so a renamed branch cannot skip its checks.
+      - name: Run the checks for this branch's shape
+        run: |
+          if [ -f hub/catalogue.js ] && [ ! -f index.html ]; then
+            echo "hub branch — running check-hub"
+            node tools/check-hub.js
+          else
+            echo "site branch — running the six static checks"
+            node tools/check.js
+          fi
 
   audit:
     name: Browser audit
@@ -28,8 +43,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm install --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium
+      # The hub has no site to audit; its own checks ran in the job above.
+      - id: shape
+        run: |
+          if [ -f index.html ]; then echo "site=true" >> "$GITHUB_OUTPUT";
+          else echo "site=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.shape.outputs.site == 'true'
+        run: npm install --no-audit --no-fund
+      - if: steps.shape.outputs.site == 'true'
+        run: npx playwright install --with-deps chromium
       # Console errors, horizontal overflow, WCAG AA contrast in both
       # languages, and brand SVGs that fail to load behind a CSS mask.
-      - run: node tools/audit.js
+      - if: steps.shape.outputs.site == 'true'
+        run: node tools/audit.js
+      - if: steps.shape.outputs.site != 'true'
+        run: echo "Hub branch — no site pages to audit."
