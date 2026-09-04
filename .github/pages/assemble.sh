@@ -1,29 +1,46 @@
 #!/usr/bin/env bash
-# Assemble every template and client site into one publishable folder.
+# ============================================================
+# Assemble the published site.
 #
-#   /                  the gallery
-#   /cafe/             café + restaurant template   (main)
-#   /services/         services + booking template  (template-services)
-#   /retail/           retail + boutique template   (template-retail)
-#   /clients/rahwah/   Rahwah                       (rahwah)
+#   /                the hub          (hub/ on this branch)
+#   /<dest>/         one per template (its branch, per hub/catalogue.js)
+#   /shots/          screenshots, added afterwards by shoot.js
 #
-# Adding a client is one line at the bottom of this file.
+# The list of what to publish comes from hub/catalogue.js, which the hub
+# page and tools/start-project.sh also read — so they cannot disagree.
+#
+# ── TEMPLATES ONLY. ─────────────────────────────────────────
+# Client work is never copied here. That is the whole of what keeps it
+# private: there is no client HTML on the public origin to find. Client
+# entries in the catalogue carry no `dest` and are skipped, and
+# tools/check-hub.js fails the build if one ever gains one.
+# ============================================================
 set -euo pipefail
 
 OUT=_site
 rm -rf "$OUT"
 mkdir -p "$OUT"
 
+# Read the publishable entries: templates only, one "branch<TAB>dest<TAB>label" per line.
+ENTRIES=$(node -e '
+  global.window = {};
+  require("./hub/catalogue.js");
+  for (const t of window.CATALOGUE.templates) {
+    process.stdout.write([t.branch, t.dest, t.name.en].join("\t") + "\n");
+  }
+')
+
 publish() {
   local branch="$1" dest="$2" label="$3"
 
-  # A branch named here may not exist yet — skip rather than fail the deploy.
+  # A branch named in the catalogue may not exist yet — skip rather than
+  # fail the whole deploy.
   local ref=""
   for candidate in "origin/$branch" "$branch"; do
     if git rev-parse --verify --quiet "$candidate^{commit}" >/dev/null; then ref="$candidate"; break; fi
   done
   if [ -z "$ref" ]; then
-    echo "skip   $label — branch '$branch' does not exist yet"
+    echo "skip    $label — branch '$branch' does not exist yet"
     return 0
   fi
 
@@ -31,18 +48,19 @@ publish() {
   git archive "$ref" | tar -x -C "$OUT/$dest"
 
   # Ship the website, not the workshop.
-  rm -rf "$OUT/$dest/.github" "$OUT/$dest/tools" "$OUT/$dest/node_modules"
+  rm -rf "$OUT/$dest/.github" "$OUT/$dest/tools" "$OUT/$dest/hub" "$OUT/$dest/node_modules"
   rm -f  "$OUT/$dest"/*.md "$OUT/$dest/package.json" "$OUT/$dest/package-lock.json" "$OUT/$dest/.gitignore"
 
   echo "publish $label — $ref -> /$dest"
 }
 
-publish main              cafe            "Café & restaurant template"
-publish template-services services        "Services & booking template"
-publish template-retail   retail          "Retail & boutique template"
-publish rahwah            clients/rahwah  "Rahwah (client)"
+while IFS=$'\t' read -r branch dest label; do
+  [ -n "$branch" ] && publish "$branch" "$dest" "$label"
+done <<< "$ENTRIES"
 
-cp .github/pages/index.html "$OUT/index.html"
+# The hub itself becomes the site root. It owns every file it references,
+# so this is a straight copy — nothing is pulled in from a template branch.
+cp hub/index.html hub/hub.css hub/hub.js hub/gate.js hub/catalogue.js hub/favicon.svg "$OUT/"
 touch "$OUT/.nojekyll"
 
 echo
