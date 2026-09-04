@@ -14,7 +14,7 @@
    branch into the public site at that path.
 
    A client entry has NEITHER, on purpose. Client work lives in the
-   private web-money-clients repo and is never copied into the public
+   private web-clients repo and is never copied into the public
    site. tools/check-hub.js FAILS THE BUILD if a client ever gains a
    `dest`, so this cannot be undone by accident.
 
@@ -84,7 +84,7 @@ window.CATALOGUE = {
         ar: 'منيو كامل وأوقات العمل والموقع من المقهى نفسه. ينقص رقم الجوال وقائمة الحلويات.',
         en: 'Full menu, hours and map pin from the café itself. Phone number and sweets menu still outstanding.'
       },
-      repo: 'https://github.com/Mishooooo0/web-money-clients/tree/rahwah',
+      repo: 'https://github.com/Mishooooo0/web-clients/tree/rahwah',
       liveUrl: null
     }
   ]

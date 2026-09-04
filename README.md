@@ -25,7 +25,7 @@ python3 -m http.server --directory _site 8000
 ## Starting a client project
 
 Client work is **not** in this repo. It lives in the private
-`Mishooooo0/web-money-clients`, and is never published to the public site.
+`Mishooooo0/web-clients`, and is never published to the public site.
 
 From a checkout of that repo:
 

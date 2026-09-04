@@ -15,7 +15,7 @@
        assemble.sh publishes templates only, and tools/check-hub.js fails
        the build if a client entry ever gains a `dest`.
      · The client cards hold a name, a status and a link. The work itself
-       is in the private web-money-clients repo, where GitHub enforces
+       is in the private web-clients repo, where GitHub enforces
        access — someone without it gets a 404 from GitHub, not from us.
 
    So the gate is doing a reasonable job: keeping a client list out of

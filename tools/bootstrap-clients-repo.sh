@@ -7,7 +7,7 @@
 #                                                    #   public branch
 #
 # Run this once, from a checkout of THIS repo, after creating
-# https://github.com/Mishooooo0/web-money-clients as a PRIVATE repository
+# https://github.com/Mishooooo0/web-clients as a PRIVATE repository
 # with no README, no .gitignore and no licence (it must start empty).
 #
 # It seeds the clients repo's main with its README and tooling, pushes every
@@ -19,7 +19,7 @@
 # ============================================================
 set -euo pipefail
 
-CLIENTS_URL="https://github.com/Mishooooo0/web-money-clients.git"
+CLIENTS_URL="https://github.com/Mishooooo0/web-clients.git"
 TEMPLATES_URL="https://github.com/Mishooooo0/Webs-money.git"
 CLIENT_BRANCHES=(rahwah)
 DELETE_SOURCE=false
@@ -37,7 +37,7 @@ git ls-remote "$CLIENTS_URL" >/dev/null 2>&1 || die \
 
 Create it first, then re-run:
   · https://github.com/new
-  · Name:       web-money-clients
+  · Name:       web-clients
   · Visibility: Private
   · Do NOT add a README, .gitignore or licence — it must start empty."
 
@@ -47,17 +47,26 @@ fi
 git fetch --quiet clients || true
 
 say "2. Seeding the clients repo's main"
-if git rev-parse --verify --quiet clients/main >/dev/null; then
+# The repo may have been created empty, or initialised with a README. Handle
+# both: start from whatever main already has, or from nothing.
+if git rev-parse --verify --quiet clients/main >/dev/null \
+   && git show clients/main:README.md 2>/dev/null | grep -q 'Client website projects'; then
   echo "   already seeded — leaving it alone"
 else
   WORK=$(mktemp -d)
+  SEED_MODE=fresh
+  if git rev-parse --verify --quiet clients/main >/dev/null; then
+    SEED_MODE=onto-existing
+    echo "   main already exists — adding the tooling on top of it"
+    git archive clients/main | tar -x -C "$WORK"
+  fi
   mkdir -p "$WORK/tools" "$WORK/.github/workflows"
   cp tools/start-project.sh "$WORK/tools/"
   cp .github/workflows/ci.yml "$WORK/.github/workflows/"
   printf 'node_modules/\n_site/\n.DS_Store\n*.log\n' > "$WORK/.gitignore"
 
   cat > "$WORK/README.md" <<'MD'
-# web-money-clients
+# web-clients
 
 Client website projects. **Private on purpose** — this is the only thing
 keeping client work off the public web.
@@ -104,6 +113,15 @@ client's own hosting when they go live. Then set `liveUrl` on their entry in
 MD
 
   git -C "$WORK" init -q -b main
+  git -C "$WORK" remote add origin "$CLIENTS_URL"
+
+  # When main already exists, base the seed commit on it rather than pushing
+  # an unrelated history, which the remote would reject.
+  if [ "$SEED_MODE" = onto-existing ]; then
+    git -C "$WORK" fetch -q origin main
+    git -C "$WORK" reset -q --soft FETCH_HEAD
+  fi
+
   git -C "$WORK" add -A
   git -C "$WORK" -c user.email="$(git config user.email)" -c user.name="$(git config user.name)" \
       commit -q -m "Seed the private clients repo
@@ -111,10 +129,9 @@ MD
 Client website projects, branched from the templates in Webs-money. Private
 because that is the only thing actually keeping client work off the public web
 — the passphrase on the public hub is a doormat, not a lock."
-  git -C "$WORK" remote add origin "$CLIENTS_URL"
   git -C "$WORK" push -q -u origin main
   rm -rf "$WORK"
-  echo "   seeded"
+  echo "   seeded ($SEED_MODE)"
 fi
 
 say "3. Moving client branches across, with history"
@@ -144,7 +161,7 @@ done
 $ALL_GOOD || die 'verification failed — nothing was deleted. Investigate before retrying.'
 
 say "5. Wiring the templates remote into the clients repo"
-echo "   Run this once inside your clone of web-money-clients:"
+echo "   Run this once inside your clone of web-clients:"
 echo "     git remote add templates $TEMPLATES_URL"
 
 if $DELETE_SOURCE; then
