@@ -411,3 +411,46 @@ html[dir='rtl'] .quote-card__cite { letter-spacing: 0; }
    header so a catalogue and a menu share one visual language. */
 
 .catalog-group + .catalog-group { margin-block-start: var(--s-8); }
+
+/* ---- Location cards ---------------------------------------------------------
+   Only rendered when content.js carries a locations[] array — a single-location
+   site never sees these. See renderAddress() in render.js. */
+
+.location-card + .location-card {
+  margin-block-start: var(--s-5);
+  padding-block-start: var(--s-5);
+  border-block-start: 1px solid var(--c-line);
+}
+.location-card__name {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--c-deep);
+  margin-block-end: var(--s-2);
+}
+.location-card__line { color: var(--c-ink-soft); }
+.location-card__note {
+  font-size: var(--fs-sm);
+  color: var(--c-ink-soft);
+  opacity: 0.85;
+  margin-block-start: var(--s-2);
+}
+.location-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  align-items: center;
+  margin-block-start: var(--s-3);
+}
+.location-card__tel { font-size: var(--fs-sm); font-weight: 500; color: var(--c-accent); }
+
+/* On a dark ground the hairline and muted text have to invert with it.
+   The footer is a dark ground too, even though it is not a .section--deep. */
+:is(.section--deep, .site-footer) .location-card + .location-card { border-block-start-color: var(--a-hairline); }
+:is(.section--deep, .site-footer) .location-card__name { color: var(--c-on-deep); }
+:is(.section--deep, .site-footer) .location-card__line,
+:is(.section--deep, .site-footer) .location-card__note { color: var(--c-on-deep); opacity: 0.78; }
+:is(.section--deep, .site-footer) .location-card__tel { color: var(--c-accent-2); }
+
+/* A footer column is narrow; the branch name does not need heading weight. */
+.site-footer .location-card__name { font-size: var(--fs-sm); }
+.site-footer .location-card + .location-card { margin-block-start: var(--s-4); padding-block-start: var(--s-4); }
