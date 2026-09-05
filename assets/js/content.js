@@ -236,8 +236,14 @@ window.SITE = {
       hoursTitle:   { ar: 'أوقات العمل',  en: 'Opening Hours' },
       contactTitle: { ar: 'تواصل معنا',   en: 'Get in touch' },
       parkingTitle: { ar: 'المواقف',      en: 'Parking' },
-      parkingText:  { ar: 'مواقف مجانية أمام الفرع وعلى الشارع الجانبي.',
-                      en: 'Free parking in front of the shop and on the side street.' }
+      /* ★ A CLAIM ABOUT THE BUSINESS — verify it or delete the section.
+         This used to read "free parking in front of the shop and on the side
+         street", which sounds like filler but reads as fact once the template
+         carries a real name. It shipped that way to two live client sites
+         before anyone asked whether it was true. Placeholder copy that states
+         something checkable has to look unfinished, not plausible. */
+      parkingText:  { ar: 'أضف تفاصيل المواقف هنا، أو احذف هذا القسم.',
+                      en: 'Add parking details here, or delete this section.' }
     },
 
     footer: {
