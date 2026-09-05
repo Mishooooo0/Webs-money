@@ -95,8 +95,8 @@ window.CATALOGUE = {
       name: { ar: 'لابيت', en: 'Llabate' },
       location: { ar: 'السعودية', en: 'Saudi Arabia' },
       note: {
-        ar: 'الهوية وأوقات العمل والنصوص من حسابهم. ينقص رقم الجوال والعنوان والمنيو.',
-        en: 'Identity, hours and copy taken from their own account. Phone, address and menu still outstanding.'
+        ar: 'الهوية والمنيو وأوقات العمل وصورتان من حسابهم. ينقص رقم الجوال والعنوان.',
+        en: 'Identity, menu, hours and two photographs from their own account. Phone and address still outstanding.'
       },
       repo: 'https://github.com/Mishooooo0/web-clients/tree/llabate',
       liveUrl: null
