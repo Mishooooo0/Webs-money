@@ -134,19 +134,25 @@ window.SITE = {
   ],
 
   /* ---- FAQ — rendered as <details>, so it opens without JavaScript --- */
+  /* ★ CLAIMS ABOUT THE BUSINESS. Delivery windows, a returns period and a
+     wrapping policy are things a customer can hold a shop to, and they are
+     the first thing a reskin should replace — but plausible filler does not
+     look like it needs replacing, so it ships. They are written as visible
+     blanks for that reason: the component still demos, and nobody mistakes
+     the answer for a policy anyone agreed to. */
   faq: [
     { q: { ar: 'هل أقدر أطلب من غير ما أزور المتجر؟', en: 'Can I order without visiting?' },
       a: { ar: 'نعم. أرسل لنا اسم المنتج على واتساب ونرتب لك الدفع والتوصيل.',
            en: 'Yes. Send us the product on WhatsApp and we arrange payment and delivery.' } },
     { q: { ar: 'كم يستغرق التوصيل؟', en: 'How long is delivery?' },
-      a: { ar: 'داخل المدينة خلال يوم عمل، وبقية المناطق من يومين إلى أربعة.',
-           en: 'Same city within one working day; elsewhere two to four.' } },
+      a: { ar: '[أضف مدة التوصيل داخل المدينة وخارجها.]',
+           en: '[Add your delivery times, in the city and outside it.]' } },
     { q: { ar: 'هل تغلّفون الهدايا؟', en: 'Do you gift wrap?' },
-      a: { ar: 'نعم، التغليف مجاني ونضيف بطاقة بخط اليد إذا رغبت.',
-           en: 'Yes — wrapping is free, and we add a handwritten card if you like.' } },
+      a: { ar: '[أضف سياسة التغليف — مجاني أم برسوم؟]',
+           en: '[Add your gift-wrapping policy — free or paid?]' } },
     { q: { ar: 'هل يمكن الاستبدال أو الإرجاع؟', en: 'Can I exchange or return?' },
-      a: { ar: 'خلال سبعة أيام على المنتجات غير المفتوحة، مع الفاتورة.',
-           en: 'Within seven days on unopened items, with the receipt.' } },
+      a: { ar: '[أضف سياسة الإرجاع والاستبدال — المدة والشروط.]',
+           en: '[Add your returns policy — the window and the conditions.]' } },
     { q: { ar: 'هل الأسعار شاملة الضريبة؟', en: 'Do prices include VAT?' },
       a: { ar: 'نعم، كل الأسعار المعروضة شاملة ضريبة القيمة المضافة.', en: 'Yes — every price shown includes VAT.' } }
   ],
@@ -247,8 +253,9 @@ window.SITE = {
       hoursTitle:   { ar: 'أوقات العمل',  en: 'Opening Hours' },
       contactTitle: { ar: 'تواصل معنا',   en: 'Get in touch' },
       parkingTitle: { ar: 'المواقف',      en: 'Parking' },
-      parkingText:  { ar: 'مواقف المركز التجاري مجانية لأول ثلاث ساعات.',
-                      en: 'Mall parking is free for the first three hours.' }
+      /* ★ Same class as the FAQ above — see the note there. */
+      parkingText:  { ar: '[أضف تفاصيل المواقف، أو احذف هذا القسم.]',
+                      en: '[Add parking details, or delete this section.]' }
     },
 
     footer: {
