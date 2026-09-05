@@ -30,8 +30,23 @@
     return node;
   }
 
+  /* U+2066 LEFT-TO-RIGHT ISOLATE … U+2069 POP DIRECTIONAL ISOLATE.
+
+     A price that opens with a sign is reordered by the bidi algorithm in an
+     Arabic run: a leading '+' is not absorbed into the number the way one
+     between two digits is, so it resolves to the paragraph direction and
+     lands on the wrong side. '+3 ر.س' renders as '3+', which reads as three
+     plus something. Isolating the value pins the sign to its number without
+     moving the price relative to the currency — an ordinary '17' renders
+     identically with the isolate and without it.
+
+     Written as escapes on purpose: both characters are invisible, and an
+     invisible literal in source is one stray keystroke away from a bug that
+     cannot be seen in a diff. */
+  var LRI = '\u2066', PDI = '\u2069';
+
   function price(value) {
-    return value + ' ' + window.I18N.v('brand.currency');
+    return LRI + value + PDI + ' ' + window.I18N.v('brand.currency');
   }
 
   /* A branded image slot: house pattern + logo, never an empty box. */
@@ -196,7 +211,12 @@
 
       var body = el('div', 'card__body');
       body.appendChild(el('h3', 'card__title', window.I18N.pick(item.name)));
-      body.appendChild(el('p', 'card__text', window.I18N.pick(item.desc)));
+      /* Guarded like the other card renderers already are. An empty <p> still
+         takes a row in the card's grid, so an item with no description opened
+         a gap under its title — the third outing for "absent data leaves a
+         visible hole", after the empty menu and the empty featured strip. */
+      var desc = window.I18N.pick(item.desc);
+      if (desc) body.appendChild(el('p', 'card__text', desc));
       body.appendChild(el('p', 'card__price', price(item.price)));
       card.appendChild(body);
 
@@ -231,7 +251,8 @@
       meta.appendChild(metaRow('process', window.I18N.pick(bean.process)));
       body.appendChild(meta);
 
-      body.appendChild(el('p', 'card__text', window.I18N.pick(bean.notes)));
+      var notes = window.I18N.pick(bean.notes);
+      if (notes) body.appendChild(el('p', 'card__text', notes));
 
       var tags = el('div', 'tag-row');
       tags.appendChild(el('span', 'tag', bean.weight));
@@ -256,7 +277,8 @@
 
       var body = el('div', 'card__body');
       body.appendChild(el('h3', 'card__title', window.I18N.pick(product.name)));
-      body.appendChild(el('p', 'card__text', window.I18N.pick(product.desc)));
+      var desc = window.I18N.pick(product.desc);
+      if (desc) body.appendChild(el('p', 'card__text', desc));
       body.appendChild(el('p', 'card__price', price(product.price)));
       card.appendChild(body);
 
