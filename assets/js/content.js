@@ -157,6 +157,10 @@ window.SITE = {
   ],
 
   /* ---- Social proof ---------------------------------------------------- */
+  /* ★ INVENTED QUOTES. Nobody said these. They are attributed to archetypes
+     rather than named people so they cannot be mistaken for real named
+     reviews, but they are still social proof on a commercial page — replace
+     them with quotes the client actually has, or delete the section. */
   testimonials: [
     { name: { ar: 'زبون دائم', en: 'A regular' },
       text: { ar: '«أول مكان أخرج منه وأنا مرتاح من الشكل ومن الجلسة نفسها.»',
@@ -175,8 +179,8 @@ window.SITE = {
       a: { ar: 'نستقبل بالدور عند توفر مكان، لكن الحجز يضمن وقتك — خاصة في المساء ونهاية الأسبوع.',
            en: 'We take walk-ins when there is room, but booking guarantees your slot — especially evenings and weekends.' } },
     { q: { ar: 'كيف أحجز؟', en: 'How do I book?' },
-      a: { ar: 'أرسل لنا رسالة على واتساب بالخدمة والوقت المناسب، ونؤكد لك خلال دقائق.',
-           en: 'Message us on WhatsApp with the service and a time that suits you; we confirm within minutes.' } },
+      a: { ar: 'أرسل لنا رسالة على واتساب بالخدمة والوقت المناسب، ونؤكد لك الحجز.',
+           en: 'Message us on WhatsApp with the service and a time that suits you; we confirm your booking.' } },
     { q: { ar: 'ماذا لو تأخرت أو أردت الإلغاء؟', en: 'What if I am late or need to cancel?' },
       a: { ar: 'أخبرنا قبل ساعة على الأقل ونعيد جدولة الموعد بلا رسوم. التأخر أكثر من خمس عشرة دقيقة قد يعني تقصير الجلسة.',
            en: 'Tell us at least an hour ahead and we reschedule at no charge. More than fifteen minutes late may mean a shorter session.' } },
@@ -233,8 +237,8 @@ window.SITE = {
       galleryTitle:   { ar: 'مساحة نظيفة وهادئة', en: 'Clean, quiet, and yours for the hour' },
       praiseTitle:    { ar: 'ماذا يقول زبائننا', en: 'What people say' },
       visitTitle:     { ar: 'احجز موعدك', en: 'Book your appointment' },
-      visitText:      { ar: 'أرسل لنا الخدمة والوقت المناسب على واتساب، ونؤكد لك خلال دقائق.',
-                        en: 'Send us the service and a time on WhatsApp, and we confirm within minutes.' }
+      visitText:      { ar: 'أرسل لنا الخدمة والوقت المناسب على واتساب، ونؤكد لك الحجز.',
+                        en: 'Send us the service and a time on WhatsApp, and we confirm your booking.' }
     },
 
     servicesPage: {
@@ -277,13 +281,13 @@ window.SITE = {
     book: {
       eyebrow:      { ar: 'الحجز والموقع', en: 'Booking & location' },
       title:        { ar: 'احجز موعدك', en: 'Book an Appointment' },
-      lede:         { ar: 'الحجز عبر واتساب أسرع طريقة. أخبرنا بالخدمة والوقت، ونؤكد لك خلال دقائق.',
-                      en: 'WhatsApp is the fastest way. Tell us the service and a time, and we confirm within minutes.' },
+      lede:         { ar: 'الحجز عبر واتساب أسرع طريقة. أخبرنا بالخدمة والوقت، ونؤكد لك الحجز.',
+                      en: 'WhatsApp is the fastest way. Tell us the service and a time, and we confirm your booking.' },
       howTitle:     { ar: 'كيف يتم الحجز', en: 'How booking works' },
       s1Title:      { ar: '١ · أرسل رسالة', en: '1 · Message us' },
       s1Text:       { ar: 'اذكر الخدمة، واليوم، والوقت الذي يناسبك.', en: 'Name the service, the day, and a time that suits you.' },
       s2Title:      { ar: '٢ · نؤكد لك',   en: '2 · We confirm' },
-      s2Text:       { ar: 'نرد خلال دقائق بالتأكيد أو بأقرب وقت متاح.', en: 'We reply within minutes, confirming or offering the nearest slot.' },
+      s2Text:       { ar: 'نرد بالتأكيد أو بأقرب وقت متاح.', en: 'We reply confirming, or offering the nearest slot.' },
       s3Title:      { ar: '٣ · تعال في وقتك', en: '3 · Arrive on time' },
       s3Text:       { ar: 'احضر قبل خمس دقائق، ولا حاجة للانتظار.', en: 'Come five minutes early — there is no waiting.' },
       addressTitle: { ar: 'العنوان',     en: 'Address' },
