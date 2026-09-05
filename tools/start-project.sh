@@ -186,6 +186,31 @@ Each of these is one edit in \`assets/js/content.js\`.
 | Palette and type | \`assets/css/tokens.css\` | |
 | Page meta | \`<title>\` and og tags on each page | |
 
+## ⚠ Claims the site makes about the business
+
+The table above lists blanks, which are easy to spot. These are different:
+they are *sentences* — already written, already plausible, and about a real
+business the moment this branch has its name on it. They do not look like
+they need replacing, which is exactly why they get shipped.
+
+Search the branch for \`★\` — every one is marked in \`assets/js/content.js\`.
+Then read these and either confirm them with the client or delete them:
+
+| Where | What it asserts |
+|---|---|
+| \`t.visit.parkingText\` | Where customers park, and whether it is free |
+| \`faq[]\` | Delivery windows, returns periods, wrapping and payment terms |
+| \`testimonials[]\` | Quotes from customers. Nobody said these |
+| \`t.*\` generally | Response times, "we grind to order", "no booking needed", opening times written out in prose |
+
+Two rules that catch most of it:
+
+- **Any sentence a customer could hold them to** — a time, a price, a policy,
+  a guarantee — needs the client to have actually said it.
+- **Prose that restates data must agree with the data.** Opening hours written
+  into a paragraph will drift from \`hours[]\` and contradict the table on the
+  same page. Prefer pointing at the table over repeating it.
+
 ## Before launch
 
 \`\`\`bash
