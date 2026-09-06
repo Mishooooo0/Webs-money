@@ -9,7 +9,11 @@
   'use strict';
 
   var STRINGS = {
-    title:          { ar: 'قوالب مواقع للأعمال الصغيرة', en: 'Website templates for small businesses' },
+    /* The hub is the index of the whole thing, so it carries the product's
+       name rather than a description of its contents. The strapline does the
+       describing. */
+    title:          { ar: 'أوبسيديان', en: 'Obsidian-Hub' },
+    strapline:      { ar: 'قوالب مواقع للأعمال الصغيرة', en: 'Website templates for small businesses' },
     lede:           { ar: 'قوالب ثنائية اللغة، عربية أولًا مع تبديل للإنجليزية. بدون أي اعتماديات، وبدون خطوة بناء — مجرد ملفات تُرفع وتعمل.',
                       en: 'Bilingual templates, Arabic-first with an English toggle. No dependencies and no build step — just files you upload.' },
     templatesTitle: { ar: 'القوالب', en: 'Templates' },

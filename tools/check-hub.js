@@ -78,6 +78,28 @@ if (known) {
     if (!found) fail(`template "${tpl.id}" names branch "${tpl.branch}", which does not exist`);
   }
   if (!problems.length) ok.push('every template branch exists');
+
+  /* The hub is the index of the whole thing, so it must not also be sitting
+     inside the things it indexes. A template branch is main plus its own
+     pages, so hub/ arrives there purely by inheritance — it was deleted on
+     each branch, and this is what notices if a later merge puts it back. */
+  let strays = 0;
+  for (const tpl of C.templates) {
+    for (const ref of [tpl.branch, `origin/${tpl.branch}`]) {
+      let listing = '';
+      try {
+        listing = execFileSync('git', ['ls-tree', '--name-only', ref, 'hub/'],
+          { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+      } catch (err) { continue; }
+      if (listing) {
+        strays += 1;
+        fail(`branch "${ref}" contains hub/. The hub is the index, not something `
+           + 'that lives inside a template. Remove it there:\n'
+           + `           git checkout ${tpl.branch} && git rm -r --cached -q hub && git commit -m "drop the inherited hub"`);
+      }
+    }
+  }
+  if (!strays) ok.push('no template branch carries a copy of the hub');
 }
 
 /* ---- 3. The hub page's own files are all present ---------------------- */
