@@ -1,14 +1,22 @@
-# Webs-money — the hub
+# Obsidian-Hub
 
 Bilingual (Arabic-first, RTL) website templates for small businesses, and the
-shelf you pick one from.
+hub you pick one from.
 
-This branch is **the hub**, not a website. It carries the shelf page, the shared
-engine every template inherits, and the tooling. The templates live on their own
-branches; client work lives in a separate private repo.
+**The hub is the index of the whole thing.** It is what `/` serves once this is
+published, and every template sits inside it at `/cafe/`, `/services/`,
+`/retail/`. It is not a page you reach from a template — templates are reached
+from it.
+
+This branch *is* the hub. It carries the hub page, the shared engine every
+template inherits, and the tooling. The templates live on their own branches;
+client work lives in a separate private repo and is never published here.
+
+The repository is still named `Webs-money` on GitHub — renaming it is a
+settings change, and every clone URL in these docs changes with it.
 
 ```
-main                the hub + the shared engine
+main                Obsidian-Hub + the shared engine
 ├── template-cafe       01 · Café & Restaurant
 ├── template-services   02 · Services & Booking
 └── template-retail     03 · Retail & Boutique
@@ -21,6 +29,17 @@ python3 -m http.server --directory _site 8000
 ```
 
 ---
+
+## The hub does not live inside the templates
+
+A template branch is this branch plus its own six pages, so anything here
+arrives there on the next merge — which is how `hub/` ended up sitting inside
+all three of them. It has been removed from each, and `tools/check-hub.js`
+fails if it comes back.
+
+It can come back: editing `hub/*` here raises a modify/delete conflict the
+next time a template merges `main`. The resolution is `git rm -r hub` on the
+template branch. That is the intended answer, not a mistake to undo.
 
 ## Starting a client project
 
