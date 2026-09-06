@@ -43,6 +43,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .lang:hover{background:rgba(246,241,232,.12);opacity:1}
 .top h1{margin:0 0 14px;font-size:clamp(1.9rem,1.3rem+2.8vw,3.2rem);line-height:1.15;font-weight:700}
 .top p{margin:0;max-width:58ch;opacity:.76;font-size:clamp(1rem,.95rem+.3vw,1.12rem)}
+/* The h1 is the product's name now, so the line that used to be the heading
+   sits under it as a strapline rather than disappearing. */
+.strapline{margin:0 0 12px !important;font-family:var(--ff-la);font-size:.8rem;
+  letter-spacing:.2em;text-transform:uppercase;opacity:.5 !important}
+html[dir=rtl] .strapline{font-family:var(--ff-ar);letter-spacing:0;text-transform:none;font-size:.95rem}
 
 /* ---- Shelves --------------------------------------------------------- */
 
