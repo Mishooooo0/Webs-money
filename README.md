@@ -1,4 +1,4 @@
-# Obsidian-Hub
+# Obsidian Labs
 
 Bilingual (Arabic-first, RTL) website templates for small businesses, and the
 hub you pick one from.
@@ -16,7 +16,7 @@ The repository is still named `Webs-money` on GitHub — renaming it is a
 settings change, and every clone URL in these docs changes with it.
 
 ```
-main                Obsidian-Hub + the shared engine
+main                Obsidian Labs + the shared engine
 ├── template-cafe       01 · Café & Restaurant
 ├── template-services   02 · Services & Booking
 └── template-retail     03 · Retail & Boutique
