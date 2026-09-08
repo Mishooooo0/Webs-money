@@ -51,7 +51,8 @@
                        en: 'Three templates, all of them working today' },
     tplLede:         { ar: 'افتح أيًّا منها وتصفّحه كما يتصفّحه زبونك. ما تراه هو ما يُسلَّم، بمحتواك أنت مكان المحتوى التجريبي.',
                        en: 'Open any of them and browse as your customer would. What you see is what ships, with your content in place of the sample.' },
-    view:            { ar: 'شاهد القالب', en: 'View template' },
+    view:            { ar: 'التفاصيل', en: 'Details' },
+    allDetails:      { ar: 'كل التفاصيل ←', en: 'All the detail →' },
 
     howEyebrow:      { ar: 'كيف نعمل', en: 'How it works' },
     howTitle:        { ar: 'أربع خطوات، لا أكثر', en: 'Four steps, no more' },
@@ -113,7 +114,10 @@
 
   function card(tpl) {
     var a = el('a', 'card');
-    a.href = tpl.dest + '/';
+    /* The card opens the detail on templates.html, not the live demo. The
+       demo is one more click from there, behind the page list and what the
+       template holds — which is what someone deciding actually needs. */
+    a.href = 'templates.html#' + tpl.id;
     /* The accent drives the swatch and the "view" arrow, so each card
        carries a hint of the template it opens. */
     a.style.setProperty('--sw', tpl.accent);
@@ -127,7 +131,7 @@
     var img = new Image();
     img.alt = '';
     img.addEventListener('load', function () { img.classList.add('is-loaded'); });
-    img.src = 'shots/' + tpl.id + '.jpg';
+    img.src = 'shots/' + tpl.id + '/index.jpg';
     thumb.appendChild(img);
     a.appendChild(thumb);
 

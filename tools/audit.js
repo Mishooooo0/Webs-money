@@ -41,12 +41,12 @@ const LANGS = ['ar', 'en'];
    · /_stats: analytics.html asks for it on every load and renders its
      "nothing is counting here" panel when it is absent. On a static
      host the 404 IS the feature working.
-   · shots/<id>.jpg: the template card screenshots are rendered by
+   · shots/<id>/<page>.jpg: the template screenshots are rendered by
      .github/pages/shoot.js during the Pages build, with
      continue-on-error, and only ever exist in _site. The card fades one
      in over its accent swatch if it arrives and reads correctly if it
      does not, so a 404 here is the fallback working. */
-const IGNORED_REQUESTS = /fonts\.(googleapis|gstatic)\.com|\/shots\/[^/]+\.jpg$|\/_stats$/;
+const IGNORED_REQUESTS = /fonts\.(googleapis|gstatic)\.com|\/shots\/.+\.jpg$|\/_stats$/;
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',

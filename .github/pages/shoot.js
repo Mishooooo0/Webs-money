@@ -4,8 +4,9 @@
 
        node .github/pages/shoot.js            (after assemble.sh)
 
-   Serves the assembled _site and screenshots each template's home page
-   into _site/shots/<id>.jpg, which the hub cards fade in over their
+   Serves the assembled _site and screenshots every page of every template
+   into _site/shots/<id>/<name>.jpg, which the cards and the templates
+   gallery fade in over their
    colour swatch. A card that has no shot still reads correctly — the
    swatch stays — so this failing never breaks the deploy.
 
@@ -66,22 +67,41 @@ function serve() {
     viewport: { width: 1440, height: 900 }, deviceScaleFactor: 0.6
   });
 
+  /* Every page of every template, not just the home page: templates.html
+     shows a gallery of all of them. The list comes from the catalogue, which
+     check-hub.js §2b has already proved matches the branch — so a shot that
+     404s here means the assembled site is wrong, not the list.
+
+     Shots land at shots/<id>/<name>.jpg. The homepage card reads
+     shots/<id>/index.jpg, so it is the same loop that feeds both. */
   for (const t of templates) {
-    const page = await context.newPage();
-    try {
-      await page.goto(`http://localhost:${PORT}/${t.dest}/`, { waitUntil: 'networkidle', timeout: 30000 });
-      await page.waitForTimeout(600);
-      /* Reveal animations start hidden; a shot taken mid-animation looks broken. */
-      await page.evaluate(() => document.querySelectorAll('[data-reveal]')
-        .forEach((n) => n.classList.add('is-visible')));
-      await page.waitForTimeout(300);
-      await page.screenshot({ path: path.join(SHOTS, `${t.id}.jpg`), type: 'jpeg', quality: 72 });
-      const kb = Math.round(fs.statSync(path.join(SHOTS, `${t.id}.jpg`)).size / 1024);
-      console.log(`shoot: ${t.id}.jpg (${kb} KB)`);
-    } catch (err) {
-      console.log(`shoot: ${t.id} failed (${err.message.split('\n')[0]}) — card keeps its swatch`);
+    const pages = (t.pages || []).map((pg) => pg.file);
+    if (!pages.length) {
+      console.log(`shoot: ${t.id} declares no pages — skipped`);
+      continue;
     }
-    await page.close();
+    fs.mkdirSync(path.join(SHOTS, t.id), { recursive: true });
+
+    for (const file of pages) {
+      const name = file.replace(/\.html$/, '');
+      const out = path.join(SHOTS, t.id, `${name}.jpg`);
+      const page = await context.newPage();
+      try {
+        await page.goto(`http://localhost:${PORT}/${t.dest}/${file}`,
+          { waitUntil: 'networkidle', timeout: 30000 });
+        await page.waitForTimeout(600);
+        /* Reveal animations start hidden; a shot taken mid-animation looks broken. */
+        await page.evaluate(() => document.querySelectorAll('[data-reveal]')
+          .forEach((n) => n.classList.add('is-visible')));
+        await page.waitForTimeout(300);
+        await page.screenshot({ path: out, type: 'jpeg', quality: 72 });
+        const kb = Math.round(fs.statSync(out).size / 1024);
+        console.log(`shoot: ${t.id}/${name}.jpg (${kb} KB)`);
+      } catch (err) {
+        console.log(`shoot: ${t.id}/${name} failed (${err.message.split('\n')[0]}) — keeps its swatch`);
+      }
+      await page.close();
+    }
   }
 
   await browser.close();

@@ -51,6 +51,23 @@ for (const tpl of C.templates) {
     if (!bilingual(tpl[field])) fail(`template "${tpl.id}" needs ${field} as { ar, en }`);
   }
   if (!/^#[0-9a-f]{6}$/i.test(tpl.accent || '')) fail(`template "${tpl.id}" accent must be a #rrggbb hex`);
+
+  /* templates.html renders both of these, so a malformed entry is a hole in
+     a published page rather than a quiet no-op. */
+  if (!Array.isArray(tpl.pages) || !tpl.pages.length) {
+    fail(`template "${tpl.id}" needs a pages[] listing the pages on its branch`);
+  } else {
+    for (const pg of tpl.pages) {
+      if (!pg.file || !bilingual(pg)) fail(`template "${tpl.id}" has a pages[] entry without file/ar/en`);
+    }
+  }
+  if (!Array.isArray(tpl.holds) || !tpl.holds.length) {
+    fail(`template "${tpl.id}" needs a holds[] naming what its content file drives`);
+  } else {
+    for (const h of tpl.holds) {
+      if (!h.key || !bilingual(h)) fail(`template "${tpl.id}" has a holds[] entry without key/ar/en`);
+    }
+  }
 }
 
 const STATUSES = ['building', 'review', 'live', 'paused'];
@@ -100,27 +117,103 @@ if (known) {
     }
   }
   if (!strays) ok.push('no template branch carries a copy of the hub');
+
+  /* ---- 2b. THE CLAIMS templates.html MAKES ARE TRUE -------------------
+     The page tells a visitor "this template has these pages" and "it holds
+     these things". Both are read from the catalogue, and a catalogue is a
+     promise about a branch — promises drift the first time someone adds a
+     page and forgets. So both are compared against the branch itself, in
+     BOTH directions: an undeclared page is as wrong as a declared one that
+     does not exist. */
+
+  const showFrom = (branch, file) => {
+    for (const ref of [`origin/${branch}`, branch]) {
+      try {
+        return execFileSync('git', ['show', `${ref}:${file}`],
+          { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString();
+      } catch (err) { /* try the next ref */ }
+    }
+    return null;
+  };
+  const treeOf = (branch) => {
+    for (const ref of [`origin/${branch}`, branch]) {
+      try {
+        return execFileSync('git', ['ls-tree', '--name-only', ref],
+          { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim().split('\n');
+      } catch (err) { /* try the next ref */ }
+    }
+    return null;
+  };
+
+  let drift = 0;
+  for (const tpl of C.templates) {
+    if (!Array.isArray(tpl.pages) || !Array.isArray(tpl.holds)) continue;
+
+    /* 404.html is never a page a visitor is sent to, so it is excluded on
+       both sides rather than listed on the site. */
+    const onBranch = treeOf(tpl.branch);
+    if (onBranch) {
+      const actual = onBranch.filter((f) => f.endsWith('.html') && f !== '404.html');
+      const declared = tpl.pages.map((pg) => pg.file);
+      for (const f of declared) {
+        if (!actual.includes(f)) {
+          drift += 1;
+          fail(`template "${tpl.id}" declares page ${f}, which is not on branch "${tpl.branch}"`);
+        }
+      }
+      for (const f of actual) {
+        if (!declared.includes(f)) {
+          drift += 1;
+          fail(`branch "${tpl.branch}" has ${f}, which hub/catalogue.js does not declare — `
+             + 'add it to that template\'s pages[] so the site lists it');
+        }
+      }
+    }
+
+    /* holds[].key names a top-level key of the branch's content.js. Matched
+       by its two-space indentation rather than by evaluating the file: the
+       checker should not run branch code to validate branch data. */
+    const content = showFrom(tpl.branch, 'assets/js/content.js');
+    if (content) {
+      const keys = (content.match(/^ {2}([A-Za-z_$][\w$]*)\s*:/gm) || [])
+        .map((m) => m.trim().replace(/\s*:$/, ''));
+      for (const h of tpl.holds) {
+        if (!keys.includes(h.key)) {
+          drift += 1;
+          fail(`template "${tpl.id}" claims to hold "${h.key}", which is not in `
+             + `assets/js/content.js on branch "${tpl.branch}"`);
+        }
+      }
+    }
+  }
+  if (!drift) ok.push('every template\'s declared pages and contents match its branch');
 }
 
 /* ---- 3. The website's own files are all present ----------------------- */
 
-for (const f of ['index.html', 'site.css', 'site.js', 'hub/catalogue.js']) {
+const PAGES = ['index.html', 'templates.html', 'analytics.html'];
+for (const f of PAGES.concat(['site.css', 'site.js', 'templates.css', 'templates.js',
+                              'analytics.css', 'analytics.js', 'hub/catalogue.js'])) {
   if (!fs.existsSync(path.join(ROOT, f))) fail(`missing ${f}`);
 }
 
-/* Every local src/href on the page must resolve from the repo root, which
+/* Every local src/href on every page must resolve from the repo root, which
    is also where assemble.sh lays the published site out. A link that only
    works locally is a 404 the moment it deploys. */
-const page = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-for (const src of (page.match(/(?:src|href)="(?!https?:|#)([^"]+)"/g) || [])) {
-  const rel = src.match(/"([^"]+)"/)[1];
-  /* Template paths are produced by assemble.sh from other branches, so
-     they are absent from this checkout by design — section 1 already
-     verified those branches exist. */
-  if (/^(cafe|services|retail)\//.test(rel)) continue;
-  if (!fs.existsSync(path.join(ROOT, rel))) fail(`index.html links ${rel}, which does not exist`);
+const destPrefix = new RegExp(`^(${C.templates.map((t) => t.dest).join('|')})/`);
+for (const file of PAGES) {
+  if (!fs.existsSync(path.join(ROOT, file))) continue;
+  const page = fs.readFileSync(path.join(ROOT, file), 'utf8');
+  for (const src of (page.match(/(?:src|href)="(?!https?:|#|mailto:)([^"]+)"/g) || [])) {
+    const rel = src.match(/"([^"]+)"/)[1];
+    /* Template paths are produced by assemble.sh from other branches, so
+       they are absent from this checkout by design — section 2 already
+       verified those branches exist and carry the pages named. */
+    if (destPrefix.test(rel)) continue;
+    if (!fs.existsSync(path.join(ROOT, rel))) fail(`${file} links ${rel}, which does not exist`);
+  }
 }
-if (!problems.length) ok.push('website and its local links resolve');
+if (!problems.length) ok.push('every page and its local links resolve');
 
 /* ---- 4. THE GUARD RAIL: no client entry may be publishable ------------ */
 

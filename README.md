@@ -33,9 +33,10 @@ whole published site — homepage and all three templates — not just this bran
 
 | | |
 |---|---|
-| `index.html`, `site.css`, `site.js` | the website. Self-contained: imports nothing from a template branch |
+| `index.html`, `site.css`, `site.js` | the homepage. Self-contained: imports nothing from a template branch |
+| `templates.html`, `templates.css`, `templates.js` | what is inside each template — pages, contents, live demo |
 | `analytics.html`, `analytics.css`, `analytics.js` | the owner's visitor counts. Not linked from the site |
-| `hub/catalogue.js` | **the one list of templates.** Four things read it, two of them in the private repo |
+| `hub/catalogue.js` | **the one list of templates**, down to each one's pages. Four things read it, two of them in the private repo, and `check-hub.js` proves it still matches the branches |
 | `SITE.md` | the blanks still to fill, and how counting works |
 | `BRAND.md` | the three-file reskin surface for a template |
 | `tools/` | the checks, and `start-project.sh`, which starts a client build |

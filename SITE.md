@@ -93,19 +93,45 @@ fabricated token fails silently, which is worse than no analytics.
 2. Add the site, copy the token
 3. Paste it into the tag and uncomment
 
-## 4. Where things live
+## 4. How the templates page stays honest
+
+`templates.html` tells a visitor *"this template has these pages"* and *"it
+holds these things"*. Both are claims about a branch, and claims about
+branches go stale.
+
+So neither is written into the page. Both live in `hub/catalogue.js` as
+`pages[]` and `holds[]`, and `tools/check-hub.js` §2b compares them against
+the branch on every push:
+
+- every declared page must exist on the branch, **and** every `.html` on the
+  branch except `404.html` must be declared — set equality, so an
+  undeclared page fails the build just as loudly as a missing one
+- every `holds[].key` must be a real top-level key in that branch's
+  `assets/js/content.js`
+
+**Add a page to a template and the build fails until you add it to the
+catalogue.** That is the point. The page names themselves are copied from
+each template's own `t.nav`, so the site describes a template in the
+template's own words.
+
+Screenshots follow the same list: `.github/pages/shoot.js` walks `pages[]`
+and writes `shots/<id>/<name>.jpg`. A missing shot leaves the accent swatch
+in place and breaks nothing.
+
+## 5. Where things live
 
 | | |
 |---|---|
-| `index.html`, `site.css`, `site.js` | the website |
+| `index.html`, `site.css`, `site.js` | the homepage |
+| `templates.html`, `templates.css`, `templates.js` | the templates sub-page |
 | `analytics.html`, `analytics.css`, `analytics.js` | owner-only, not linked from the site |
-| `hub/catalogue.js` | the one list of templates — the cards render from it |
+| `hub/catalogue.js` | the one list of templates — both pages render from it |
 | `.github/pages/assemble.sh` | builds `_site/`: this site at `/`, templates under their paths |
 
 The site is **self-contained**: it imports nothing from `assets/` and nothing
 from a template branch, so a template mid-reskin can never take the front door
 down.
 
-To change a template's name, description or "fits" line on the homepage, edit
-`hub/catalogue.js` — nothing else. `assemble.sh`, `tools/check-hub.js`,
+To change a template's name, description, "fits" line, page list or contents,
+edit `hub/catalogue.js` — nothing else. `assemble.sh`, `tools/check-hub.js`,
 `shoot.js` and the private clients server all read the same file.

@@ -198,6 +198,10 @@ html[dir=rtl] .hero .strapline { font-family: var(--ff-ar); letter-spacing: .04e
 .go::after { content: ' ←' }
 html[dir=ltr] .go::after { content: ' →' }
 
+.all-link { margin: 28px 0 0; font-size: .92rem }
+.all-link a { color: var(--accent); font-weight: 500 }
+.all-link a:hover { text-decoration: underline }
+
 /* ---- Steps ------------------------------------------------------------ */
 
 .steps { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); counter-reset: step }

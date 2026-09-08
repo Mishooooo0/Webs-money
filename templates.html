@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+  TEMPLATES — what is actually inside each one.
+
+  Every section renders from hub/catalogue.js: the page list, what the
+  template holds, the names, the accent. None of it is written here, so
+  none of it can quietly disagree with the branch it describes —
+  tools/check-hub.js §2b compares both against the branch on every push
+  and fails the build when they drift apart.
+
+  That is also why the <noscript> block below stays deliberately thin. It
+  names the three templates and links their demos, and nothing more: it is
+  hand-written, so anything richer would be a second copy of the
+  catalogue with no check behind it.
+-->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>القوالب · أوبسيديان</title>
+  <meta name="description" content="القوالب الثلاثة بالتفصيل: صفحات كل قالب، وما يحتويه، ورابط تجربته مباشرة — المقاهي والمطاعم، الخدمات والحجوزات، المتاجر والبوتيكات.">
+  <meta property="og:title" content="القوالب · أوبسيديان">
+  <meta property="og:description" content="صفحات كل قالب وما يحتويه، مع رابط لتجربته مباشرة.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#2b2621">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Tajawal:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="templates.css">
+</head>
+
+<body>
+
+  <a class="skip" href="#main" data-i18n="skip">تخطَّ إلى المحتوى</a>
+
+  <header class="hero" style="padding-bottom:0">
+    <div class="wrap">
+
+      <nav class="nav">
+        <a class="brand" href="index.html">
+          <svg class="mark" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 3 C35 15 35 33 24 45 C13 33 13 15 24 3 Z"/>
+          </svg>
+          <span data-i18n="brand">أوبسيديان</span>
+        </a>
+        <button class="lang" type="button" data-lang-toggle>English</button>
+      </nav>
+
+      <div class="page-head">
+        <h1 data-i18n="pageTitle">القوالب</h1>
+        <p class="lede" data-i18n="pageLede">كل قالب هنا موقع كامل يعمل الآن، لا صورة تصميم. تحت كل واحد صفحاته وما يحتويه، ورابط تفتحه وتتصفّحه كما يتصفّحه زبونك.</p>
+      </div>
+
+    </div>
+  </header>
+
+  <main id="main" data-templates></main>
+
+  <!-- Rendered sections need JavaScript. Without it, the three names and
+       their demos — enough that the page is never a dead end. -->
+  <noscript>
+    <div class="wrap fallback">
+      <p>القوالب الثلاثة:</p>
+      <a href="cafe/">المقاهي والمطاعم — افتح القالب</a>
+      <a href="services/">الخدمات والحجوزات — افتح القالب</a>
+      <a href="retail/">المتاجر والبوتيكات — افتح القالب</a>
+    </div>
+  </noscript>
+
+  <div class="wrap">
+    <footer class="foot">
+      <a data-i18n="backHome" href="index.html">← الرئيسية</a>
+      <span class="u-ltr">Obsidian-Hub</span>
+    </footer>
+  </div>
+
+  <script src="hub/catalogue.js"></script>
+  <script src="templates.js"></script>
+</body>
+</html>

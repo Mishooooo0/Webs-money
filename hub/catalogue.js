@@ -43,7 +43,19 @@ window.CATALOGUE = {
         ar: 'خمس صفحات: الرئيسية، المنيو، قصتنا، المتجر، زورونا. منيو وحبوب ومنتجات تُبنى من ملف واحد.',
         en: 'Five pages: home, menu, story, shop, visit. Menu, beans and merch all build from one file.'
       },
-      fits: { ar: 'مقاهي · مطاعم · مخابز', en: 'Cafés · restaurants · bakeries' }
+      fits: { ar: 'مقاهي · مطاعم · مخابز', en: 'Cafés · restaurants · bakeries' },
+      pages: [
+        { file: 'index.html',      ar: 'الرئيسية',    en: 'Home' },
+        { file: 'menu.html',       ar: 'المنيو',      en: 'Menu' },
+        { file: 'story.html',      ar: 'قصتنا',       en: 'Story' },
+        { file: 'shop.html',       ar: 'المتجر',      en: 'Shop' },
+        { file: 'visit.html',      ar: 'زورونا',      en: 'Visit' }
+      ],
+      holds: [
+        { key: 'menu',          ar: 'منيو بأقسام وأسعار',              en: 'A menu in sections, with prices' },
+        { key: 'beans',         ar: 'حبوب بالمنشأ والمعالجة وملاحظات التذوق', en: 'Beans with origin, process and tasting notes' },
+        { key: 'merch',         ar: 'منتجات بأسعارها',                 en: 'Merch with prices' }
+      ]
     },
     {
       id: 'services',
@@ -56,7 +68,21 @@ window.CATALOGUE = {
         ar: 'خدمات بمدة وسعر، فريق العمل، باقات، وأسئلة شائعة. الحجز عبر واتساب.',
         en: 'Services with duration and price, team profiles, packages and an FAQ. Booking over WhatsApp.'
       },
-      fits: { ar: 'صالونات · حلاقة · عيادات · نوادي', en: 'Salons · barbers · clinics · gyms' }
+      fits: { ar: 'صالونات · حلاقة · عيادات · نوادي', en: 'Salons · barbers · clinics · gyms' },
+      pages: [
+        { file: 'index.html',      ar: 'الرئيسية',    en: 'Home' },
+        { file: 'services.html',   ar: 'الخدمات',     en: 'Services' },
+        { file: 'team.html',       ar: 'فريقنا',      en: 'Team' },
+        { file: 'story.html',      ar: 'قصتنا',       en: 'Story' },
+        { file: 'book.html',       ar: 'احجز',        en: 'Book' }
+      ],
+      holds: [
+        { key: 'services',      ar: 'خدمات بمدة وسعر',                 en: 'Services with a duration and a price' },
+        { key: 'team',          ar: 'فريق العمل',                      en: 'The people who do the work' },
+        { key: 'packages',      ar: 'باقات بما تشمله',                 en: 'Packages, with what each one includes' },
+        { key: 'testimonials',  ar: 'آراء العملاء',                    en: 'Customer quotes' },
+        { key: 'faq',           ar: 'أسئلة شائعة',                     en: 'An FAQ' }
+      ]
     },
     {
       id: 'retail',
@@ -69,7 +95,19 @@ window.CATALOGUE = {
         ar: 'كتالوج بالأحجام والأسعار، تشكيلات مختارة، وأسئلة شائعة. الطلب عبر واتساب.',
         en: 'A catalogue with sizes and prices, curated collections and an FAQ. Orders over WhatsApp.'
       },
-      fits: { ar: 'عطور · عبايات · هدايا · ورود', en: 'Perfume · abayas · gifts · florists' }
+      fits: { ar: 'عطور · عبايات · هدايا · ورود', en: 'Perfume · abayas · gifts · florists' },
+      pages: [
+        { file: 'index.html',      ar: 'الرئيسية',    en: 'Home' },
+        { file: 'shop.html',       ar: 'المتجر',      en: 'Shop' },
+        { file: 'collections.html', ar: 'التشكيلات',   en: 'Collections' },
+        { file: 'story.html',      ar: 'قصتنا',       en: 'Story' },
+        { file: 'visit.html',      ar: 'زورونا',      en: 'Visit' }
+      ],
+      holds: [
+        { key: 'catalog',       ar: 'كتالوج بالأحجام والأسعار',        en: 'A catalogue with sizes and prices' },
+        { key: 'collections',   ar: 'تشكيلات مختارة',                  en: 'Curated collections' },
+        { key: 'faq',           ar: 'أسئلة شائعة',                     en: 'An FAQ' }
+      ]
     }
   ],
 
