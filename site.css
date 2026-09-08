@@ -1,0 +1,245 @@
+/* ============================================================
+   OBSIDIAN-HUB — the public website.
+
+   Self-contained on purpose, the same way the old hub page was. This is
+   the front door: it must never go down because a template branch is
+   mid-reskin, so it imports nothing from assets/ and nothing from a
+   template.
+
+   The palette and type are inherited from the hub page they replace, so
+   the site still looks like the same company.
+   ============================================================ */
+
+:root {
+  --deep:    #2b2621;   /* near-black warm — hero, footer, dark bands   */
+  --deep-2:  #3a332c;   /* one step up, for layering inside the dark    */
+  --mid:     #6d5c4c;
+  --ground:  #f6f1e8;   /* page background                              */
+  --surface: #fdfaf5;   /* cards                                        */
+  --alt:     #efe8db;   /* alternating band                             */
+  --line:    #e2d8c9;
+  --ink:     #241d17;
+  --soft:    #6f6155;   /* secondary text — dark enough for AA on --alt */
+  --accent:  #a6432a;   /* terracotta — CTAs, links, active             */
+  /* The accent is 2.5:1 on --deep, which fails AA outright. Dark bands
+     get their own lighter step of the same hue rather than borrowing one
+     that cannot be read. */
+  --accent-lift: #d97a57;
+
+  --r:    16px;
+  --r-sm: 10px;
+
+  --ff-ar: 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+  --ff-la: 'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --t: .25s cubic-bezier(.4, 0, .2, 1);
+
+  /* The dotted wash that marks every dark surface on this brand. */
+  --dots: radial-gradient(circle at 1px 1px, #fff 1.5px, transparent 0);
+}
+
+*, *::before, *::after { box-sizing: border-box }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--ff-ar);
+  line-height: 1.75;
+  -webkit-text-size-adjust: 100%;
+  min-height: 100svh;
+  /* Long Arabic words must be allowed to break, or a narrow phone gets a
+     horizontal scrollbar from a single unbreakable string. */
+  overflow-wrap: break-word;
+}
+html[dir=ltr] body { font-family: var(--ff-la) }
+
+img, svg { max-width: 100%; display: block }
+a { color: inherit; text-decoration: none }
+button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px }
+[hidden] { display: none !important }
+
+.wrap { width: 100%; max-width: 1140px; margin-inline: auto; padding-inline: 24px }
+.wrap--narrow { max-width: 760px }
+
+/* Isolate Latin runs so a leading digit or bracket cannot reorder the
+   surrounding Arabic. Same fix as the price strings in the templates. */
+.u-ltr { direction: ltr; unicode-bidi: isolate }
+
+/* Reached only by keyboard, so it must be visible when it is. */
+.skip {
+  position: absolute; inset-inline-start: -9999px; top: 0; z-index: 50;
+  background: var(--accent); color: #fff; padding: 10px 18px; border-radius: 0 0 var(--r-sm) 0;
+}
+.skip:focus { inset-inline-start: 0 }
+
+/* ---- Section rhythm --------------------------------------------------- */
+
+section { padding-block: clamp(52px, 8vw, 104px) }
+.band--alt  { background: var(--alt); border-block: 1px solid var(--line) }
+.band--dark { background: var(--deep); color: var(--ground); position: relative; overflow: hidden }
+.band--dark::after {
+  content: ''; position: absolute; inset: 0; opacity: .06; pointer-events: none;
+  background-image: var(--dots); background-size: 26px 26px;
+}
+.band--dark > .wrap { position: relative; z-index: 1 }
+
+.sec-head { margin-bottom: clamp(28px, 4vw, 48px); max-width: 62ch }
+.eyebrow {
+  display: block; font-family: var(--ff-la); font-size: .72rem;
+  letter-spacing: .26em; text-transform: uppercase; color: var(--soft); margin-bottom: 12px;
+}
+.band--dark .eyebrow { color: rgba(246, 241, 232, .55) }
+html[dir=rtl] .eyebrow { font-family: var(--ff-ar); letter-spacing: .04em; text-transform: none; font-size: .84rem }
+
+h2 { margin: 0 0 12px; font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.3rem); line-height: 1.25; font-weight: 700 }
+.sec-head p { margin: 0; color: var(--soft); font-size: clamp(.98rem, .95rem + .2vw, 1.08rem) }
+.band--dark .sec-head p { color: rgba(246, 241, 232, .72) }
+
+/* ---- Top bar ---------------------------------------------------------- */
+
+.nav {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-block: 22px;
+}
+.brand { display: flex; align-items: center; gap: 11px; font-weight: 700; font-size: 1.02rem }
+/* Inline SVG rather than a CSS mask: one fewer request, and it inherits
+   currentColor so the mark follows whatever band it sits in. */
+.brand .mark { width: 22px; height: 22px; flex: none; fill: var(--accent) }
+.lang {
+  border: 1px solid rgba(246, 241, 232, .28); border-radius: 999px; padding: 7px 17px;
+  font-size: .78rem; letter-spacing: .06em; opacity: .85;
+  transition: background var(--t), opacity var(--t);
+}
+.lang:hover { background: rgba(246, 241, 232, .12); opacity: 1 }
+
+/* ---- Hero ------------------------------------------------------------- */
+
+.hero { background: var(--deep); color: var(--ground); position: relative; overflow: hidden; padding-bottom: clamp(64px, 9vw, 116px) }
+.hero::after {
+  content: ''; position: absolute; inset: 0; opacity: .07; pointer-events: none;
+  background-image: var(--dots); background-size: 26px 26px;
+}
+.hero > .wrap { position: relative; z-index: 1 }
+.hero-body { padding-top: clamp(44px, 7vw, 88px); max-width: 40ch }
+.hero h1 {
+  margin: 0 0 18px;
+  font-size: clamp(2.3rem, 1.6rem + 3.6vw, 4.1rem);
+  line-height: 1.08; font-weight: 700; letter-spacing: -.01em;
+}
+.hero .lede { margin: 0 0 34px; font-size: clamp(1.05rem, 1rem + .45vw, 1.28rem); color: rgba(246, 241, 232, .78); max-width: 46ch }
+.hero .strapline {
+  font-family: var(--ff-la); font-size: .78rem; letter-spacing: .22em;
+  /* .5 lands at 4.46:1 on --deep — just under AA. .56 clears it at 5.2. */
+  text-transform: uppercase; opacity: .56; margin: 0 0 14px;
+}
+html[dir=rtl] .hero .strapline { font-family: var(--ff-ar); letter-spacing: .04em; text-transform: none; font-size: .95rem }
+
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap }
+.btn {
+  display: inline-block; padding: 13px 28px; border-radius: 999px;
+  font-size: .95rem; font-weight: 500; transition: transform var(--t), opacity var(--t), background var(--t);
+}
+.btn:hover { transform: translateY(-2px) }
+.btn--primary { background: var(--accent); color: #fff }
+.btn--primary:hover { opacity: .9 }
+.btn--ghost { border: 1px solid rgba(246, 241, 232, .3); color: var(--ground) }
+.btn--ghost:hover { background: rgba(246, 241, 232, .1) }
+.btn--onlight { background: var(--deep); color: var(--ground) }
+.btn--onlight:hover { opacity: .88 }
+
+/* ---- Feature grid ----------------------------------------------------- */
+
+.features { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)) }
+.feature .num {
+  font-family: var(--ff-la); font-size: .74rem; letter-spacing: .2em;
+  color: var(--accent); display: block; margin-bottom: 10px;
+}
+.feature h3 { margin: 0 0 7px; font-size: 1.06rem; font-weight: 700 }
+.feature p { margin: 0; font-size: .92rem; color: var(--soft) }
+
+/* ---- Template cards --------------------------------------------------- */
+
+.grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)) }
+
+.card {
+  display: flex; flex-direction: column; background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--r); overflow: hidden;
+  transition: transform var(--t), box-shadow var(--t);
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 16px 38px rgba(36, 29, 23, .14) }
+
+/* The swatch is the card's own accent until a screenshot loads over it, so
+   the shelf reads properly before CI has shot anything. */
+.thumb { position: relative; aspect-ratio: 16 / 10; background: var(--sw, var(--mid)); display: grid; place-items: center }
+.thumb::after {
+  content: ''; position: absolute; inset: 0; opacity: .16; pointer-events: none;
+  background-image: var(--dots); background-size: 22px 22px;
+}
+.thumb span {
+  position: relative; font-family: var(--ff-la); font-size: .78rem;
+  letter-spacing: .24em; text-transform: uppercase; color: #fff; opacity: .9;
+}
+.thumb img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: top center; opacity: 0; transition: opacity .4s ease;
+}
+.thumb img.is-loaded { opacity: 1 }
+
+.card .body { padding: 20px 22px 22px; display: grid; gap: 9px; flex: 1 }
+.card h3 { margin: 0; font-size: 1.14rem; font-weight: 700 }
+.card .en { font-family: var(--ff-la); font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--soft) }
+.card p { margin: 0; font-size: .9rem; color: var(--soft) }
+/* No opacity here: --soft is 5.7:1 on --surface, but .85 of it is 4.1. */
+.fits { font-size: .8rem; color: var(--soft) }
+.go { margin-top: auto; padding-top: 14px; font-size: .88rem; font-weight: 500; color: var(--sw, var(--accent)) }
+.go::after { content: ' ←' }
+html[dir=ltr] .go::after { content: ' →' }
+
+/* ---- Steps ------------------------------------------------------------ */
+
+.steps { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); counter-reset: step }
+.step {
+  border-inline-start: 2px solid rgba(246, 241, 232, .22);
+  padding-inline-start: 18px; counter-increment: step;
+}
+.step::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--ff-la); font-size: .74rem; letter-spacing: .2em;
+  color: var(--accent-lift); display: block; margin-bottom: 9px;
+}
+.step h3 { margin: 0 0 6px; font-size: 1.02rem; font-weight: 700 }
+.step p { margin: 0; font-size: .9rem; color: rgba(246, 241, 232, .7) }
+
+/* ---- Contact ---------------------------------------------------------- */
+
+.contact-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  padding: clamp(26px, 4vw, 46px); display: grid; gap: 18px; justify-items: start;
+}
+.contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; width: 100% }
+.contact-list li { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; font-size: .95rem }
+.contact-list .label { color: var(--soft); font-size: .84rem; min-width: 5em }
+
+/* A blank the owner still has to fill. Deliberately conspicuous: an
+   unfilled placeholder must never read as a real answer. */
+.blank {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem;
+  background: var(--alt); border: 1px dashed var(--line); border-radius: 6px;
+  padding: 2px 9px; color: var(--soft);
+}
+
+/* ---- Footer ----------------------------------------------------------- */
+
+.foot {
+  border-top: 1px solid var(--line); padding-block: 30px; margin-top: 8px;
+  display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  font-size: .82rem; color: var(--soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important }
+  .card:hover, .btn:hover { transform: none }
+}

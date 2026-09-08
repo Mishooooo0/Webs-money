@@ -102,18 +102,25 @@ if (known) {
   if (!strays) ok.push('no template branch carries a copy of the hub');
 }
 
-/* ---- 3. The hub page's own files are all present ---------------------- */
+/* ---- 3. The website's own files are all present ----------------------- */
 
-for (const f of ['hub/index.html', 'hub/hub.css', 'hub/hub.js', 'hub/gate.js', 'hub/catalogue.js']) {
+for (const f of ['index.html', 'site.css', 'site.js', 'hub/catalogue.js']) {
   if (!fs.existsSync(path.join(ROOT, f))) fail(`missing ${f}`);
 }
 
-const page = fs.readFileSync(path.join(ROOT, 'hub', 'index.html'), 'utf8');
+/* Every local src/href on the page must resolve from the repo root, which
+   is also where assemble.sh lays the published site out. A link that only
+   works locally is a 404 the moment it deploys. */
+const page = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 for (const src of (page.match(/(?:src|href)="(?!https?:|#)([^"]+)"/g) || [])) {
   const rel = src.match(/"([^"]+)"/)[1];
-  if (!fs.existsSync(path.join(ROOT, 'hub', rel))) fail(`hub/index.html links ${rel}, which does not exist`);
+  /* Template paths are produced by assemble.sh from other branches, so
+     they are absent from this checkout by design — section 1 already
+     verified those branches exist. */
+  if (/^(cafe|services|retail)\//.test(rel)) continue;
+  if (!fs.existsSync(path.join(ROOT, rel))) fail(`index.html links ${rel}, which does not exist`);
 }
-if (!problems.length) ok.push('hub page and its local links resolve');
+if (!problems.length) ok.push('website and its local links resolve');
 
 /* ---- 4. THE GUARD RAIL: no client entry may be publishable ------------ */
 

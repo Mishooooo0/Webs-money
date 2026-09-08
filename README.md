@@ -1,26 +1,24 @@
-# Obsidian Labs
+# Obsidian-Hub
 
-Bilingual (Arabic-first, RTL) website templates for small businesses, and the
-hub you pick one from.
+The public website, and the bilingual (Arabic-first, RTL) website templates it
+sells.
 
-**The hub is the index of the whole thing.** It is what `/` serves once this is
-published, and every template sits inside it at `/cafe/`, `/services/`,
-`/retail/`. It is not a page you reach from a template — templates are reached
-from it.
-
-This branch *is* the hub. It carries the hub page, the shared engine every
-template inherits, and the tooling. The templates live on their own branches;
-client work lives in a separate private repo and is never published here.
+**This branch is the website.** `/` is the site a customer lands on; each
+template sits under its own path at `/cafe/`, `/services/`, `/retail/` and is
+reachable from the homepage. Client work lives in a separate private repo and
+is never published here.
 
 The repository is still named `Webs-money` on GitHub — renaming it is a
 settings change, and every clone URL in these docs changes with it.
 
 ```
-main                Obsidian Labs + the shared engine
+main                the website + hub/catalogue.js
 ├── template-cafe       01 · Café & Restaurant
 ├── template-services   02 · Services & Booking
 └── template-retail     03 · Retail & Boutique
 ```
+
+## Run it
 
 ```bash
 bash .github/pages/assemble.sh          # build the site into _site/
@@ -28,113 +26,53 @@ node .github/pages/shoot.js             # add card screenshots (optional)
 python3 -m http.server --directory _site 8000
 ```
 
----
+`assemble.sh` pulls each template branch out of this clone, so `_site/` is the
+whole published site — homepage and all three templates — not just this branch.
 
-## The hub does not live inside the templates
+## What is on this branch
 
-A template branch is this branch plus its own six pages, so anything here
-arrives there on the next merge — which is how `hub/` ended up sitting inside
-all three of them. It has been removed from each, and `tools/check-hub.js`
-fails if it comes back.
+| | |
+|---|---|
+| `index.html`, `site.css`, `site.js` | the website. Self-contained: imports nothing from a template branch |
+| `analytics.html`, `analytics.css`, `analytics.js` | the owner's visitor counts. Not linked from the site |
+| `hub/catalogue.js` | **the one list of templates.** Four things read it, two of them in the private repo |
+| `SITE.md` | the blanks still to fill, and how counting works |
+| `BRAND.md` | the three-file reskin surface for a template |
+| `tools/` | the checks, and `start-project.sh`, which starts a client build |
 
-It can come back: editing `hub/*` here raises a modify/delete conflict the
-next time a template merges `main`. The resolution is `git rm -r hub` on the
-template branch. That is the intended answer, not a mistake to undo.
+## The one rule
 
-## Starting a client project
+Templates are published. **Clients are not.**
 
-Client work is **not** in this repo. It lives in the private
-`Mishooooo0/web-clients`, and is never published to the public site.
+A template entry in `hub/catalogue.js` has `branch` and `dest`, and
+`assemble.sh` copies it into the site. A client entry has neither, on purpose —
+and `tools/check-hub.js` fails the build if one ever gains a `dest`, or if a
+template branch is caught carrying a copy of `hub/`. The website itself has no
+markup for a client list at all.
 
-From a checkout of that repo:
-
-```bash
-tools/start-project.sh cafe al-nakheel "عطور النخيل"
-```
-
-That branches from the chosen template, stamps the name in, writes a `CLIENT.md`
-listing everything still holding a placeholder, and verifies the result. It does
-not push and does not touch the catalogue — it prints what to do for both.
-
-To pick up engine fixes on a client branch later:
-
-```bash
-git fetch templates && git merge templates/main
-```
-
-## What keeps client work private
-
-Worth being exact, because the design depends on it.
-
-The passphrase on the hub's client shelf is **not** access control. It is served
-to every visitor of a public page, the hash is readable in devtools, and the
-check runs in the visitor's own browser. It is a doormat.
-
-The privacy is structural instead:
-
-- **No client site is ever published here.** `assemble.sh` copies template
-  branches only. There is no client HTML on the public origin to find, with or
-  without the passphrase.
-- **The client cards link to the private repo**, where GitHub enforces access —
-  someone without it gets a 404 from GitHub, not from us.
-- **`tools/check-hub.js` fails the build** if a client entry ever gains a `dest`,
-  or if `assemble.sh` grows a `clients/` path. The guarantee is asserted, not
-  remembered.
-
-Changing the passphrase:
-
-```bash
-node tools/set-hub-password.js "the new one"
-```
-
-GitHub Pages on a private repo needs a paid plan, so client sites have no live
-URL until they are deployed to the client's own hosting. At that point set
-`liveUrl` on their catalogue entry and the card links there instead.
-
-## The catalogue
-
-`hub/catalogue.js` is the one list of what exists. The hub page renders from it,
-`assemble.sh` publishes from it, and `start-project.sh` validates against it — so
-they cannot drift apart.
-
-A template entry has `branch` and `dest` and gets published. A client entry has
-neither, on purpose.
-
-## Files
-
-```
-hub/          index.html · hub.css · hub.js · gate.js · catalogue.js · favicon.svg
-assets/       the shared engine, and a vertical-neutral base every template overrides
-  css/        reset · base · layout · components · pages   (engine)
-              tokens.css                                   ★ per-template
-  js/         i18n · render · app                          (engine)
-              content.js                                   ★ per-template
-  brand/      five SVGs                                    ★ per-template
-tools/        check · check-brand · check-hub · sync-static · audit
-              start-project.sh · set-hub-password.js
-.github/      ci.yml · pages.yml · pages/assemble.sh · pages/shoot.js
-```
-
-`BRAND.md` is the reskin checklist — the three files that carry 100% of a brand,
-and how to change them.
+What actually keeps client work private is that it is in a private repo and no
+client HTML is ever published from here. The catalogue entries exist so the
+owner's dashboard in that repo can list them.
 
 ## Checks
 
-`ci.yml` picks the right set from the shape of the checkout, so a renamed branch
-cannot skip its checks:
-
 ```bash
-node tools/check-hub.js    # on this branch: catalogue, links, and the privacy guard
-node tools/check.js        # on a template branch: the six static checks
-node tools/audit.js        # on a template branch: WCAG AA, console errors, overflow
+node tools/check-hub.js     # this branch: catalogue, links, the privacy guard
+node tools/check.js         # a template branch: the six static checks
+node tools/audit.js         # browser: console errors, overflow, AA contrast
 ```
 
-## Adding a template
+CI picks between the first two by looking for `hub/catalogue.js`, so a renamed
+branch cannot skip its checks.
 
-Branch from `main`, add your pages, and override `tokens.css`, `content.js` and
-`assets/brand/`. Then add an entry to `hub/catalogue.js` and a line to the
-`branches:` list in `.github/workflows/pages.yml`.
+## Starting a client project
 
-The engine needs no changes: `render.js` renders from `data-render` mounts with a
-`data-source`, so a new template usually needs no new renderer at all. Three
-templates share it unmodified.
+From a checkout of the **private** clients repo:
+
+```bash
+tools/start-project.sh cafe llabate "لابيت" "Llabate"
+```
+
+It fetches the template branch from this remote, creates the client branch from
+it, stamps the name in, and writes a `CLIENT.md` listing everything still
+missing. Add `--multi-location` if the business has more than one branch.

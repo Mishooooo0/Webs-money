@@ -1,10 +1,14 @@
 /* ============================================================
    CATALOGUE — the one list of what exists.
 
-   Read by three things, so they can never drift apart:
-     · hub/index.html          renders the shelves from it
+   Read by four things, so they can never drift apart:
+     · index.html                  renders the template cards from it
      · .github/pages/assemble.sh   publishes the templates it names
-     · tools/start-project.sh  validates the template you ask for
+     · tools/start-project.sh      validates the template you ask for
+     · web-clients tools/server.js reads it straight off templates/main
+
+   It stays under hub/ rather than moving to the root: four separate
+   readers, two of them in another repository, already point here.
 
    Same shape as content.js in the templates: a plain global, no fetch,
    works from file://.
@@ -18,9 +22,10 @@
    site. tools/check-hub.js FAILS THE BUILD if a client ever gains a
    `dest`, so this cannot be undone by accident.
 
-   The gate on the client shelf is a convenience, not a lock — see
-   hub/gate.js. What actually keeps client work private is that it is in
-   a private repo and no client HTML is ever published here.
+   The public website never renders the client list at all — it has no
+   markup for it. What keeps client work private is that it lives in a
+   private repo and no client HTML is ever published here; the entries
+   below exist so the owner's dashboard in that repo can list them.
    ============================================================ */
 
 window.CATALOGUE = {

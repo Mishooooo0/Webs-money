@@ -58,9 +58,16 @@ while IFS=$'\t' read -r branch dest label; do
   [ -n "$branch" ] && publish "$branch" "$dest" "$label"
 done <<< "$ENTRIES"
 
-# The hub itself becomes the site root. It owns every file it references,
-# so this is a straight copy — nothing is pulled in from a template branch.
-cp hub/index.html hub/hub.css hub/hub.js hub/gate.js hub/catalogue.js hub/favicon.svg "$OUT/"
+# The website becomes the site root. It owns every file it references, so
+# this is a straight copy — nothing is pulled in from a template branch.
+#
+# hub/catalogue.js goes with it: index.html renders the template cards from
+# it at runtime, so it has to be fetchable at the same path the page asks
+# for. Keeping it under hub/ means assemble.sh, check-hub.js, shoot.js and
+# the private clients server all still read it from one place.
+cp index.html site.css site.js analytics.html analytics.css analytics.js favicon.svg "$OUT/"
+mkdir -p "$OUT/hub"
+cp hub/catalogue.js "$OUT/hub/"
 touch "$OUT/.nojekyll"
 
 echo

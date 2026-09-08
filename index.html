@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<!--
+  OBSIDIAN-HUB — the public website.
+
+  Arabic is written directly into this markup, not fetched, so the page is
+  readable and crawlable with JavaScript switched off. site.js only swaps
+  text when a visitor asks for English.
+
+  The template cards are the one exception: they render from
+  hub/catalogue.js, which .github/pages/assemble.sh and tools/check-hub.js
+  read too — so the site, the published paths and the guards can never
+  disagree about what exists. A <noscript> fallback links the same three
+  demos for anyone without JavaScript.
+-->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>أوبسيديان · مواقع عربية للأعمال الصغيرة</title>
+  <meta name="description" content="أوبسيديان: مواقع عربية أولًا للأعمال الصغيرة في السعودية. قوالب للمقاهي والمطاعم، الخدمات والحجوزات، المتاجر والبوتيكات — تُكسى بهويتك ومحتواك.">
+  <meta property="og:title" content="أوبسيديان · مواقع عربية للأعمال الصغيرة">
+  <meta property="og:description" content="نبدأ من قالب جاهز، نكسوه بهويتك ومحتواك، ونسلّمك موقعًا يفتح سريعًا ويقرأ بالعربية كما يجب.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#2b2621">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Tajawal:wght@300;400;500;700&display=swap">
+  <link rel="stylesheet" href="site.css">
+
+  <!-- ============================================================
+       CLOUDFLARE WEB ANALYTICS — for when this is hosted statically
+       (GitHub Pages, Cloudflare Pages), where there is no server of ours
+       to do the counting.
+
+       Deliberately left commented out and WITHOUT a token. A made-up
+       token fails silently, which is worse than no analytics at all.
+
+       To switch it on:
+         1. Cloudflare dashboard → Analytics & Logs → Web Analytics
+         2. Add this site, copy the token it gives you
+         3. Paste it below and uncomment
+
+       Hosting behind tools/server.js instead? Then you do not need this
+       at all — see analytics.html and SITE.md.
+       ============================================================ -->
+  <!-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+               data-cf-beacon='{"token": "PASTE_YOUR_TOKEN_HERE"}'></script> -->
+</head>
+
+<body>
+
+  <a class="skip" href="#main" data-i18n="skip">تخطَّ إلى المحتوى</a>
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="wrap">
+
+      <nav class="nav">
+        <span class="brand">
+          <svg class="mark" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M24 3 C35 15 35 33 24 45 C13 33 13 15 24 3 Z"/>
+          </svg>
+          <span data-i18n="brand">أوبسيديان</span>
+        </span>
+        <button class="lang" type="button" data-lang-toggle>English</button>
+      </nav>
+
+      <div class="hero-body">
+        <p class="strapline" data-i18n="strapline">أوبسيديان · Obsidian-Hub</p>
+        <h1 data-i18n="heroTitle">مواقع عربية للأعمال الصغيرة</h1>
+        <p class="lede" data-i18n="heroLede">نبدأ من قالب جاهز، نكسوه بهويتك ومحتواك، ونسلّمك موقعًا يفتح سريعًا ويقرأ بالعربية كما يجب.</p>
+        <div class="cta-row">
+          <a class="btn btn--primary" href="#templates" data-i18n="ctaTemplates">شاهد القوالب</a>
+          <a class="btn btn--ghost" href="#contact" data-i18n="ctaContact">تواصل معنا</a>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ================= WHAT YOU GET ================= -->
+    <section class="band--alt">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow" data-i18n="whatEyebrow">ما الذي تحصل عليه</span>
+          <h2 data-i18n="whatTitle">مبني للعربية، لا مترجم إليها</h2>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <span class="num u-ltr">01</span>
+            <h3 data-i18n="f1Title">العربية أولًا</h3>
+            <p data-i18n="f1Body">الاتجاه من اليمين، والخط والمسافات مضبوطة للعربية من الأساس — لا قالب إنجليزي مقلوب.</p>
+          </div>
+          <div class="feature">
+            <span class="num u-ltr">02</span>
+            <h3 data-i18n="f2Title">لغتان بضغطة</h3>
+            <p data-i18n="f2Body">زر واحد ينقل الموقع كاملًا إلى الإنجليزية ويعيده. المحتوى مكتوب مرة واحدة في ملف واحد.</p>
+          </div>
+          <div class="feature">
+            <span class="num u-ltr">03</span>
+            <h3 data-i18n="f3Title">بدون اعتماديات</h3>
+            <p data-i18n="f3Body">ملفات HTML و CSS فقط. لا إطار عمل ولا خطوة بناء، ولا شيء ينكسر بعد سنة لأن مكتبة تحدّثت.</p>
+          </div>
+          <div class="feature">
+            <span class="num u-ltr">04</span>
+            <h3 data-i18n="f4Title">الملفات ملكك</h3>
+            <p data-i18n="f4Body">تستلم الموقع ملفات كاملة. تستضيفه حيث تشاء، وتنقله متى شئت، دون العودة إلينا.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TEMPLATES ================= -->
+    <section id="templates">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow" data-i18n="tplEyebrow">القوالب</span>
+          <h2 data-i18n="tplTitle">ثلاثة قوالب، كلها تعمل الآن</h2>
+          <p data-i18n="tplLede">افتح أيًّا منها وتصفّحه كما يتصفّحه زبونك. ما تراه هو ما يُسلَّم، بمحتواك أنت مكان المحتوى التجريبي.</p>
+        </div>
+
+        <div class="grid" data-shelf="templates"></div>
+
+        <!-- Without JavaScript the grid above stays empty, and an empty
+             section reads as a broken page. These are the same three paths
+             assemble.sh publishes. -->
+        <noscript>
+          <div class="grid">
+            <a class="card" href="cafe/"><div class="body"><h3>المقاهي والمطاعم</h3><p class="go">شاهد القالب</p></div></a>
+            <a class="card" href="services/"><div class="body"><h3>الخدمات والحجوزات</h3><p class="go">شاهد القالب</p></div></a>
+            <a class="card" href="retail/"><div class="body"><h3>المتاجر والبوتيكات</h3><p class="go">شاهد القالب</p></div></a>
+          </div>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="band--dark">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow" data-i18n="howEyebrow">كيف نعمل</span>
+          <h2 data-i18n="howTitle">أربع خطوات، لا أكثر</h2>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <h3 data-i18n="s1Title">تختار قالبًا</h3>
+            <p data-i18n="s1Body">تفتح القوالب الثلاثة وتختار الأقرب لنشاطك.</p>
+          </div>
+          <div class="step">
+            <h3 data-i18n="s2Title">نكسوه بهويتك</h3>
+            <p data-i18n="s2Body">اسمك وألوانك وصورك ومحتواك، ومنيو أو قائمة خدمات إن كان النشاط يحتاجها.</p>
+          </div>
+          <div class="step">
+            <h3 data-i18n="s3Title">تراجعه قبل النشر</h3>
+            <p data-i18n="s3Body">ترى الموقع كاملًا وتطلب ما تريد تعديله، قبل أن يراه أحد.</p>
+          </div>
+          <div class="step">
+            <h3 data-i18n="s4Title">ينطلق</h3>
+            <p data-i18n="s4Body">نربطه بنطاقك ونسلّمك الملفات.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section id="contact">
+      <div class="wrap wrap--narrow">
+        <div class="sec-head">
+          <span class="eyebrow" data-i18n="contactEyebrow">تواصل</span>
+          <h2 data-i18n="contactTitle">احكِ لنا عن نشاطك</h2>
+          <p data-i18n="contactLede">أرسل اسم النشاط ونوعه، ونرد عليك بالقالب الأنسب وما نحتاجه منك للبدء.</p>
+        </div>
+
+        <!-- ⚠ EVERY VALUE HERE IS A BLANK ON PURPOSE.
+             No phone number, email or address has been given for this
+             business, and inventing one would send a real customer to a
+             number that is not yours. The .blank styling is deliberately
+             conspicuous so an unfilled placeholder can never be mistaken
+             for a real answer. See SITE.md. -->
+        <div class="contact-card">
+          <ul class="contact-list">
+            <li>
+              <span class="label" data-i18n="labelWhatsapp">واتساب</span>
+              <span class="blank u-ltr">— أضف الرقم —</span>
+            </li>
+            <li>
+              <span class="label" data-i18n="labelEmail">البريد</span>
+              <span class="blank u-ltr">— أضف البريد —</span>
+            </li>
+            <li>
+              <span class="label" data-i18n="labelInstagram">إنستقرام</span>
+              <span class="blank u-ltr">— أضف الحساب —</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <footer class="foot">
+        <span data-i18n="footLeft">عربية أولًا · RTL · بدون اعتماديات</span>
+        <span class="u-ltr">Obsidian-Hub</span>
+      </footer>
+    </div>
+
+  </main>
+
+  <script src="hub/catalogue.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>

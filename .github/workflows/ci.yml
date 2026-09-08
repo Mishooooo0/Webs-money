@@ -21,17 +21,23 @@ jobs:
           node-version: '22'
       # No install step — these checks are deliberately dependency-free.
       #
-      # The hub branch carries no template pages, so tools/check.js would pass
-      # there vacuously: sync-static with nothing to sync, binding checks with
-      # no markup to bind. Branch on the shape of the checkout instead of on
-      # the branch name, so a renamed branch cannot skip its checks.
+      # Branch on the shape of the checkout, not on the branch name, so a
+      # renamed branch cannot skip its checks.
+      #
+      # hub/catalogue.js is the discriminator on its own. main carries the
+      # website AND the catalogue; a template branch carries a site but never
+      # a hub/ directory — check-hub.js §2 fails the build if one ever does.
+      # Testing for index.html as well used to work only because main had no
+      # index.html of its own; it has one now, and that test would have sent
+      # main into the template arm and run six checks written for pages it
+      # does not have.
       - name: Run the checks for this branch's shape
         run: |
-          if [ -f hub/catalogue.js ] && [ ! -f index.html ]; then
-            echo "hub branch — running check-hub"
+          if [ -f hub/catalogue.js ]; then
+            echo "website branch — running check-hub"
             node tools/check-hub.js
           else
-            echo "site branch — running the six static checks"
+            echo "template branch — running the six static checks"
             node tools/check.js
           fi
 
@@ -43,7 +49,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      # The hub has no site to audit; its own checks ran in the job above.
+      # Any branch with pages at its root gets audited — that now includes
+      # main, whose website is exactly the kind of thing these checks are
+      # for: console errors, horizontal overflow and AA contrast in both
+      # languages.
       - id: shape
         run: |
           if [ -f index.html ]; then echo "site=true" >> "$GITHUB_OUTPUT";
@@ -57,4 +66,4 @@ jobs:
       - if: steps.shape.outputs.site == 'true'
         run: node tools/audit.js
       - if: steps.shape.outputs.site != 'true'
-        run: echo "Hub branch — no site pages to audit."
+        run: echo "No pages at the root — nothing to audit."
