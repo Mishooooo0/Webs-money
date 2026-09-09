@@ -191,8 +191,9 @@ if (known) {
 
 /* ---- 3. The website's own files are all present ----------------------- */
 
-const PAGES = ['index.html', 'templates.html', 'analytics.html'];
+const PAGES = ['index.html', 'templates.html', 'work.html', 'analytics.html'];
 for (const f of PAGES.concat(['site.css', 'site.js', 'templates.css', 'templates.js',
+                              'work.css', 'work.js',
                               'analytics.css', 'analytics.js', 'hub/catalogue.js'])) {
   if (!fs.existsSync(path.join(ROOT, f))) fail(`missing ${f}`);
 }

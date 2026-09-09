@@ -1,0 +1,22 @@
+/* ============================================================
+   WORK — client sites that are actually live.
+
+   Loaded on top of site.css. Only what this page adds is here; the card
+   shape is close enough to the template cards that it reuses .grid and
+   .card from site.css rather than restating them.
+   ============================================================ */
+
+.page-head { padding-block: clamp(40px, 6vw, 76px) clamp(30px, 4vw, 52px) }
+.page-head h1 {
+  margin: 0 0 14px; font-size: clamp(1.9rem, 1.4rem + 2.4vw, 3.1rem);
+  line-height: 1.15; font-weight: 700;
+}
+.page-head .lede { margin: 0; max-width: 54ch; color: rgba(246, 241, 232, .78); font-size: clamp(1rem, .96rem + .3vw, 1.14rem) }
+
+.work-main { padding-block: clamp(40px, 6vw, 72px) }
+
+/* ---- Waiting ----------------------------------------------------------
+   What the page shows before any client is live. Owner-facing, and the
+   page is noindex and unlinked while this is what it says. */
+
+.waiting { max-width: 620px }

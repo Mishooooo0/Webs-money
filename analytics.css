@@ -58,16 +58,7 @@
 
 /* ---- States ----------------------------------------------------------- */
 
-.notice {
-  background: var(--surface); border: 1px solid var(--line); border-inline-start: 3px solid var(--accent);
-  border-radius: var(--r-sm); padding: 20px 22px; display: grid; gap: 10px;
-}
-.notice h2 { margin: 0; font-size: 1.1rem }
-.notice p { margin: 0; font-size: .92rem; color: var(--soft) }
-.notice code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem;
-  background: var(--alt); border-radius: 4px; padding: 1px 6px; direction: ltr; unicode-bidi: isolate;
-}
+/* .notice moved to site.css — work.html uses it too. */
 
 .privacy { margin-top: clamp(32px, 5vw, 52px); font-size: .84rem; color: var(--soft); max-width: 62ch }
 

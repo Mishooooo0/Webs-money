@@ -67,6 +67,7 @@ done <<< "$ENTRIES"
 # the private clients server all still read it from one place.
 cp index.html site.css site.js \
    templates.html templates.css templates.js \
+   work.html work.css work.js \
    analytics.html analytics.css analytics.js favicon.svg "$OUT/"
 mkdir -p "$OUT/hub"
 cp hub/catalogue.js "$OUT/hub/"

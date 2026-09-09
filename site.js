@@ -77,8 +77,16 @@
     labelEmail:      { ar: 'البريد', en: 'Email' },
     labelInstagram:  { ar: 'إنستقرام', en: 'Instagram' },
 
-    footLeft:        { ar: 'عربية أولًا · RTL · بدون اعتماديات',
-                       en: 'Arabic-first · RTL · no dependencies' }
+    workEyebrow:     { ar: 'أعمالنا', en: 'Our work' },
+    workTitle:       { ar: 'مواقع انطلقت فعلًا', en: 'Sites that have launched' },
+    workLede:        { ar: 'كل واحد منها مبني على أحد قوالبنا، ومكسو بهوية صاحبه ومحتواه.',
+                       en: 'Each one built on one of our templates and dressed in its owner’s identity and words.' },
+    allWork:         { ar: 'كل الأعمال ←', en: 'All the work →' },
+    builtOn:         { ar: 'مبني على قالب', en: 'Built on the' },
+    visit:           { ar: 'زر الموقع', en: 'Visit the site' },
+
+    navTemplates:    { ar: 'القوالب', en: 'Templates' },
+    navWork:         { ar: 'أعمالنا', en: 'Our work' }
   };
 
   var lang = readStored();
@@ -167,6 +175,61 @@
     mount.replaceChildren.apply(mount, shown.map(card));
   }
 
+  /* ---- Client work ----------------------------------------------------
+     A client appears only once it has a liveUrl. Until then the section,
+     the footer link and the grid all stay hidden — an "our work" heading
+     over an empty row tells a visitor we have no clients, which is worse
+     than not showing the section at all. */
+
+  function liveClients() {
+    return ((window.CATALOGUE && window.CATALOGUE.clients) || [])
+      .filter(function (c) { return c.liveUrl; });
+  }
+
+  function templateName(from) {
+    var tpl = ((window.CATALOGUE && window.CATALOGUE.templates) || [])
+      .filter(function (x) { return x.id === from; })[0];
+    return tpl ? pick(tpl.name) : '';
+  }
+
+  function clientCard(client) {
+    var a = el('a', 'card client');
+    a.href = client.liveUrl;
+    /* Someone else's domain, so its own tab — and noopener, or that tab
+       gets a handle on this window. */
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.style.setProperty('--sw', client.accent || '');
+
+    var panel = el('div', 'panel');
+    var name = pick(client.name) || '';
+    /* Array.from, not [0]: a surrogate pair would be cut in half. */
+    panel.appendChild(el('span', 'initial', Array.from(name)[0] || ''));
+    a.appendChild(panel);
+
+    var body = el('div', 'body');
+    body.appendChild(el('h3', null, name));
+    body.appendChild(el('p', 'en', lang === 'ar' ? client.name.en : client.name.ar));
+    var built = templateName(client.from);
+    if (built) body.appendChild(el('p', 'built', t('builtOn') + ' ' + built));
+    body.appendChild(el('p', 'go', t('visit')));
+    a.appendChild(body);
+    return a;
+  }
+
+  function renderWork() {
+    var list = liveClients();
+    var section = document.querySelector('[data-work-section]');
+    var mount = document.querySelector('[data-shelf="clients"]');
+
+    if (section) section.hidden = !list.length;
+    document.querySelectorAll('[data-work-link]').forEach(function (n) {
+      n.hidden = !list.length;
+    });
+    if (!mount) return;
+    mount.replaceChildren.apply(mount, list.map(clientCard));
+  }
+
   /* ---- Language ------------------------------------------------------- */
 
   function apply() {
@@ -184,6 +247,7 @@
     /* Re-render rather than patch: the cards carry text in both languages
        and the arrow direction flips with dir. */
     renderShelf();
+    renderWork();
   }
 
   function init() {

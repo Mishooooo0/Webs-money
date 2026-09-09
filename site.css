@@ -202,6 +202,42 @@ html[dir=ltr] .go::after { content: ' →' }
 .all-link a { color: var(--accent); font-weight: 500 }
 .all-link a:hover { text-decoration: underline }
 
+/* The client grid is not the template grid. Templates are always three and
+   fill a row; clients are however many have launched. auto-fill reserves a
+   track nothing fills, so two cards sit beside a visible empty column —
+   cap the card instead and let the row start where it starts. */
+[data-clients], [data-shelf="clients"] {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 360px));
+  justify-content: start;
+}
+
+/* ---- One client -------------------------------------------------------
+   No screenshot: shooting a client's production site from CI on every
+   build is fragile and rude to their server. The accent panel is the same
+   fallback the template cards use when a shot is missing, so a client card
+   and a template card sit together without looking unfinished. */
+
+.client .panel {
+  position: relative; aspect-ratio: 16 / 9; background: var(--sw, var(--mid));
+  display: grid; place-items: center;
+}
+.client .panel::after {
+  content: ''; position: absolute; inset: 0; opacity: .16; pointer-events: none;
+  background-image: var(--dots); background-size: 22px 22px;
+}
+.client .panel .initial {
+  position: relative; color: #fff; font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
+  font-weight: 700; opacity: .92;
+}
+
+.client .built {
+  font-size: .8rem; color: var(--soft);
+  /* The template name is a fact about how the site was made, not a claim
+     about the client, so it stays quiet. */
+}
+.client .go::after { content: ' ↗' }
+html[dir=ltr] .client .go::after { content: ' ↗' }
+
 /* ---- Steps ------------------------------------------------------------ */
 
 .steps { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); counter-reset: step }
@@ -235,6 +271,22 @@ html[dir=ltr] .go::after { content: ' →' }
   padding: 2px 9px; color: var(--soft);
 }
 
+/* ---- Notice ----------------------------------------------------------
+   A panel that explains a state rather than showing data. Used by
+   analytics.html when nothing is counting, and by work.html when no client
+   is live yet. */
+
+.notice {
+  background: var(--surface); border: 1px solid var(--line); border-inline-start: 3px solid var(--accent);
+  border-radius: var(--r-sm); padding: 20px 22px; display: grid; gap: 10px;
+}
+.notice h2 { margin: 0; font-size: 1.1rem }
+.notice p { margin: 0; font-size: .92rem; color: var(--soft) }
+.notice code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem;
+  background: var(--alt); border-radius: 4px; padding: 1px 6px; direction: ltr; unicode-bidi: isolate;
+}
+
 /* ---- Footer ----------------------------------------------------------- */
 
 .foot {
@@ -242,6 +294,8 @@ html[dir=ltr] .go::after { content: ' →' }
   display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
   font-size: .82rem; color: var(--soft);
 }
+.foot-nav { display: flex; gap: 18px; flex-wrap: wrap }
+.foot-nav a:hover { color: var(--ink); text-decoration: underline }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important }

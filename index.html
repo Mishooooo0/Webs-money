@@ -142,6 +142,25 @@
       </div>
     </section>
 
+    <!-- ================= WORK =================
+         Hidden in the markup, revealed by site.js only when a client in
+         hub/catalogue.js has a liveUrl. With JavaScript off it stays
+         hidden, which is right: a visible "our work" heading over nothing
+         says we have no clients. -->
+    <section id="work" data-work-section hidden>
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow" data-i18n="workEyebrow">أعمالنا</span>
+          <h2 data-i18n="workTitle">مواقع انطلقت فعلًا</h2>
+          <p data-i18n="workLede">كل واحد منها مبني على أحد قوالبنا، ومكسو بهوية صاحبه ومحتواه.</p>
+        </div>
+
+        <div class="grid" data-shelf="clients"></div>
+
+        <p class="all-link"><a href="work.html" data-i18n="allWork">كل الأعمال ←</a></p>
+      </div>
+    </section>
+
     <!-- ================= HOW IT WORKS ================= -->
     <section class="band--dark">
       <div class="wrap">
@@ -207,7 +226,11 @@
 
     <div class="wrap">
       <footer class="foot">
-        <span data-i18n="footLeft">عربية أولًا · RTL · بدون اعتماديات</span>
+        <nav class="foot-nav">
+          <a href="templates.html" data-i18n="navTemplates">القوالب</a>
+          <!-- Revealed with the section above, by the same test. -->
+          <a href="work.html" data-i18n="navWork" data-work-link hidden>أعمالنا</a>
+        </nav>
         <span class="u-ltr">Obsidian-Hub</span>
       </footer>
     </div>

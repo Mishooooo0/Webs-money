@@ -29,7 +29,8 @@
     pagesLabel: { ar: 'صفحاته', en: 'Its pages' },
     openPage:   { ar: 'افتح القالب', en: 'Open the template' },
     fitsLabel:  { ar: 'يناسب', en: 'Fits' },
-    backHome:   { ar: '← الرئيسية', en: '← Home' }
+    navHome:    { ar: 'الرئيسية', en: 'Home' },
+    navWork:    { ar: 'أعمالنا', en: 'Our work' }
   };
 
   /* "5 صفحات" is not a rule Arabic follows: 1 is صفحة, 2 صفحتان, 3–10
@@ -170,6 +171,14 @@
 
     var toggle = document.querySelector('[data-lang-toggle]');
     if (toggle) toggle.textContent = lang === 'ar' ? 'English' : 'العربية';
+
+    /* The footer's work link follows the same rule as the homepage's: it
+       only exists once a client site does. */
+    var anyLive = ((window.CATALOGUE && window.CATALOGUE.clients) || [])
+      .some(function (c) { return c.liveUrl; });
+    document.querySelectorAll('[data-work-link]').forEach(function (n) {
+      n.hidden = !anyLive;
+    });
 
     render();
   }
