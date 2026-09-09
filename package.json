@@ -7,7 +7,7 @@
     "audit": "node tools/audit.js",
     "sync": "node tools/sync-static.js",
     "brand": "node tools/check-brand.js",
-    "serve": "python3 -m http.server 8000"
+    "serve": "node tools/serve.js"
   },
   "devDependencies": {
     "playwright": "^1.49.0"

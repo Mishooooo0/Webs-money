@@ -21,13 +21,26 @@ main                the website + hub/catalogue.js
 ## Run it
 
 ```bash
-bash .github/pages/assemble.sh          # build the site into _site/
-node .github/pages/shoot.js             # add card screenshots (optional)
-python3 -m http.server --directory _site 8000
+npm run serve                  # build and serve on http://localhost:8000
+node tools/serve.js --port 3000
+node tools/serve.js --shots    # also render the card screenshots (~1 min)
 ```
 
-`assemble.sh` pulls each template branch out of this clone, so `_site/` is the
-whole published site — homepage and all three templates — not just this branch.
+That builds the whole published site — homepage and all three template demos,
+pulled out of this clone from their own branches — and serves it.
+
+Two things worth knowing:
+
+- **Edits to the root files are live.** `index.html`, `site.css`, `work.js` and
+  `hub/catalogue.js` are served from the working copy, not from `_site`, so a
+  reload shows your change. Templates come from `_site` and need a restart,
+  since they are rebuilt out of their branches.
+- **`/_stats` is served too**, so `analytics.html` has real numbers to render
+  locally. It is an in-memory counter that dies with the process — the real one
+  is `site-server.js` in the clients repo.
+
+Without `--shots` every card thumbnail 404s and falls back to its accent
+swatch. That is the designed behaviour, and the server says so on startup.
 
 ## What is on this branch
 
@@ -39,6 +52,7 @@ whole published site — homepage and all three templates — not just this bran
 | `hub/catalogue.js` | **the one list of templates**, down to each one's pages. Four things read it, two of them in the private repo, and `check-hub.js` proves it still matches the branches |
 | `SITE.md` | the blanks still to fill, and how counting works |
 | `BRAND.md` | the three-file reskin surface for a template |
+| `tools/serve.js` | build and serve the whole site locally |
 | `tools/` | the checks, and `start-project.sh`, which starts a client build |
 
 ## The one rule
