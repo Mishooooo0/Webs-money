@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   TEMPLATE 04 · CONTRACTING & FINISHING
-  من نحن · اسم المؤسسة
+  اطلب عرض سعر · اسم المؤسسة
 
   Arabic ships as the static default so the page is readable and
   crawlable with JavaScript off; data-i18n keys swap it to English on
@@ -13,10 +13,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- ★ Per-page meta is part of the reskin surface. -->
-  <title>من نحن · اسم المؤسسة</title>
-  <meta name="description" content="من نحن، وكيف نعمل.">
-  <meta property="og:title" content="من نحن · اسم المؤسسة">
-  <meta property="og:description" content="من نحن، وكيف نعمل.">
+  <title>اطلب عرض سعر · اسم المؤسسة</title>
+  <meta name="description" content="أرسل نوع العمل والموقع والمساحة تقريبًا، ونرتّب معاينة ونعود بعرض سعر مكتوب.">
+  <meta property="og:title" content="اطلب عرض سعر · اسم المؤسسة">
+  <meta property="og:description" content="أرسل نوع العمل والموقع والمساحة تقريبًا، ونرتّب معاينة ونعود بعرض سعر مكتوب.">
   <meta property="og:type" content="website">
 
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
@@ -72,26 +72,34 @@
 
     <section class="page-hero">
       <div class="container page-hero__inner">
-        <span class="eyebrow" data-i18n="story.eyebrow">من نحن</span>
-        <h1 class="page-hero__title" data-i18n="story.title">من نحن</h1>
+        <span class="eyebrow" data-i18n="quotePage.eyebrow">عرض سعر</span>
+        <h1 class="page-hero__title" data-i18n="quotePage.title">اطلب عرض سعر</h1>
+        <p class="lede" data-i18n="quotePage.lede">
+          لا يوجد نموذج طويل. أرسل رسالة واحدة فيها ما تحتاجه، ونرد عليك بموعد معاينة.
+        </p>
       </div>
     </section>
 
     <section class="section">
       <div class="container container--narrow">
-        <p class="prose" data-i18n="story.body">
-          ——— اكتب هنا قصة المؤسسة: متى بدأت، ومن يقف خلفها، وما الذي يميّز طريقتها في العمل. ———
-        </p>
+        <div class="panel">
+          <h2 class="panel__title" data-i18n="quotePage.needTitle">ما الذي يفيدنا معرفته</h2>
+          <ul class="ticks" role="list" data-render="list" data-source="t.quotePage.needList"></ul>
+          <div class="btn-row u-mt-5">
+            <a class="btn btn--primary" data-site-attr="href:contact.whatsapp"
+               href="" target="_blank" rel="noopener"
+               data-i18n="hero.ctaQuote">اطلب عرض سعر</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="section section--deep">
-      <div class="container">
+    <section class="section section--alt">
+      <div class="container container--narrow">
         <div class="section-head">
-          <span class="eyebrow" data-i18n="home.processEyebrow">كيف نشتغل</span>
-          <h2 class="" data-i18n="home.processTitle">أربع خطوات، معروفة من البداية</h2>
+          <h2 class="" data-i18n="quotePage.hoursTitle">أوقات المكتب</h2>
         </div>
-        <ol class="named-grid named-grid--steps" data-render="process"></ol>
+        <div class="info-list" role="list" data-render="hours"></div>
       </div>
     </section>
 

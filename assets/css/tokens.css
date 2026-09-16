@@ -14,44 +14,63 @@
    type is a one-file edit instead of a six-file one. The HTML supplies
    a brand-agnostic <link rel="preconnect"> to soften the extra hop.   */
 
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap');
+/* Reem Kufi is a Kufic face — the angular, architectural Arabic script cut
+   into stone and plaster long before it was set in type. On a contractor's
+   site it is doing the same job the Najdi geometry does: saying "building"
+   in the local idiom. Almarai carries the body text, where Kufic would be
+   unreadable at length. Archivo is the Latin grotesque — drawn for signage,
+   which is the right register beside it. */
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Almarai:wght@300;400;700&family=Archivo:wght@400;500;600&display=swap');
 
 :root {
 
   /* ---- 2. Palette --------------------------------------------------
-     Template default: a neutral warm-grey. Each brand overrides these
-     six roles and the whole site follows.                            */
+     Najdi earth and Sadu thread.
 
-  --c-deep:        #3b3531;   /* darkest brand tone — header, footer   */
-  --c-mid:         #6d635b;   /* mid brand tone                        */
-  --c-soft:        #a99f95;   /* muted brand tone — placeholders       */
-  --c-accent:      #6f6153;   /* primary CTA, links, active states     */
-  --c-accent-2:    #94a394;   /* secondary accent — tags, highlights   */
-  --c-ground:      #f5f2ed;   /* page background                       */
+     The browns are Diriyah mud-brick: the deep tone is wet clay in shadow,
+     the mid is a sun-struck wall, the soft is plaster bleached by a summer
+     of it. The accent is the red of Sadu weaving — the Bedouin loom work,
+     which is red, black and white and nothing else, so the red has to be
+     the one that carries.
+
+     Deliberately NOT the gold-on-black that stands in for "Arabia" in
+     stock design. Nothing here is gold.                                */
+
+  --c-deep:        #241a12;   /* wet clay in shadow — header, footer   */
+  --c-mid:         #8a5a2b;   /* sunlit mud-brick                      */
+  --c-soft:        #b99b73;   /* bleached plaster — placeholders       */
+  --c-accent:      #9c2b21;   /* Sadu red — primary CTA, links         */
+  --c-accent-2:    #5f6b4f;   /* date-palm shade — tags, highlights    */
+  --c-ground:      #f5efe3;   /* limestone dust — page background      */
 
   /* Derived surfaces — usually fine to leave alone. */
-  --c-surface:     #fcfaf7;   /* cards, panels                         */
-  --c-surface-alt: #ece7df;   /* alternating sections                  */
-  --c-ink:         #2a2622;   /* body text                             */
-  --c-ink-soft:    #6d635b;   /* secondary text                        */
-  --c-line:        #ded7cd;   /* hairlines, borders                    */
-  --c-on-deep:     #f5f2ed;   /* text sitting on --c-deep              */
+  --c-surface:     #fdfaf4;   /* cards, panels                         */
+  --c-surface-alt: #ebe2d1;   /* alternating sections                  */
+  --c-ink:         #221a12;   /* body text                             */
+  --c-ink-soft:    #6a5a46;   /* secondary text                        */
+  --c-line:        #ddd0ba;   /* hairlines, borders                    */
+  --c-on-deep:     #f5efe3;   /* text sitting on --c-deep              */
   --c-on-accent:   #ffffff;   /* text sitting on --c-accent            */
 
-  /* Alpha values. Kept here so no rgba() escapes into other files. */
-  --a-shadow:      rgba(42, 38, 34, 0.10);
-  --a-shadow-soft: rgba(42, 38, 34, 0.05);
-  --a-veil:        rgba(59, 53, 49, 0.55);   /* over imagery           */
-  --a-hairline:    rgba(245, 242, 237, 0.16);/* dividers on dark       */
-  --a-pattern:     rgba(169, 159, 149, 0.16);/* pattern wash opacity   */
+  /* --c-accent is 2.3:1 on --c-deep, which fails AA outright. Dark
+     surfaces get their own lighter step of the same red rather than
+     borrowing one that cannot be read. It is 5.0:1 there — and only
+     3.0:1 on --c-ground, so it belongs on dark and nowhere else. */
+  --c-accent-lift: #d86b58;
 
+  /* Alpha values. Kept here so no rgba() escapes into other files. */
+  --a-shadow:      rgba(36, 26, 18, 0.12);
+  --a-shadow-soft: rgba(36, 26, 18, 0.06);
+  --a-veil:        rgba(36, 26, 18, 0.58);   /* over imagery           */
+  --a-hairline:    rgba(245, 239, 227, 0.16);/* dividers on dark       */
+  --a-pattern:     rgba(185, 155, 115, 0.20);/* pattern wash opacity   */
   /* ---- 3. Type ------------------------------------------------------
      --ff-latin drives LTR, --ff-arabic drives RTL. base.css picks the
      right one off the <html dir> attribute, so pages never choose.    */
 
-  --ff-latin:   'Jost', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --ff-arabic:  'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
-  --ff-display: var(--ff-latin);   /* headings; override per brand     */
+  --ff-latin:   'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ff-arabic:  'Almarai', 'Segoe UI', Tahoma, sans-serif;
+  --ff-display: 'Reem Kufi', 'Almarai', Georgia, serif;  /* Kufic, for headings */
 
   /* Fluid scale — clamp() means no breakpoint juggling for type. */
   --fs-xs:   0.78rem;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   TEMPLATE 04 · CONTRACTING & FINISHING
-  من نحن · اسم المؤسسة
+  أعمالنا · اسم المؤسسة
 
   Arabic ships as the static default so the page is readable and
   crawlable with JavaScript off; data-i18n keys swap it to English on
@@ -13,10 +13,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- ★ Per-page meta is part of the reskin surface. -->
-  <title>من نحن · اسم المؤسسة</title>
-  <meta name="description" content="من نحن، وكيف نعمل.">
-  <meta property="og:title" content="من نحن · اسم المؤسسة">
-  <meta property="og:description" content="من نحن، وكيف نعمل.">
+  <title>أعمالنا · اسم المؤسسة</title>
+  <meta name="description" content="مشاريع منفّذة، كل واحد منها بصورته قبل العمل وبعده من الزاوية نفسها.">
+  <meta property="og:title" content="أعمالنا · اسم المؤسسة">
+  <meta property="og:description" content="مشاريع منفّذة، كل واحد منها بصورته قبل العمل وبعده من الزاوية نفسها.">
   <meta property="og:type" content="website">
 
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
@@ -72,26 +72,17 @@
 
     <section class="page-hero">
       <div class="container page-hero__inner">
-        <span class="eyebrow" data-i18n="story.eyebrow">من نحن</span>
-        <h1 class="page-hero__title" data-i18n="story.title">من نحن</h1>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container container--narrow">
-        <p class="prose" data-i18n="story.body">
-          ——— اكتب هنا قصة المؤسسة: متى بدأت، ومن يقف خلفها، وما الذي يميّز طريقتها في العمل. ———
+        <span class="eyebrow" data-i18n="projectsPage.eyebrow">أعمالنا</span>
+        <h1 class="page-hero__title" data-i18n="projectsPage.title">قبل وبعد</h1>
+        <p class="lede" data-i18n="projectsPage.lede">
+          كل مشروع هنا بصورته قبل العمل وبعده، من الزاوية نفسها. اسحب الخط بينهما.
         </p>
       </div>
     </section>
 
-    <section class="section section--deep">
+    <section class="section">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow" data-i18n="home.processEyebrow">كيف نشتغل</span>
-          <h2 class="" data-i18n="home.processTitle">أربع خطوات، معروفة من البداية</h2>
-        </div>
-        <ol class="named-grid named-grid--steps" data-render="process"></ol>
+        <div class="project-list" data-render="projects"></div>
       </div>
     </section>
 

@@ -1,11 +1,25 @@
-# Template 01 · Café & Restaurant
+# Template 04 · Contracting & Finishing
 
-A bilingual (Arabic-first, RTL) brochure website for a coffee shop or
-restaurant, built to be **re-dressed for a new client in about ten minutes**.
+A bilingual (Arabic-first, RTL) site for a مقاولات وتشطيب business, built to be
+**re-dressed for a new client in about ten minutes**.
 
-One of three templates. The shelf, the shared engine and the tooling live on
-`main`; this branch is the café product. Start a client project from it with
-`tools/start-project.sh cafe <client-slug>`.
+One of four templates. The public website, the catalogue and the tooling live on
+`main`; this branch is the contracting product. Start a client project from it
+with `tools/start-project.sh contracting <client-slug>`.
+
+## What makes this one different
+
+The other three templates list things — a menu, services, a catalogue. A
+contractor's pitch is a **pair**: the same room before and after. So `projects`
+in `assets/js/content.js` is built around that pair, and the site's one real
+interaction is the seam between them.
+
+The comparison is an `<input type=range>` under a transparent overlay, not
+pointer maths. That gives mouse, touch and arrow-key dragging for free, a
+44px-wide thumb over the full height of the frame, and a control a screen
+reader can announce — none of which a `pointermove` handler brings with it.
+`clip-path` takes physical edges, so the one mirrored rule in the template is
+the `[dir="rtl"]` inset swap; everything else is logical and flips on its own.
 
 No build step. No dependencies. No framework. Six HTML pages, six stylesheets,
 four scripts. Open `index.html` and it runs.

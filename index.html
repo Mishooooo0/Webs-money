@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-  TEMPLATE 01 · CAFÉ & RESTAURANT
-  HOME — hero, story, featured drinks, gallery, hours.
+  TEMPLATE 04 · CONTRACTING & FINISHING
+  اسم المؤسسة · مقاولات وتشطيب
 
   Arabic ships as the static default so the page is readable and
   crawlable with JavaScript off; data-i18n keys swap it to English on
@@ -13,10 +13,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- ★ Per-page meta is part of the reskin surface. -->
-  <title>اسم المقهى · مكان يرحّب بك</title>
-  <meta name="description" content="قهوة مختصة، حلويات تُخبز يوميًا، ومساحة هادئة تجلس فيها بلا استعجال.">
-  <meta property="og:title" content="اسم المقهى · مكان يرحّب بك">
-  <meta property="og:description" content="قهوة مختصة، حلويات تُخبز يوميًا، ومساحة هادئة تجلس فيها بلا استعجال.">
+  <title>اسم المؤسسة · مقاولات وتشطيب</title>
+  <meta name="description" content="مقاولات وتشطيب: نأخذ المساحة على العظم أو على قِدمها ونسلّمها مكتملة، بجدول متفق عليه وعرض سعر مكتوب قبل البدء.">
+  <meta property="og:title" content="اسم المؤسسة · مقاولات وتشطيب">
+  <meta property="og:description" content="مقاولات وتشطيب: نأخذ المساحة على العظم أو على قِدمها ونسلّمها مكتملة، بجدول متفق عليه وعرض سعر مكتوب قبل البدء.">
   <meta property="og:type" content="website">
 
   <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml">
@@ -42,25 +42,25 @@
       <a class="brand" href="index.html">
         <span class="brand__mark" aria-hidden="true"></span>
         <span class="brand__name">
-          <span class="brand__name-primary" data-site="brand.primary">اسم المقهى</span>
-          <span class="brand__name-secondary" data-site="brand.secondary">CAFE NAME</span>
+          <span class="brand__name-primary" data-site="brand.primary">اسم المؤسسة</span>
+          <span class="brand__name-secondary" data-site="brand.secondary">CONTRACTING</span>
         </span>
       </a>
 
       <nav class="nav" id="site-nav" data-nav data-i18n-attr="aria-label:common.navLabel" aria-label="التنقل الرئيسي">
         <ul class="nav__list" role="list">
           <li><a class="nav__link" href="index.html" data-i18n="nav.home">الرئيسية</a></li>
-          <li><a class="nav__link" href="menu.html"  data-i18n="nav.menu">المنيو</a></li>
-          <li><a class="nav__link" href="story.html" data-i18n="nav.story">قصتنا</a></li>
-          <li><a class="nav__link" href="shop.html"  data-i18n="nav.shop">المتجر</a></li>
-          <li><a class="nav__link" href="visit.html" data-i18n="nav.visit">زورونا</a></li>
+          <li><a class="nav__link" href="projects.html" data-i18n="nav.projects">أعمالنا</a></li>
+          <li><a class="nav__link" href="services.html" data-i18n="nav.services">خدماتنا</a></li>
+          <li><a class="nav__link" href="story.html" data-i18n="nav.story">من نحن</a></li>
+          <li><a class="nav__link" href="quote.html" data-i18n="nav.quote">اطلب عرض سعر</a></li>
         </ul>
       </nav>
 
       <div class="header-actions">
         <button class="lang-toggle" type="button" data-lang-toggle data-i18n="common.langSwitch">English</button>
         <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav"
-                data-i18n-attr="aria-label:common.openMenu" aria-label="فتح القائمة">
+                data-i18n-attr="aria-label:common.openMenu" aria-label="افتح القائمة">
           <span class="nav-toggle__bars" aria-hidden="true"></span>
         </button>
       </div>
@@ -71,120 +71,73 @@
   <main id="main">
 
     <!-- ================= HERO ================= -->
-    <section class="hero">
+    <section class="hero hero--build">
       <div class="container hero__inner">
         <div class="hero__body">
-          <span class="hero__badge" aria-hidden="true"></span>
-          <h1 class="hero__title" data-i18n="hero.title">مكان يرحّب بك</h1>
-          <p class="hero__tagline" data-i18n="hero.tagline">
-            قهوة مختصة، حلويات تُخبز يوميًا، ومساحة هادئة تجلس فيها بلا استعجال.
+          <span class="hero__eyebrow" data-i18n="hero.eyebrow">مقاولات وتشطيب</span>
+          <h1 class="hero__title" data-i18n="hero.title">نسلّمك المكان وقد صار كما أردته</h1>
+          <p class="hero__tagline" data-i18n="hero.lede">
+            نأخذ المساحة على العظم أو على قِدمها، ونخرج منها بعمل مكتمل — بجدول متفق عليه وعرض سعر مكتوب قبل أن نبدأ.
           </p>
           <div class="btn-row">
-            <a class="btn btn--primary" href="menu.html" data-i18n="common.viewMenu">تصفّح المنيو</a>
-            <a class="btn btn--on-deep" href="visit.html" data-i18n="common.directions">الاتجاهات</a>
-          </div>
-          <p class="hero__meta">
-            <span data-i18n="hero.meta1">المدينة – اسم الحي</span>
-            <span aria-hidden="true">·</span>
-            <span data-i18n="hero.meta2">يوميًا من ٧ صباحًا</span>
-          </p>
-        </div>
-
-        <div class="hero__media">
-          <!-- PHOTO SLOT · hero · 1600×1000 · the room, wide, natural light -->
-          <div class="ph ph--hero" role="img" data-i18n-attr="aria-label:alt.hero" aria-label="واجهة المقهى من الداخل">
-            <span class="ph__mark"></span>
+            <a class="btn btn--primary" href="quote.html" data-i18n="hero.ctaQuote">اطلب عرض سعر</a>
+            <a class="btn btn--on-deep" href="projects.html" data-i18n="hero.ctaProjects">شاهد أعمالنا</a>
           </div>
         </div>
       </div>
+      <!-- The Sadu band. Woven, not printed: drawn in CSS from the palette,
+           so it re-tints with a reskin and weighs nothing. -->
+      <div class="sadu" aria-hidden="true"></div>
     </section>
 
-    <div class="band band--soft" aria-hidden="true"></div>
-
-    <!-- ================= INTRO ================= -->
-    <section class="section">
-      <div class="container">
-        <div class="split" data-reveal>
-          <div class="split__body">
-            <span class="eyebrow" data-i18n="home.introEyebrow">من نحن</span>
-            <h2 data-i18n="home.introTitle">نبدأ من الحبّة، وننتهي عندك</h2>
-            <p class="lede" data-i18n="home.introText">
-              نختار حبّاتنا موسمًا بعد موسم، ونحمّصها على دفعات صغيرة. كل فنجان يُحضَّر عند الطلب، لأن القهوة الجيدة لا تنتظر.
-            </p>
-            <a class="link-arrow" href="story.html" data-i18n="nav.story">قصتنا</a>
-          </div>
-          <div class="split__media">
-            <!-- PHOTO SLOT · counter · 1000×1250 · barista at the counter, portrait -->
-            <div class="ph ph--portrait" role="img" data-i18n-attr="aria-label:alt.counter" aria-label="الباريستا خلف الطاولة">
-              <span class="ph__mark"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= FEATURED DRINKS ================= -->
-    <section class="section section--alt">
-      <div class="container">
-        <div class="section-head section-head--center">
-          <span class="eyebrow" data-i18n="home.featuredEyebrow">المفضّلة</span>
-          <h2 data-i18n="home.featuredTitle">ما يطلبه الناس أكثر</h2>
-        </div>
-
-        <!-- Built from SITE.menu — items flagged featured:true -->
-        <div class="featured" data-render="featured"></div>
-
-        <noscript>
-          <p class="noscript-note" data-i18n="common.noscript">
-            فعّل الجافاسكربت لعرض المنيو والمتجر كاملين.
-          </p>
-        </noscript>
-
-        <div class="btn-row u-center-x u-mt-7">
-          <a class="btn btn--ghost" href="menu.html" data-i18n="common.viewMenu">تصفّح المنيو</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= GALLERY ================= -->
+    <!-- ================= TRADES ================= -->
     <section class="section">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow" data-i18n="home.galleryEyebrow">المكان</span>
-          <h2 data-i18n="home.galleryTitle">تفاصيل صغيرة، صُنعت بحب</h2>
+          <span class="eyebrow" data-i18n="home.tradesEyebrow">ما ننفّذه</span>
+          <h2 class="" data-i18n="home.tradesTitle">ستة تخصصات، وجهة واحدة مسؤولة</h2>
+          <p class="lede" data-i18n="home.tradesLede">
+            العمل كله من عندنا، فلا تطارد أنت المقاول والكهربائي والسبّاك.
+          </p>
         </div>
-
-        <div class="gallery" data-reveal>
-          <!-- PHOTO SLOTS · gallery · 800×800 each · room, cup, sweets, storefront -->
-          <div class="ph ph--square" role="img" data-i18n-attr="aria-label:alt.room" aria-label="زاوية الجلوس"><span class="ph__mark ph__mark--icon"></span></div>
-          <div class="ph ph--square" role="img" data-i18n-attr="aria-label:alt.cup" aria-label="فنجان قهوة على الطاولة"><span class="ph__mark ph__mark--icon"></span></div>
-          <div class="ph ph--square" role="img" data-i18n-attr="aria-label:alt.sweets" aria-label="حلويات المقهى"><span class="ph__mark ph__mark--icon"></span></div>
-          <div class="ph ph--square" role="img" data-i18n-attr="aria-label:alt.storefront" aria-label="واجهة المقهى من الخارج"><span class="ph__mark ph__mark--icon"></span></div>
-        </div>
+        <ul class="named-grid" role="list" data-render="trades"></ul>
       </div>
     </section>
 
-    <!-- ================= VISIT TEASER ================= -->
+    <!-- ================= FEATURED PROJECT ================= -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="home.featuredEyebrow">من أعمالنا</span>
+          <h2 class="" data-i18n="home.featuredTitle">اسحب الخط وشِف الفرق</h2>
+        </div>
+        <div class="project-list" data-render="projects" data-featured></div>
+      </div>
+    </section>
+
+    <!-- ================= PROCESS ================= -->
     <section class="section section--deep">
       <div class="container">
-        <div class="split">
-          <div class="split__body">
-            <h2 data-i18n="home.visitTitle">تعال وقابلنا</h2>
-            <p class="lede" data-i18n="home.visitText">
-              الباب مفتوح من الصباح الباكر حتى آخر الليل. لا تحتاج حجزًا، فقط تعال.
-            </p>
-            <div data-render="address"></div>
-            <div class="btn-row">
-              <a class="btn btn--primary" data-site-attr="href:contact.maps" href="https://maps.google.com/"
-                 target="_blank" rel="noopener" data-i18n="common.directions">الاتجاهات</a>
-              <a class="btn btn--on-deep" href="visit.html" data-i18n="nav.visit">زورونا</a>
-            </div>
-          </div>
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="home.processEyebrow">كيف نشتغل</span>
+          <h2 class="" data-i18n="home.processTitle">أربع خطوات، معروفة من البداية</h2>
+        </div>
+        <ol class="named-grid named-grid--steps" data-render="process"></ol>
+      </div>
+    </section>
 
-          <div class="split__body">
-            <h3 data-i18n="visit.hoursTitle">أوقات العمل</h3>
-            <ul class="info-list" role="list" data-render="hours"></ul>
-          </div>
+    <!-- ================= QUOTE CTA ================= -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="section-head">
+          <span class="eyebrow" data-i18n="home.quoteEyebrow">ابدأ</span>
+          <h2 class="" data-i18n="home.quoteTitle">احكِ لنا عن المكان</h2>
+          <p class="lede" data-i18n="home.quoteLede">
+            أرسل نوع العمل والموقع ومساحته تقريبًا، ونرتّب معاينة.
+          </p>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="quote.html" data-i18n="hero.ctaQuote">اطلب عرض سعر</a>
         </div>
       </div>
     </section>
@@ -199,46 +152,44 @@
           <a class="brand" href="index.html">
             <span class="brand__mark" aria-hidden="true"></span>
             <span class="brand__name">
-              <span class="brand__name-primary" data-site="brand.primary">اسم المقهى</span>
-              <span class="brand__name-secondary" data-site="brand.secondary">CAFE NAME</span>
+              <span class="brand__name-primary" data-site="brand.primary">اسم المؤسسة</span>
+              <span class="brand__name-secondary" data-site="brand.secondary">CONTRACTING</span>
             </span>
           </a>
-          <p class="note u-mt-4" data-i18n="footer.tagline">
-            مكان يرحّب بك.
-          </p>
+          <p class="note u-mt-4" data-i18n="footer.tagline">نسلّمك المكان وقد صار كما أردته.</p>
         </div>
 
         <div class="footer-col">
           <h2 class="footer-col__title" data-i18n="footer.exploreTitle">تصفّح</h2>
           <ul role="list">
-            <li><a href="menu.html"  data-i18n="nav.menu">المنيو</a></li>
-            <li><a href="story.html" data-i18n="nav.story">قصتنا</a></li>
-            <li><a href="shop.html"  data-i18n="nav.shop">المتجر</a></li>
-            <li><a href="visit.html" data-i18n="nav.visit">زورونا</a></li>
+            <li><a href="projects.html" data-i18n="nav.projects">أعمالنا</a></li>
+            <li><a href="services.html" data-i18n="nav.services">خدماتنا</a></li>
+            <li><a href="story.html" data-i18n="nav.story">من نحن</a></li>
+            <li><a href="quote.html" data-i18n="nav.quote">اطلب عرض سعر</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
-          <h2 class="footer-col__title" data-i18n="footer.visitTitle">زورونا</h2>
+          <h2 class="footer-col__title" data-i18n="footer.visitTitle">تواصل</h2>
           <div class="note" data-render="address"></div>
         </div>
 
         <div class="footer-col">
           <h2 class="footer-col__title" data-i18n="footer.followTitle">تابعنا</h2>
           <ul role="list">
-            <li><a class="u-ltr" data-site-attr="href:contact.instagram" href="https://instagram.com/" target="_blank" rel="noopener"
+            <li><a class="u-ltr" data-site-attr="href:contact.instagram" href="" target="_blank" rel="noopener"
                    data-site="contact.instagramHandle">@example</a></li>
-            <li><a class="u-ltr" data-site-attr="href:contact.whatsapp" href="https://wa.me/966500000000" target="_blank" rel="noopener"
-                   data-site="contact.phoneLabel">+966 50 000 0000</a></li>
-            <li><a class="u-ltr" data-site-attr="href:contact.emailHref" href="mailto:hello@example.com"
-                   data-site="contact.email">hello@example.com</a></li>
+            <li><a class="u-ltr" data-site-attr="href:contact.whatsapp" href="" target="_blank" rel="noopener"
+                   data-site="contact.phoneLabel">اتصل بنا</a></li>
+            <li><a class="u-ltr" data-site-attr="href:contact.emailHref" href=""
+                   data-site="contact.email">——— أضف البريد ———</a></li>
           </ul>
         </div>
       </div>
 
       <div class="site-footer__base">
-        <p>© <span data-year>2026</span> <span data-site="brand.primary">اسم المقهى</span>. <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></p>
-        <p><span data-site="brand.secondary">CAFE NAME</span></p>
+        <p>© <span data-year>2026</span> <span data-site="brand.primary">اسم المؤسسة</span>. <span data-i18n="footer.rights">جميع الحقوق محفوظة.</span></p>
+        <p><span data-site="brand.secondary">CONTRACTING</span></p>
       </div>
     </div>
   </footer>

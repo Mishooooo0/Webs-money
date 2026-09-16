@@ -454,3 +454,150 @@ html[dir='rtl'] .quote-card__cite { letter-spacing: 0; }
 /* A footer column is narrow; the branch name does not need heading weight. */
 .site-footer .location-card__name { font-size: var(--fs-sm); }
 .site-footer .location-card + .location-card { margin-block-start: var(--s-4); padding-block-start: var(--s-4); }
+
+/* ===========================================================================
+   TEMPLATE 04 — CONTRACTING & FINISHING
+   Components that only this template mounts. Every colour is a token;
+   every offset is logical, so the whole thing mirrors with dir.
+   =========================================================================== */
+
+/* ---- The Sadu band ------------------------------------------------------
+   Bedouin loom work, drawn rather than photographed: two sets of opposing
+   diagonals over a ground, which is how the triangular motif is actually
+   built on a warp. It re-tints from the palette on a reskin and weighs
+   nothing, which a background image would not. */
+
+.sadu {
+  height: var(--band-height);
+  background:
+    repeating-linear-gradient(135deg,
+      var(--c-accent) 0 8px, transparent 8px 16px),
+    repeating-linear-gradient(45deg,
+      var(--c-deep) 0 8px, transparent 8px 16px),
+    var(--c-soft);
+  border-block-start: 1px solid var(--a-hairline);
+}
+
+/* ---- Named list — trades, and the numbered process ---------------------- */
+
+.named-grid {
+  display: grid;
+  gap: var(--s-5);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.named__n {
+  display: block;
+  font-family: var(--ff-latin);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-mid);
+  color: var(--c-accent);
+  margin-block-end: var(--s-2);
+}
+.named__name { margin: 0 0 var(--s-2); font-size: var(--fs-md); }
+.named__desc { margin: 0; color: var(--c-ink-soft); font-size: var(--fs-sm); }
+
+/* On the dark band the accent fails AA outright, so the numbers take the
+   lifted step and the body text takes the on-deep tone. */
+.section--deep .eyebrow     { color: var(--c-accent-lift); }
+.section--deep .named__n    { color: var(--c-accent-lift); }
+.section--deep .named__desc { color: var(--c-on-deep); opacity: .78; }
+.named-grid--steps .named {
+  border-inline-start: 2px solid var(--a-hairline);
+  padding-inline-start: var(--s-4);
+}
+
+/* ---- Before / after ----------------------------------------------------- */
+
+.project-list { display: grid; gap: var(--s-9); }
+.project__body { margin-block-start: var(--s-4); }
+.project__name { margin: 0 0 var(--s-2); font-size: var(--fs-lg); }
+.project__meta {
+  display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4);
+  list-style: none; padding: 0; margin: 0 0 var(--s-3);
+  font-size: var(--fs-sm); color: var(--c-ink-soft);
+}
+.project__meta li + li { border-inline-start: 1px solid var(--c-line); padding-inline-start: var(--s-4); }
+.project__desc { margin: 0; max-width: var(--measure); color: var(--c-ink-soft); }
+
+.cmp__stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--r-md);
+  background: var(--c-surface-alt);
+  touch-action: pan-y;          /* let the page scroll; the range takes the drag */
+}
+.cmp__half { position: absolute; inset: 0; }
+.cmp__half > .ph, .cmp__img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+/* The seam. clip-path takes physical edges, so the one place this template
+   cannot express itself logically is here — and it is handled by mirroring
+   the inset under [dir=rtl] rather than by leaving RTL subtly wrong. */
+.cmp__half--after { clip-path: inset(0 0 0 var(--cmp)); }
+[dir="rtl"] .cmp__half--after { clip-path: inset(0 var(--cmp) 0 0); }
+
+.cmp__seam {
+  position: absolute; inset-block: 0;
+  inset-inline-start: var(--cmp);
+  width: 2px; background: var(--c-ground);
+  box-shadow: 0 0 0 1px var(--a-shadow);
+  pointer-events: none;
+}
+.cmp__tag {
+  position: absolute; inset-block-start: var(--s-3);
+  padding: var(--s-1) var(--s-3);
+  /* Solid, not the veil. A 58%-alpha ground cannot promise legibility over
+     a photograph nobody has seen yet — and whatever is behind these two
+     words, they have to be readable or the comparison is unlabelled. */
+  background: var(--c-deep); color: var(--c-on-deep);
+  font-size: var(--fs-xs); border-radius: var(--r-pill);
+}
+.cmp__half--before .cmp__tag { inset-inline-start: var(--s-3); }
+.cmp__half--after  .cmp__tag { inset-inline-end:   var(--s-3); }
+
+/* The control IS the input. A transparent range over the whole stage gives
+   pointer, touch and arrow-key dragging for free, and announces itself to a
+   screen reader — none of which a pointermove handler would. */
+.cmp__range {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  margin: 0; padding: 0;
+  appearance: none; -webkit-appearance: none;
+  background: transparent; cursor: ew-resize;
+}
+.cmp__range::-webkit-slider-thumb {
+  appearance: none; -webkit-appearance: none;
+  width: 44px; height: 100%;          /* a real touch target, not 2px */
+  background: transparent; cursor: ew-resize;
+}
+.cmp__range::-moz-range-thumb {
+  width: 44px; height: 100%; border: 0;
+  background: transparent; cursor: ew-resize;
+}
+.cmp__range:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 3px; }
+.cmp__hint {
+  margin: var(--s-2) 0 0;
+  font-size: var(--fs-xs); color: var(--c-ink-soft);
+}
+
+/* ---- Quote page --------------------------------------------------------- */
+
+.panel {
+  background: var(--c-surface);
+  border: var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-6);
+}
+.panel__title { margin: 0 0 var(--s-4); font-size: var(--fs-md); }
+.ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-3); }
+.ticks li { padding-inline-start: var(--s-5); position: relative; }
+.ticks li::before {
+  content: ''; position: absolute; inset-inline-start: 0; inset-block-start: .62em;
+  width: 8px; height: 8px; background: var(--c-accent);
+}
+.prose { max-width: var(--measure); color: var(--c-ink-soft); }

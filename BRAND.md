@@ -83,15 +83,17 @@ repeated on the opposite edge. Tile scale is set by `--pattern-size` and
 
 | Key | What to change |
 |---|---|
-| `brand` | Café name in both scripts, the Latin wordmark line, currency |
+| `brand` | Company name in both scripts, the Latin wordmark line, currency |
 | `contact` | Address lines, phone (`phone`, `phoneHref`, `phoneLabel`), email (`email`, `emailHref`), WhatsApp, Instagram, Maps link |
 | `hours` | Seven rows. Keep the `key` values — that's how today's row highlights itself |
-| `menu` | Categories in display order; `featured: true` lifts an item onto the home page (first three win) |
+| `projects` | Before/after pairs. `featured: true` lifts ONE onto the home page |
+| `trades` | The six specialisms. The grid is built for six |
+| `process` | The four steps, numbered in order |
 | `beans` / `merch` | The shop grids |
 | `t.*` | Every string on the site, as `{ ar, en }` pairs |
 | `t.alt.*` | Alt text for photo slots — update when real photos land |
 
-Adding a drink is one object in `menu[].items`. Never edit HTML for content.
+Adding a project is one object in `projects[]`. Never edit HTML for content.
 
 **After every edit here, run `node tools/sync-static.js`.** The Arabic sitting
 in the HTML is a generated mirror of this file — it exists so the site reads
@@ -125,14 +127,19 @@ element:
 
 | Page | Slot | Size | Subject |
 |---|---|---|---|
-| `index.html` | hero | 1600×1000 | The room, wide, natural light |
-| `index.html` | counter | 1000×1250 | Barista at the counter, portrait |
-| `index.html` | gallery ×4 | 800×800 | Room, cup, sweets, storefront |
-| `story.html` | room | 1000×1250 | The room early in the day, portrait |
-| `story.html` | counter | 1200×900 | The team behind the bar |
-| `visit.html` | map | — | Replace with a Google Maps `<iframe>` once the pin is live |
-| `shop.html` | beans, merch | 1000×1250 / 800×800 | Generated per product by `render.js` |
-| `index.html` | featured ×3 | 800×800 | Generated per drink by `render.js` |
+| `index.html` | hero | 1600×1000 | The finished room, wide, natural light |
+| `projects[].before` | pair | 1600×1000 | The space as found — bare, stripped, or tired |
+| `projects[].after` | pair | 1600×1000 | **The same corner of the same room, finished** |
+
+⚠ **Both halves of a pair must be the same aspect ratio and the same camera
+position.** The seam slides between two images the reader believes are one
+room; a different angle breaks that in the first second of dragging.
+
+⚠ **A generated or stock photograph must never ship as a client's project.**
+The placeholders here are placeholders. A before/after on a contractor's site
+is a claim about work they did, and a picture of someone else's room — or of
+no room at all — is a false one. Replace every pair with photographs of the
+actual job.
 
 **Generated slots need no code at all.** Anything rendered from data — featured
 drinks, beans, merch, team members — takes an optional `image` (and optional
