@@ -511,6 +511,140 @@
     mount.replaceChildren(frag);
   }
 
+  /* ---- Template 4 — contracting and finishing ------------------------
+
+     A contractor's pitch is a pair of photographs of one room, so the
+     unit here is the pair and the interaction is the seam between them.
+
+     Built on <input type=range> rather than pointer maths: it is
+     draggable with a mouse, a finger, and the arrow keys without any of
+     that being written, it announces itself to a screen reader, and it
+     cannot get stuck mid-drag when a pointer leaves the window. The
+     visible handle is drawn from the input; the input itself is the
+     control. */
+
+  function comparison(project) {
+    var wrap = el('div', 'cmp');
+
+    /* Both halves stack in the same grid cell. The 'after' sits on top and
+       is clipped from the inline-start edge, so the seam moves with dir
+       and needs no RTL special-casing. */
+    function half(kind, src, altKey) {
+      var box = el('div', 'cmp__half cmp__half--' + kind);
+      if (src) {
+        var img = new Image();
+        img.className = 'cmp__img';
+        img.src = src;
+        img.alt = altFor(project, altKey);
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        /* Reserve the box before the file lands, or the seam jumps. */
+        img.width = 1600; img.height = 1000;
+        box.appendChild(img);
+      } else {
+        box.appendChild(placeholder('ph--hero', altKey, false, project));
+      }
+      box.appendChild(el('span', 'cmp__tag', window.I18N.t('common.' + kind)));
+      return box;
+    }
+
+    var stage = el('div', 'cmp__stage');
+    stage.appendChild(half('before', project.before, 'alt.before'));
+    stage.appendChild(half('after', project.after, 'alt.after'));
+
+    var range = document.createElement('input');
+    range.type = 'range';
+    range.className = 'cmp__range';
+    range.min = 0; range.max = 100; range.value = 50;
+    range.setAttribute('aria-label', window.I18N.t('common.sliderLabel'));
+    range.addEventListener('input', function () {
+      stage.style.setProperty('--cmp', range.value + '%');
+    });
+    stage.style.setProperty('--cmp', '50%');
+
+    stage.appendChild(el('span', 'cmp__seam'));
+    stage.appendChild(range);
+    wrap.appendChild(stage);
+    wrap.appendChild(el('p', 'cmp__hint', window.I18N.t('common.dragHint')));
+    return wrap;
+  }
+
+  function projectCard(project) {
+    var card = el('article', 'project');
+    card.setAttribute('data-reveal', '');
+    card.appendChild(comparison(project));
+
+    var body = el('div', 'project__body');
+    body.appendChild(el('h3', 'project__name', window.I18N.pick(project.name)));
+
+    var meta = el('ul', 'project__meta');
+    [['type', project.type], ['area', project.area], ['span', project.span]]
+      .forEach(function (pair) {
+        var v = window.I18N.pick(pair[1]);
+        if (v) meta.appendChild(el('li', null, v));
+      });
+    if (meta.childNodes.length) body.appendChild(meta);
+
+    var desc = window.I18N.pick(project.desc);
+    if (desc) body.appendChild(el('p', 'project__desc', desc));
+
+    card.appendChild(body);
+    return card;
+  }
+
+  function renderProjects(mount) {
+    var list = window.SITE.projects || [];
+    /* The home page wants one; the projects page wants all of them. */
+    if (mount.hasAttribute('data-featured')) {
+      list = list.filter(function (p) { return p.featured; }).slice(0, 1);
+    }
+
+    var section = mount.closest('.section');
+    if (section) section.hidden = !list.length;
+    if (!list.length) { mount.replaceChildren(); return; }
+
+    var frag = document.createDocumentFragment();
+    list.forEach(function (p) { frag.appendChild(projectCard(p)); });
+    mount.replaceChildren(frag);
+  }
+
+  /* trades and process are the same shape — a numbered list of
+     name + description — so they share one builder and differ only in
+     whether the number is shown. */
+  function namedList(mount, items, numbered) {
+    var frag = document.createDocumentFragment();
+
+    (items || []).forEach(function (item, i) {
+      var row = el('li', 'named');
+      row.setAttribute('data-reveal', '');
+      if (numbered) {
+        /* Isolated: a bare Latin numeral opening an Arabic line is
+           reordered against the text that follows it. */
+        row.appendChild(el('span', 'named__n u-ltr',
+          LRI + ('0' + (i + 1)).slice(-2) + PDI));
+      }
+      row.appendChild(el('h3', 'named__name', window.I18N.pick(item.name)));
+      var d = window.I18N.pick(item.desc);
+      if (d) row.appendChild(el('p', 'named__desc', d));
+      frag.appendChild(row);
+    });
+
+    mount.replaceChildren(frag);
+  }
+
+  /* An array of plain strings — a checklist, not objects. Every other
+     renderer here takes {name, desc} shapes, and forcing a list of
+     sentences through one of those produces empty <p> elements. */
+  function renderList(mount) {
+    var items = window.I18N.v(mount.getAttribute('data-source')) || [];
+    var frag = document.createDocumentFragment();
+    items.forEach(function (line) { frag.appendChild(el('li', null, line)); });
+    mount.replaceChildren(frag);
+  }
+
+  function renderTrades(mount)  { namedList(mount, window.SITE.trades,  false); }
+  function renderProcess(mount) { namedList(mount, window.SITE.process, true); }
+
   /* ---- Wiring ------------------------------------------------------------ */
 
   /* Keyed by data-render. A renderer with no mount point on the page simply
@@ -533,7 +667,12 @@
     team:         renderTeam,
     packages:     renderPackages,
     testimonials: renderTestimonials,
-    faq:          renderFaq
+    faq:          renderFaq,
+    /* template 4 — contracting and finishing */
+    projects:     renderProjects,
+    trades:       renderTrades,
+    list:         renderList,
+    process:      renderProcess
   };
 
   function renderAll() {
