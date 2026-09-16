@@ -8,7 +8,7 @@ name: Pages
 # tools/check-hub.js fails the build if the catalogue ever says otherwise.
 on:
   push:
-    branches: [main, template-cafe, template-services, template-retail]
+    branches: [main, template-cafe, template-services, template-retail, template-contracting]
   workflow_dispatch:
 
 permissions:

@@ -108,6 +108,32 @@ window.CATALOGUE = {
         { key: 'collections',   ar: 'تشكيلات مختارة',                  en: 'Curated collections' },
         { key: 'faq',           ar: 'أسئلة شائعة',                     en: 'An FAQ' }
       ]
+    },
+    {
+      id: 'contracting',
+      branch: 'template-contracting',
+      dest: 'contracting',
+      number: '04',
+      accent: '#9c2b21',
+      name: { ar: 'المقاولات والتشطيب', en: 'Contracting & Finishing' },
+      desc: {
+        ar: 'مشاريع بصور قبل وبعد يسحبها الزائر بنفسه، وتخصصات، وخطوات العمل، وطلب عرض سعر عبر واتساب.',
+        en: 'Projects the visitor drags between before and after, the trades on offer, how a job runs, and a quote requested over WhatsApp.'
+      },
+      fits: { ar: 'مقاولات · تشطيب · ترميم · واجهات', en: 'Contractors · finishing · restoration · facades' },
+      pages: [
+        { file: 'index.html',    ar: 'الرئيسية',      en: 'Home'     },
+        { file: 'projects.html', ar: 'أعمالنا',       en: 'Projects' },
+        { file: 'services.html', ar: 'خدماتنا',       en: 'Services' },
+        { file: 'story.html',    ar: 'من نحن',        en: 'About'    },
+        { file: 'quote.html',    ar: 'اطلب عرض سعر',  en: 'Get a quote' }
+      ],
+      holds: [
+        { key: 'projects', ar: 'مشاريع بصور قبل وبعد',      en: 'Projects with before/after photographs' },
+        { key: 'trades',   ar: 'تخصصات التنفيذ',            en: 'The trades on offer' },
+        { key: 'process',  ar: 'خطوات العمل الأربع',        en: 'The four steps of a job' },
+        { key: 'faq',      ar: 'أسئلة شائعة',               en: 'An FAQ' }
+      ]
     }
   ],
 
